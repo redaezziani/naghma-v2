@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/provider/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-
+import '@/app/globals.css'
 
 export const metadata: Metadata = {
   title: "شركة القهوة التي توصلها",

@@ -10,5 +10,6 @@ export const secrets = {
     resendSecret: process.env.RESEND_TOKEN_SECRET,
     edg_store_access_key: process.env.EDGE_STORE_ACCESS_KEY,
     edg_store_secret_key: process.env.EDGE_STORE_SECRET_KEY,
+    store_name: process.env.STORE_NAME,
 };
 
