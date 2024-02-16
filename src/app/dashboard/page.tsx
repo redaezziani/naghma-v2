@@ -1,5 +1,6 @@
 'use client';
 import ApexChart from '@/components/my-ui/chart';
+import ApexChartcol from '@/components/my-ui/chart2';
 // icon 
 import { Card } from '@/components/ui/card';
 import { Mode } from "@/components/ui/them-mode";
@@ -29,24 +30,25 @@ const Dashboard = () => {
         </div>
         <div className="flex w-full flex-col gap-3 justify-start items-start">
 
-          <div className="w-full grid gap-6 grid-cols-4">
-            <Card className="w-full col-span-1 h-2/3 aspect-video shadow-none py-7 px-5 flex justify-between items-center  ">
+          <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
+
+            <div className="w-full col-span-1  shadow-none py-7 px-5 flex justify-between items-center border-2 rounded-lg  ">
               <div>
                 <p className=" text-xs">الأرباح (شهريًا)</p>
                 <p className="font-semibold text-xl mt-1">$40,000</p>
               </div>
               <Calendar className="w-9 h-9" />
-            </Card>
+            </div>
 
-            <Card className="w-full col-span-1 h-2/3 aspect-video shadow-none p-2 py-7 px-5 flex justify-between items-center">
+            <div className="w-full col-span-1  shadow-none  py-7 px-5 flex justify-between items-center border-2 rounded-lg">
               <div>
                 <p className="text-xs text-bold">الأرباح (سنويًا)</p>
                 <p className="font-semibold text-xl mt-1">$215,000</p>
               </div>
               <Calendar className="w-9 h-9" />
-            </Card>
+            </div>
 
-            <Card className="w-full col-span-1 h-2/3 aspect-video shadow-none p-2 py-7 px-5 flex justify-between items-center">
+            <div className="w-full col-span-1 shadow-none py-7 px-5 flex justify-between items-center border-2 rounded-lg">
               <div>
                 <p className="text-xs">المهام</p>
                 <div className="flex flex-row w-full">
@@ -57,21 +59,27 @@ const Dashboard = () => {
               </div>
               <Progress value={55} className="w-[66%] mt-6" />
               <BookCheck className="w-9 h-9" />
-            </Card>
-            <Card className="w-full col-span-1 h-2/3 aspect-video shadow-none p-2 py-7 px-5 flex justify-between items-center">
+            </div>
+            <div className="w-full col-span-1  shadow-none py-7 px-5 flex justify-between items-center border-2 rounded-lg">
               <div>
                 <p className="text-xs">الطلبات المعلقة</p>
                 <p className="font-semibold text-xl mt-1">8</p>
               </div>
               <MessageCircle className="w-9 h-9" />
-            </Card>
+            </div>
           </div>
         </div>
-        <div className="w-full grid grid-cols-3 gap-6">
-          <Card className="w-full col-span-2 h-96 p-2 shadow-none">
+        <h2 className="text-2xl font-bold text-primary mt-5">
+            الرسوم البيانية
+          </h2>
+        <div className="w-full grid lg:grid-cols-3 gap-6 md:grid-cols-1 ">
+       
+          <div className="w-full col-span-2 h-96 p-2   border-2 rounded-lg">
             <ApexChart />
-          </Card>
-          <Card className="w-full col-span-1 h-96 p-2 shadow-none"></Card>
+          </div>
+          <div className="w-full col-span-1 h-96 p-2   border-2 rounded-lg">
+            <ApexChartcol />
+          </div>
         </div>
         <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
         </Card>

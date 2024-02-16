@@ -9,7 +9,7 @@ import Link from 'next/link';
 function Sidemenu() {
     return (
         <div className='  flex  h-full z-50'>
-        <div className=" w-full bg-orange-500 text-white  flex flex-col h-[100%]  ">
+        <div className=" w-full bg-primary text-white  flex flex-col h-[100%]  ">
         {/* الشعار  */}
         <div className=" uppercase flex gap-2 justify-center items-center text-xl  mt-5  font-semibold">
             <span> <Coffee /></span>

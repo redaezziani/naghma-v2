@@ -59,13 +59,13 @@ class ApexChart extends React.Component {
                     horizontalAlign: 'left'
                 },
                 fill: {
-                    colors: ['#FFA500']
+                    colors: ['#22c55e']
 
                 },
                 markers: {
-                    colors: ['#FFA500']
+                    colors: ['#22c55e']
                 },
-                colors: ['#FFA500']
+                colors: ['#22c55e']
             }
         };
     }

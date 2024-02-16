@@ -12,6 +12,7 @@ html,body{
   font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -58,6 +59,7 @@ html,body{
     --ring: 142.4 71.8% 29.2%;
   }
 }
+
 
 
  
