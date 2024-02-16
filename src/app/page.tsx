@@ -46,10 +46,15 @@ const Home = () => {
         className=" flex flex-col gap-3 justify-start items-start  w-[29rem] "
         action="">
         <h3
-          className="text-2xl font-bold"
+          className="text-2xl font-bold text-primary"
         >
-          إنشاء منتج
+            إنشاء منتج جديد
         </h3>
+        <p
+        className="text-sm text-gray-500"
+        >
+          يمكنك إنشاء منتج جديد بإدخال الاسم والسعر والكمية
+        </p>
         <div className="flex flex-col gap-3 w-full justify-start items-start">
           <Label htmlFor="name">الاسم</Label>
           <Input
