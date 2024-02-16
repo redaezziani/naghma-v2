@@ -7,7 +7,7 @@ import { MessageCircle } from 'lucide-react';
 // shad cd 
 import { Progress } from "@/components/ui/progress"
 import { UserProfile } from '@/components/my-ui/user-profile';
-const Home = () => {
+const Dashboard = () => {
   return (
     <main className="flex min-h-screen flex-col items-center relative justify-center px-5">
       <div className="top-4 fixed z-50 right-4">
@@ -76,4 +76,4 @@ const Home = () => {
   );
 }
 
-export default Home;
+export default Dashboard;
