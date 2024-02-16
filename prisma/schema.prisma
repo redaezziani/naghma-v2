@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+
+model User {
+  id         String    @id @default(uuid()) @db.VarChar(36)
+  email      String    @unique
+  name       String?
+  password   String
+  role       String    @default("user")
+  image      String?   @default("")
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+
+model ResetPasswordRequest {
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  token     String    @unique
+  expires   DateTime
+  userId    String    @db.VarChar(36)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model UserVerificationRequest {
+  id        String    @id @default(uuid()) @db.VarChar(36)
+  token     String    @unique
+  expires   DateTime
+  userId    String    @db.VarChar(36)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Product_Premium {
+  id          String   @id @default(uuid())
+  name        String
+  price       Float
+  quantity    Int
+  priceTotal  Float   @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
