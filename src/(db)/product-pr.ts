@@ -51,6 +51,20 @@ export const updateProduct = async (data: any) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
+        // fisrt find the product
+        const res = await prisma.product_Premium.findUnique({
+            where: { id: data.id },
+        });
+
+        if (!res) {
+            return {
+                status: 'error',
+                message: 'لم يتم العثور على المنتج'
+            }
+        }
+
+        
+
         const product = await prisma.product_Premium.update({
             where: { id: data.id },
             data: {
