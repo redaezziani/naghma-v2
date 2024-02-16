@@ -62,7 +62,7 @@ const Home = () => {
           <Label htmlFor="price">السعر</Label>
           <Input
             name="price"
-            type="text"
+            type="number"
             placeholder="سعر المنتج ..."
             onChange={handleChange}
           />
@@ -71,7 +71,7 @@ const Home = () => {
           <Label htmlFor="quantity">الكمية</Label>
           <Input
             name="quantity"
-            type="text"
+            type="number"
             placeholder="كمية المنتج ..."
             onChange={handleChange}
           />
