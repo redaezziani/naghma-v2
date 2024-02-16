@@ -74,7 +74,7 @@ const Dashboard = () => {
           </h2>
         <div className="w-full grid lg:grid-cols-3 gap-6 md:grid-cols-1 ">
        
-          <div className="w-full col-span-2 h-96 p-2   border-2 rounded-lg">
+          <div className="w-full lg:col-span-2 col-span-1 h-96 p-2   border-2 rounded-lg">
             <ApexChart />
           </div>
           <div className="w-full col-span-1 h-96 p-2   border-2 rounded-lg">
