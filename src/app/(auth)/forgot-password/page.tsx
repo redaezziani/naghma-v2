@@ -25,7 +25,7 @@ const ForgetPasswordPage = () => {
     setEmail(e.target.value);
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     e.preventDefault();
     setLoading(true);
   

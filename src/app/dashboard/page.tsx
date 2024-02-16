@@ -1,6 +1,5 @@
 'use client';
 import ApexChart from '@/components/my-ui/chart';
-import ApexChartcol from '@/components/my-ui/chart2';
 // icon 
 import { Card } from '@/components/ui/card';
 import { Mode } from "@/components/ui/them-mode";
@@ -10,9 +9,10 @@ import { MessageCircle } from 'lucide-react';
 // shad cd 
 import { Progress } from "@/components/ui/progress"
 import { UserProfile } from '@/components/my-ui/user-profile';
+import LineChart from '@/components/my-ui/chart-line';
 const Dashboard = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center relative justify-center px-5">
+    <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
       <div className="top-4 fixed z-50 right-4">
         <Mode />
       </div>
@@ -69,17 +69,11 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-primary mt-5">
-            الرسوم البيانية
-          </h2>
-        <div className="w-full grid lg:grid-cols-3 gap-6 md:grid-cols-1 ">
-       
-          <div className="w-full lg:col-span-2 col-span-1 h-96 p-2   border-2 rounded-lg">
+        <div className="w-full grid grid-cols-3 gap-6">
+          <Card className="w-full col-span-2 h-96 p-2 shadow-none">
             <ApexChart />
-          </div>
-          <div className="w-full col-span-1 h-96 p-2   border-2 rounded-lg">
-            <ApexChartcol />
-          </div>
+          </Card>
+          <Card className="w-full col-span-1 h-96 p-2 shadow-none"></Card>
         </div>
         <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
         </Card>

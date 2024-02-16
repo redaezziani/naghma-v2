@@ -1,6 +1,5 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
-import { secrets } from "@/(secrets)/secrets";
 
 
 export const createProduct = async (data: any) => {
@@ -43,6 +42,97 @@ interface Product {
     priceTotal?: string;
 }
 
+
+export const updateProduct = async (data: any) => {
+    try {
+        if (!data) {
+            return {
+                status: 'error',
+                message: 'لم يتم توفير البيانات'
+            }
+        }
+        const product = await prisma.product_Premium.update({
+            where: { id: data.id },
+            data: {
+                name: data.name,
+                price: data.price,
+                quantity: data.quantity,
+            },
+        });
+
+        if (!product) {
+            return {
+                status: 'error',
+                message: 'لم يتم تحديث المنتج'
+            }
+        }
+
+        return {
+            status: 'success',
+            message: 'تم تحديث المنتج بنجاح'
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const deleteProduct = async (id: number) => {
+    try {
+        if (!id) {
+            return {
+                status: 'error',
+                message: 'لم يتم توفير البيانات'
+            }
+        }
+        const product = await prisma.product_Premium.delete({
+            where: { id: String(id) },
+        });
+
+        if (!product) {
+            return {
+                status: 'error',
+                message: 'لم يتم حذف المنتج'
+            }
+        }
+
+        return {
+            status: 'success',
+            message: 'تم حذف المنتج بنجاح'
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+export const getProduct = async (id: number) => {
+    try {
+        if (!id) {
+            return {
+                status: 'error',
+                message: 'لم يتم توفير البيانات'
+            }
+        }
+        const product = await prisma.product_Premium.findUnique({
+            where: { id: String(id) },
+        });
+
+        if (!product) {
+            return {
+                status: 'error',
+                message: 'لم يتم العثور على المنتج'
+            }
+        }
+
+        return {
+            status: 'success',
+            message: 'تم العثور على المنتج',
+            data: product
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
 export const getProducts = async () => {
     try {
         const products = await prisma.product_Premium.findMany();

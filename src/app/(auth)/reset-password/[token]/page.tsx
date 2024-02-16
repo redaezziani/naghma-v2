@@ -14,7 +14,13 @@ const schema = z.object({
     password: z.string().min(8, { message: "يجب أن تكون كلمة المرور على الأقل 8 أحرف" })
 });
 
-const ResetPasswordPage = ({ params }) => {
+interface ResetPasswordPageProps {
+    params: {
+        token: string;
+    }
+}
+
+const ResetPasswordPage: React.FC<ResetPasswordPageProps> = ({ params }) => {
     const token = params.token;
     const [password, setPassword] = useState("");
 
@@ -26,7 +32,7 @@ const ResetPasswordPage = ({ params }) => {
         setPassword(e.target.value);
     }
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
         e.preventDefault();
         setLoading(true);
 

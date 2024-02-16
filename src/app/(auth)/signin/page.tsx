@@ -8,6 +8,7 @@ import { SignIn } from "@/(db)/auth";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import { LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
+import React from "react";
 
 
 const schema = z.object({
@@ -40,7 +41,7 @@ const Signin = () => {
     })
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     
     try {
       e.preventDefault();
@@ -81,9 +82,9 @@ const Signin = () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative ">
-      <div className=" w-[54rem] gap-6 flex justify-start items-center">
+      <div className=" lg:w-[54rem] gap-0 lg:gap-6 flex justify-start items-center">
         <img
-        className=" h-full md:w-96 rounded-md aspect-auto object-cover"
+        className=" h-full w-0 md:w-96 rounded-md aspect-auto object-cover"
          src="/cofee.jpeg" alt="" />
       <form
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
@@ -170,15 +171,15 @@ const Signin = () => {
             إعادة تعيينها
           </Link>
         </span>
-        <Button
-        type="submit"
-        onClick={handleSubmit}
-        isloading={loading}
-        className="w-full mt-4 py-3"
-       size={'lg'}
-        >
-          تسجيل الدخول
-        </Button>
+            <Button
+            type="submit"
+            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleSubmit(e)}
+            isloading={loading}
+            className="w-full mt-4 py-3"
+           size={'lg'}
+            >
+              تسجيل الدخول
+            </Button>
 
       </form>
       </div>
