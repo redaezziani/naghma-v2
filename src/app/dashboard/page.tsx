@@ -1,4 +1,6 @@
 'use client';
+import ApexChart from '@/components/my-ui/chart';
+// icon 
 import { Card } from '@/components/ui/card';
 import { Mode } from "@/components/ui/them-mode";
 import { Calendar } from 'lucide-react';
@@ -66,7 +68,9 @@ const Home = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-3 gap-6">
-          <Card className="w-full col-span-2 h-96 p-2 shadow-none"></Card>
+          <Card className="w-full col-span-2 h-96 p-2 shadow-none">
+            <ApexChart />
+          </Card>
           <Card className="w-full col-span-1 h-96 p-2 shadow-none"></Card>
         </div>
         <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
