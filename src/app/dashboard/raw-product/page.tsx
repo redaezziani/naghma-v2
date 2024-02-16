@@ -6,7 +6,7 @@ const RawProducts = () => {
     <div
     className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
     >
-        <nav className=" w-full fixed top-0 right-0 bg-slate-300 z-50 h-14">
+        <nav className=" w-full fixed top-0 right-0 bg-slate-300 z-40 h-14">
 
         </nav>
         <div className="flex w-full  mt-28 flex-col gap-3 justify-start items-start">
