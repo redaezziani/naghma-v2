@@ -24,12 +24,18 @@ ChartJS.register(
 );
 
 const salesData = [
-  { month: "يناير", sales: 70 },
-  { month: "فبراير", sales: 100 },
-  { month: "مارس", sales: 50 },
+  { month: "يناير", sales: 100 },
+  { month: "فبراير", sales: 300 },
+  { month: "مارس", sales: 60 },
   { month: "أبريل", sales: 80 },
   { month: "مايو", sales: 180 },
-  { month: "يونيو", sales: 900 },
+  { month: "يونيو", sales: 100 },
+  { month: "يوليو", sales: 80 },
+  { month: "أغسطس", sales: 180 },
+  { month: "سبتمبر", sales: 100 },
+  { month: "أكتوبر", sales: 80 },
+  { month: "نوفمبر", sales: 180 },
+  { month: "ديسمبر", sales: 100 },
 ];
 
 const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true }) => {
@@ -96,7 +102,9 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
 
   return (
     // @ts-ignore
-    <Line data={data} options={options}></Line>
+    <Line
+    style={{width: "100%", height: "100%"}}
+     data={data} options={options}></Line>
   );
 }
 

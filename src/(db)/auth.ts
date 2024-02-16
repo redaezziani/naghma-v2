@@ -40,7 +40,7 @@ export const SignIn = async (credentials: UserCredentials) => {
         cookies().set('token', token, {
             path: '*',
             maxAge: 60 * 60 * 24 * 7,
-            secure: true,
+            httpOnly:false
         });
         return { success: 'تم تسجيل الدخول بنجاح.' };
     } catch (error) {
