@@ -17,7 +17,6 @@ model User {
   password   String
   role       String    @default("user")
   image      String?   @default("")
-  isVerified Boolean   @default(false)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime?

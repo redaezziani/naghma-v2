@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
-import { Loader2 } from 'lucide-react';
+import { Loader } from 'lucide-react';
 
 import { cn } from "@/lib/utils"
 
@@ -52,8 +52,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isloading ? 
-        <div className="flex items-center justify-center">
-          <Loader2 className="w-5 h-5 animate-spin duration-500 ease-in-out transition-all" />
+        <div className="flex items-center gap-3 justify-center">
+          <Loader className="w-5 h-5 animate-spin duration-500 ease-in-out transition-all" />
             تحميل ...
         </div>
         : props.children}
