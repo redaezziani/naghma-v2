@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 
-
 class ApexChart extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +31,12 @@ class ApexChart extends React.Component {
                 },
                 title: {
                     text: 'تحليل أساسي للأسهم',
-                    align: ' center'
+                    align: 'center',
+                    margin: 20,
+                    style: {
+                        fontSize: '20px',
+                        fontFamily: 'Arial, sans-serif'
+                    }
                 },
                 subtitle: {
                     text: 'حركة الأسعار',
@@ -41,9 +45,15 @@ class ApexChart extends React.Component {
                 labels: exampleDates,
                 xaxis: {
                     type: 'datetime',
+                    labels: {
+                        style: {
+                            fontFamily: 'Arial, sans-serif'
+                        }
+                    }
                 },
                 yaxis: {
-                    opposite: true
+                    opposite: true,
+                   
                 },
                 legend: {
                     horizontalAlign: 'left'
@@ -54,20 +64,17 @@ class ApexChart extends React.Component {
                 },
                 markers: {
                     colors: ['#FFA500']
-             },
-             colors:['#FFA500']
-                
-            },
-            
-         
+                },
+                colors: ['#FFA500']
+            }
         };
     }
 
     render() {
         return (
-            <div className=' w-fit'>
+            <div className='w-full'>
                 <div id="chart">
-                    <ReactApexChart  options={this.state.options} series={this.state.series} type="area" height={350} />
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
                 </div>
                 <div id="html-dist"></div>
             </div>

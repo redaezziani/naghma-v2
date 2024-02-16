@@ -81,6 +81,10 @@ const Signin = () => {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative ">
+      <div className=" w-[54rem] gap-6 flex justify-start items-center">
+        <img
+        className=" h-full md:w-96 rounded-md aspect-auto object-cover"
+         src="/cofee.jpeg" alt="" />
       <form
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
       action="">
@@ -177,6 +181,7 @@ const Signin = () => {
         </Button>
 
       </form>
+      </div>
     </main>  
   )
 }
