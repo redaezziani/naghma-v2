@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 import { Mode } from "@/components/ui/them-mode";
+import { toast } from "sonner";
 const Home = () => {
   const [product, setProduct] = useState({ name: "", price: 0, quantity: 0 });
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ const Home = () => {
       };
       console.log(data);
       const res = await createProduct(product);
-      console.log(res);
+      toast.success("تم إنشاء المنتج بنجاح");
     } catch (error) {
       console.log(error); 
     }
