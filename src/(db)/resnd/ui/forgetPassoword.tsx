@@ -1,4 +1,3 @@
-
 import {
   Body,
   Container,
@@ -27,7 +26,11 @@ const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailPr
     <Html>
       <Head />
       <Tailwind>
-        <Body className="bg-white my-auto text-left mx-auto font-sans px-2">
+        <Body className="bg-white text-right  my-auto  mx-auto font-sans px-2"
+        style={{
+          direction: "rtl",
+        }}
+        >
           <Container className="border border-solid border-gray-300 rounded my-10 mx-auto p-8 w-[55rem]">
             <Row>
               <Img
@@ -41,34 +44,34 @@ const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailPr
             <Row>
               <Column>
                 <Heading className="text-3xl font-bold text-gray-900">
-                  Hello, {username}
+                  مرحبًا، {username}
                 </Heading>
               </Column>
             </Row>
             <Row>
               <Column>
                 <Text className="text-gray-900 mt-4">
-                  We received a request to reset your password. If you did not make this request, you can safely ignore this email.
+                  لقد تلقينا طلبًا لإعادة تعيين كلمة المرور الخاصة بك. إذا لم تقم بهذا الطلب، يمكنك تجاهل هذا البريد الإلكتروني بأمان.
                 </Text>
               </Column>
             </Row>
             <Row>
               <Column>
                 <Link className="text-white bg-[#ff5420] rounded px-4 py-2 mt-2 inline-block" href={resetPasswordLink}>
-                  Reset Password
+                  إعادة تعيين كلمة المرور
                 </Link>
               </Column>
             </Row>
             <Row>
               <Column>
                 <Text className="text-gray-600 text-sm">
-                  Please ignore this email if you did not request a password reset.
+                  يرجى تجاهل هذا البريد الإلكتروني إذا لم تطلب إعادة تعيين كلمة المرور.
                 </Text>
               </Column>
             </Row>
             <Row>
               <Column>
-                <Text className="text-gray-900 font-semibold mt-4">Thank you,</Text>
+                <Text className="text-gray-900 font-semibold mt-4">شكرًا لك،</Text>
               </Column>
             </Row>
             <Row>
