@@ -1,5 +1,4 @@
 'use client';
-import ApexChart from '@/components/my-ui/chart';
 // icon 
 import { Card } from '@/components/ui/card';
 import { Mode } from "@/components/ui/them-mode";
@@ -9,9 +8,10 @@ import { MessageCircle } from 'lucide-react';
 // shad cd 
 import { Progress } from "@/components/ui/progress"
 import { UserProfile } from '@/components/my-ui/user-profile';
+import LineChart from '@/components/my-ui/chart-line';
 const Dashboard = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center relative justify-center px-5">
+    <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
       <div className="top-4 fixed z-50 right-4">
         <Mode />
       </div>
@@ -69,7 +69,10 @@ const Dashboard = () => {
         </div>
         <div className="w-full grid grid-cols-3 gap-6">
           <Card className="w-full col-span-2 h-96 p-2 shadow-none">
-            <ApexChart />
+            <LineChart
+            tension={0.6}
+            isTransparent={true}
+            />
           </Card>
           <Card className="w-full col-span-1 h-96 p-2 shadow-none"></Card>
         </div>

@@ -69,3 +69,7 @@ html,body{
     @apply bg-background text-foreground;
   }
 }
+
+.text{
+  color: hsl(161, 94%, 30%);
+}
