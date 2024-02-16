@@ -80,6 +80,7 @@ const Home = () => {
             isloading={loading}
             className="w-full"
             onClick={create}
+            disabled={loading}
           >
             إنشاء المنتج
           </Button>

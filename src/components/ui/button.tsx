@@ -54,7 +54,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {isloading ? 
         <div className="flex items-center justify-center">
           <Loader2 className="w-5 h-5 animate-spin duration-500 ease-in-out transition-all" />
-          loading ...
+            تحميل ...
         </div>
         : props.children}
       </Comp>
