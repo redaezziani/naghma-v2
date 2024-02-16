@@ -41,10 +41,10 @@ const Signin = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
+    
     try {
+      e.preventDefault();
+      setLoading(true);
       const result = schema.parse(data);
       setError({ email: "", password: "" });
       const response:any = await SignIn(result);
