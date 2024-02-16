@@ -28,17 +28,11 @@ export default function RootLayout({
       <Sidemenu/>
       </aside>
       <div className="w-full relative overflow-auto col-span-4 ">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        
           {children}
           <Toaster
             position="top-right"
           />
-        </ThemeProvider>
       </div>
     </div>
   );

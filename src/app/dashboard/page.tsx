@@ -6,21 +6,18 @@ import { BookCheck } from 'lucide-react';
 import { MessageCircle } from 'lucide-react';
 // shad cd 
 import { Progress } from "@/components/ui/progress"
+import { UserProfile } from '@/components/my-ui/user-profile';
 const Home = () => {
   return (
     <main className="flex min-h-screen flex-col items-center relative justify-center px-5">
       <div className="top-4 fixed z-50 right-4">
         <Mode />
       </div>
-
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
       >
-
-
-
-        <nav className=" w-full fixed top-0 right-0 bg-slate-300 z-40 h-14">
-
+        <nav className=" w-full backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
+          <UserProfile />
         </nav>
         <div className="flex w-full  mt-20 flex-col gap-3 justify-start items-start">
           <h1 className="text-2xl font-bold text-primary">
