@@ -1,4 +1,3 @@
-'use server';
 import { prisma } from "@/(secrets)/secrets";
 
 
@@ -10,7 +9,7 @@ export const createProduct = async (data: any) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.primaryProduct.create({
+        const product = await prisma.finalProduct.create({
             data: {
                 name: data.name,
                 price: data.price,
@@ -32,16 +31,7 @@ export const createProduct = async (data: any) => {
     } catch (err) {
         console.log(err);
     }
-};
-
-
-interface Product {
-    name: string;
-    price: string;
-    quantity: string;
-    priceTotal?: string;
 }
-
 
 export const updateProduct = async (data: any) => {
     try {
@@ -52,20 +42,18 @@ export const updateProduct = async (data: any) => {
             }
         }
         // fisrt find the product
-        const res = await prisma.primaryProduct.findUnique({
+        const res = await prisma.finalProduct.findUnique({
             where: { id: data.id },
         });
 
         if (!res) {
             return {
                 status: 'error',
-                message: 'لم يتم العثور على المنتج'
+                message: 'المنتج غير موجود'
             }
         }
 
-        
-
-        const product = await prisma.primaryProduct.update({
+        const product = await prisma.finalProduct.update({
             where: { id: data.id },
             data: {
                 name: data.name,
@@ -90,7 +78,7 @@ export const updateProduct = async (data: any) => {
     }
 }
 
-export const deleteProduct = async (id: number) => {
+export const deleteProduct = async (id: string) => {
     try {
         if (!id) {
             return {
@@ -98,8 +86,8 @@ export const deleteProduct = async (id: number) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.primaryProduct.delete({
-            where: { id: String(id) },
+        const product = await prisma.finalProduct.delete({
+            where: { id: id },
         });
 
         if (!product) {
@@ -118,8 +106,25 @@ export const deleteProduct = async (id: number) => {
     }
 }
 
+export const getProducts = async () => {
+    try {
+        const products = await prisma.finalProduct.findMany();
+        if (!products) {
+            return {
+                status: 'error',
+                message: 'لم يتم العثور على المنتجات'
+            }
+        }
+        return {
+            status: 'success',
+            data: products
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
 
-export const getProduct = async (id: number) => {
+export const getProduct = async (id: string) => {
     try {
         if (!id) {
             return {
@@ -127,8 +132,8 @@ export const getProduct = async (id: number) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.primaryProduct.findUnique({
-            where: { id: String(id) },
+        const product = await prisma.finalProduct.findUnique({
+            where: { id: id },
         });
 
         if (!product) {
@@ -147,22 +152,3 @@ export const getProduct = async (id: number) => {
         console.log(err);
     }
 }
-export const getProducts = async () => {
-    try {
-        const products = await prisma.primaryProduct.findMany();
-        if (!products) {
-            return {
-                status: 'error',
-                message: 'لم يتم العثور على منتجات'
-            }
-        }
-        
-        return {
-            status: 'success',
-            message: 'تم العثور على المنتجات',
-            data: products
-        }
-    } catch (err) {
-        console.log(err);
-    }
-};
