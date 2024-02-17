@@ -11,6 +11,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Menu } from "lucide-react";
+import { UserProfile } from '@/components/my-ui/user-profile';
+
 
 
 export const metadata: Metadata = {
@@ -45,6 +47,12 @@ export default function RootLayout({
 
 
       </div>
+      {/*  */}
+      <nav className=" w-full backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
+          <UserProfile />
+        </nav>
+
+        {/*  */}
       <aside className="w-full bg-primary-foreground z-50 h-screen hidden lg:block lg:col-span-1 border-r border sticky top-0 right-0">
         <Sidemenu />
       </aside>

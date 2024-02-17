@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <div
-      className=" w-full min-h-screen px-6 py-3 flex-col   flex justify-start items-start"
+      className=" w-full min-h-screen px-6 py-3 flex-col   flex justify-start items-start mt-20 "
     >
         {children}
         

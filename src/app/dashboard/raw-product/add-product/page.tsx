@@ -51,7 +51,7 @@ const AddProductPage = () => {
 
   return (
     <div
-      className='flex flex-col gap-4 px-6 py-3  w-full justify-start items-start'
+      className='flex flex-col gap-4 px-6 py-3  w-full justify-start items-start mt-20'
     >
       <h1
         className='text-2xl text-primary font-bold'
