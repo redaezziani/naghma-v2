@@ -14,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <div className="flex w-full">
+
        <Dialog >
+    
                 {children}
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

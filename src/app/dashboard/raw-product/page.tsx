@@ -85,6 +85,7 @@ const RawProducts = () => {
         <Link href='/dashboard/raw-product/add-product'>إضافة منتج</Link>
       </Button>
       <DataTable columns={columns} data={products} />
+      
     </div>
   );
 };
