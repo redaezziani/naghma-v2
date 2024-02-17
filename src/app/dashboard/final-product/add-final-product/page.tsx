@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import React from 'react'
 import { toast } from 'sonner';
 
-const AddProductPage = () => {
+const AddfinalProduct = () => {
   const [data , setData] = React.useState({
     name: '',
     price: 0,
@@ -57,12 +57,10 @@ const AddProductPage = () => {
       <h1
         className='text-2xl text-primary font-bold'
       >
-      إضافة منتج جديد
-      {' '}
-      ( varg )  
+        إضافة منتج جديد
       </h1>
       <p>
-        هذه هي صفحة إضافة منتج جديد
+      هذه الصفحة مخصصة لإضافة المنتج النهائي
       </p>
       <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
         <Label
@@ -119,4 +117,4 @@ const AddProductPage = () => {
   )
 }
 
-export default AddProductPage
+export default AddfinalProduct

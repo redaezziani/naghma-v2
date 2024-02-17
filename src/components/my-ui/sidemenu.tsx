@@ -28,7 +28,7 @@ function Sidemenu() {
                 <Package  />
                 المنتج الاولي
             </Link>
-            <Link href="#" className=" font-semibold flex items-center gap-2">
+            <Link href="/dashboard/final-product" className=" font-semibold flex items-center gap-2">
                 <PackageOpen />
                  المنتج النهائي
             </Link>
