@@ -78,6 +78,7 @@ const RawProducts = () => {
     w-2/3
     px-6 py-3 relative">
       <DataTable columns={columns} data={products} />
+      
     </div>
   );
 };
