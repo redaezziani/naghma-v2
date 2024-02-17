@@ -17,9 +17,7 @@ const Dashboard = () => {
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
       >
-        <nav className=" w-full backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
-          <UserProfile />
-        </nav>
+       
         <div className="flex w-full  mt-20 flex-col gap-3 justify-start items-start">
           <h1 className="text-2xl font-bold text-primary">
             الرئيسية
