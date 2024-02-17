@@ -6,6 +6,7 @@ import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { DialogTrigger } from '@/components/ui/dialog';
 import { getProducts, deleteProduct } from '@/(db)/product-pr';
+import { Button } from '@/components/ui/button';
 
 const RawProducts = () => {
   const [products, setProducts] = useState([]);
@@ -62,7 +63,7 @@ const RawProducts = () => {
           />
         </DialogTrigger>
 
-        <Link href={`/dashboard/category/edit?id=${row.getValue('id')}`}>
+        <Link href={`/dashboard/raw-product/update-product/${row.getValue('id')}`}>
           <Cog
             className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105 hover:rotate-180 transition-all duration-300 ease-in-out'
             size={16} />
@@ -75,8 +76,14 @@ const RawProducts = () => {
   }, []);
   return (
     <div className=" mt-20
+    flex
+    flex-col
+     justify-start items-start gap-7
     w-2/3
     px-6 py-3 relative">
+      <Button>
+        <Link href='/dashboard/raw-product/add-product'>إضافة منتج</Link>
+      </Button>
       <DataTable columns={columns} data={products} />
     </div>
   );

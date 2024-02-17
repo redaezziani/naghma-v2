@@ -86,7 +86,7 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
         <div className="w-full">
             <div className="flex items-center py-4 lowercase">
                 <Input
-                    placeholder="Filter..."
+                    placeholder="تصفية..."
                     value={(table.getColumn(columns[1]?.accessorKey)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn(columns[1]?.accessorKey)?.setFilterValue(event.target.value)
@@ -96,10 +96,10 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                 <DropdownMenu
                 >
                     <DropdownMenuTrigger
-                    className=" rounded-md p-1"
-                    asChild>
+                        className=" rounded-md p-1"
+                        asChild>
                         <button className="ml-auto flex items-center">
-                            Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+                            الأعمدة <ChevronDownIcon className="ml-2 h-4 w-4" />
                         </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -125,7 +125,7 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
             </div>
             <div className="rounded-md border">
                 <Table
-                className=" min-h-48"
+                    className=" min-h-48"
                 >
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -133,8 +133,8 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                                 {headerGroup.headers.map((header) => {
                                     return (
                                         <TableHead
-                                        className={`${header.column.id === 'id' ? 'hidden' : ''}`}
-                                        key={header.id}>
+                                            className={`${header.column.id === 'id' ? 'hidden' : ''}`}
+                                            key={header.id}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -169,13 +169,13 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                             ))
                         ) : (
                             <TableRow
-                            className="w-full "
+                                className="w-full "
                             >
                                 <TableCell
                                     colSpan={columns.length}
                                     className="h-10  text-center flex justify-center items-center w-full"
                                 >
-                                    Date not found
+                                    لم يتم العثور على بيانات
                                 </TableCell>
                             </TableRow>
                         )}
@@ -185,8 +185,8 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
 
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                    {table.getFilteredSelectedRowModel().rows.length} of{" "}
-                    {table.getFilteredRowModel().rows.length} row(s) selected.
+                    {table.getFilteredSelectedRowModel().rows.length} من{" "}
+                    {table.getFilteredRowModel().rows.length} صف محدد.
                 </div>
                 <div className="space-x-2">
                     <Button
@@ -195,7 +195,7 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                         onClick={() => table.previousPage()}
                         disabled={!table.getCanPreviousPage()}
                     >
-                        Previous
+                        السابق
                     </Button>
                     <Button
                         variant="outline"
@@ -203,7 +203,7 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                         onClick={() => table.nextPage()}
                         disabled={!table.getCanNextPage()}
                     >
-                        Next
+                        التالي
                     </Button>
                 </div>
             </div>
