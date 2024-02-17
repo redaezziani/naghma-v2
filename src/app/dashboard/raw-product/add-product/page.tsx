@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
+import { toast } from 'sonner';
 
 const AddProductPage = () => {
   const [data , setData] = React.useState({
@@ -38,7 +39,7 @@ const AddProductPage = () => {
         price: 0,
         quantity: 0
       })
-      alert(res.message)
+      toast.success('تم إضافة المنتج بنجاح')
 
     } catch (error) {
       console.log(error)
