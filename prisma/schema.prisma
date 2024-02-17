@@ -43,7 +43,8 @@ model UserVerificationRequest {
   deletedAt DateTime?
 }
 
-model Product_Premium {
+
+model PrimaryProduct {
   id          String   @id @default(uuid())
   name        String
   price       Float
@@ -52,3 +53,16 @@ model Product_Premium {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model FinalProduct {
+  id          String   @id @default(uuid())
+  name        String
+  price       Float
+  quantity    Int
+  priceTotal  Float   @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+

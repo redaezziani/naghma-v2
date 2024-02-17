@@ -10,7 +10,7 @@ export const createProduct = async (data: any) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.product_Premium.create({
+        const product = await prisma.primaryProduct.create({
             data: {
                 name: data.name,
                 price: data.price,
@@ -52,7 +52,7 @@ export const updateProduct = async (data: any) => {
             }
         }
         // fisrt find the product
-        const res = await prisma.product_Premium.findUnique({
+        const res = await prisma.primaryProduct.findUnique({
             where: { id: data.id },
         });
 
@@ -65,7 +65,7 @@ export const updateProduct = async (data: any) => {
 
         
 
-        const product = await prisma.product_Premium.update({
+        const product = await prisma.primaryProduct.update({
             where: { id: data.id },
             data: {
                 name: data.name,
@@ -98,7 +98,7 @@ export const deleteProduct = async (id: number) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.product_Premium.delete({
+        const product = await prisma.primaryProduct.delete({
             where: { id: String(id) },
         });
 
@@ -127,7 +127,7 @@ export const getProduct = async (id: number) => {
                 message: 'لم يتم توفير البيانات'
             }
         }
-        const product = await prisma.product_Premium.findUnique({
+        const product = await prisma.primaryProduct.findUnique({
             where: { id: String(id) },
         });
 
@@ -149,33 +149,18 @@ export const getProduct = async (id: number) => {
 }
 export const getProducts = async () => {
     try {
-        const products = await prisma.product_Premium.findMany();
+        const products = await prisma.primaryProduct.findMany();
         if (!products) {
             return {
                 status: 'error',
                 message: 'لم يتم العثور على منتجات'
             }
         }
-        const listProducts: Product[] = [];
-        products.forEach((product) => {
-            listProducts.push({
-                name: product.name,
-                price: `${product.price} درهم`,
-                quantity: `${product.quantity} كجم`,
-                priceTotal: `${product.price * product.quantity} درهم`
-            });
-        });
-
-        const TotalPrice = listProducts.reduce((acc, product) => {
-            return acc + parseInt(product.priceTotal || '0');
-        }
-            , 0);
-
+        
         return {
             status: 'success',
             message: 'تم العثور على المنتجات',
-            data: listProducts,
-            TotalPrice: `${TotalPrice} درهم`
+            data: products
         }
     } catch (err) {
         console.log(err);
