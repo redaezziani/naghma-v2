@@ -29,19 +29,15 @@ export default function RootLayout({
     <div
       className="w-full min-h-screen grid grid-cols-5 relative place-content-start"
     >
-      <div className="top-4 fixed z-50 right-4">
+      <div className="top-4 fixed z-50 right-4 lg:hidden block">
         <Sheet>
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
           <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Are you absolutely sure?</SheetTitle>
-              <SheetDescription>
-                This action cannot be undone. This will permanently delete your account
-                and remove your data from our servers.
-              </SheetDescription>
-            </SheetHeader>
+            
+              <Sidemenu />
+           
           </SheetContent>
         </Sheet>
 
