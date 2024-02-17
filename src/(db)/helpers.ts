@@ -66,3 +66,40 @@ export const getBestSellingProductPrice = async (data: BestPrice[]) => {
         };
     }
 };
+
+
+
+export const getTotalPrimaryProductPrice = async () => {
+    try {
+        const products = await prisma.primaryProduct.findMany();
+        if (!products || products.length === 0) {
+            return {
+                status: 'error',
+                message: 'لم يتم العثور على البيانات'
+            };
+        }
+
+        let total = 0;
+        for (let i = 0; i < products.length; i++) {
+            total += products[i].price* products[i].quantity;
+        }
+
+
+        if (!total) {
+            return {
+                status: 'error',
+                message: 'لم يتم العثور على البيانات'
+            };
+        }
+
+        return {
+            status: 'success',
+            message: 'تم العثور على البيانات بنجاح',
+            data: total
+        };
+    } catch (err) {
+        console.log(err);
+       
+    }
+}
+
