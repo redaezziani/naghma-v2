@@ -74,13 +74,13 @@ const Dashboard = () => {
         <div className="w-full grid grid-cols-4 gap-6">
           <Card className="w-full h-fit flex justify-center items-center col-span-4  lg:col-span-2 lg:h-96 p-2 shadow-none">
             <LineChart
-            color='22, 100%, 50%'
+            color='267, 100%, 50%'
             tension={0.4}
             />
           </Card>
           <Card className="w-full col-span-4  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
             <BarChart
-            color='22, 100%, 50%' />
+            color='267, 100%, 50%' />
           </Card>
         </div>
         <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
