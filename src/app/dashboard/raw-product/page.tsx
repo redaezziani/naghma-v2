@@ -15,7 +15,7 @@ const RawProducts = () => {
     try {
       const res = await getProducts();
       setProducts(res.data);
-      setTotal(res.total_price);
+      setTotal(res.total_price);a
     } catch (error) {
       console.log(error);
     }
