@@ -17,7 +17,7 @@ function Profil() {
         <Input
           type='text'
           placeholder='الاسم'
-          className='w-full border-primary border-2 rounded-lg p-2' 
+          className='w-full border-primary  rounded-lg p-2' 
         />
         <label className=' font-semibold'>
           البريد الالكتروني
@@ -25,7 +25,7 @@ function Profil() {
         <Input
           type='email'
           placeholder='البريد الالكتروني'
-          className='w-full border-primary border-2 rounded-lg p-2'
+          className='w-full border-primary rounded-lg p-2'
         />
         <h2 className='text-lg font-semibold mt-5 text-primary'>
           تغيير كلمة المرور
@@ -36,7 +36,7 @@ function Profil() {
         <Input
           type='password'
           placeholder='كلمة المرور'
-          className='w-full border-primary border-2 rounded-lg p-2'
+          className='w-full border-primary rounded-lg p-2'
         />
         <label className=' font-semibold'>
           تأكيد كلمة المرور
@@ -44,7 +44,7 @@ function Profil() {
         <Input
           type='password'
           placeholder='تأكيد كلمة المرور'
-          className='w-full border-primary border-2 rounded-lg p-2'
+          className='w-full border-primary  rounded-lg p-2'
         />
 
         </div>
