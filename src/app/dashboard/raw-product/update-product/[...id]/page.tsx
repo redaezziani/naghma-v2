@@ -4,15 +4,15 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
-
+import { toast } from 'sonner';
 const UpdateProductPage = ({...props}) => {
   const {params} = props
+  const [product , setProduct] = React.useState({})
   const [data , setData] = React.useState({
     name: '',
     price: 0,
     quantity: 0
   })
-  const [product , setProduct] = React.useState({})
   const handelProduct = async ()=>{
     const res = await getProduct(params.id[0])
     if (res.status === 'error') {
@@ -47,7 +47,7 @@ const UpdateProductPage = ({...props}) => {
         alert(res.message)
         return
       }
-      alert(res.message)
+      toast.success('تم تحديث المنتج بنجاح')
     } catch (error) {
       console.log(error)
     }

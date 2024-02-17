@@ -41,27 +41,30 @@ const RawProducts = () => {
     },
     {
       accessorKey: 'price',
-      header: 'السعر',
-      cell: ({ row }) => <div>{row.getValue('price')}</div>,
+      header: 'السعر (د.م)',
+      cell: ({ row }) => <div>{row.getValue('price')} د.م</div>,
     },
     {
       accessorKey: 'quantity',
       header: 'الكمية',
-      cell: ({ row }) => <div>{row.getValue('quantity')}</div>,
+      cell: ({ row }) => <div>{row.getValue('quantity')} كجم </div>,
+    },
+    {
+      accessorKey: 'total',
+      header: 'المجموع',
+      cell: ({ row }) => <div>{row.getValue('quantity') * row.getValue('price')}</div>,
     },
     {
 
       accessorKey: 'action',
       header: 'إجراء',
       cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
-        <DialogTrigger asChild>
           <Trash
             onClick={() => handleDelete(row.getValue('id'))}
             className='cursor-pointer text-muted-foreground hover:text-secondary-foreground hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
             size={16}
 
           />
-        </DialogTrigger>
 
         <Link href={`/dashboard/raw-product/update-product/${row.getValue('id')}`}>
           <Cog
@@ -79,13 +82,14 @@ const RawProducts = () => {
     flex
     flex-col
      justify-start items-start gap-7
-    w-2/3
+     w-full
+    lg:w-2/3
     px-6 py-3 relative">
       <Button>
         <Link href='/dashboard/raw-product/add-product'>إضافة منتج</Link>
       </Button>
       <DataTable columns={columns} data={products} />
-      
+
     </div>
   );
 };
