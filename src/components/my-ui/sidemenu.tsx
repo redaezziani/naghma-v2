@@ -24,7 +24,7 @@ function Sidemenu() {
                 لوحة القيادة
 
             </Link>
-            <Link href="dashboard/raw-product" className=" font-semibold flex items-center gap-2">
+            <Link href="/dashboard/raw-product" className=" font-semibold flex items-center gap-2">
                 <Package  />
                 المنتج الاولي
             </Link>
