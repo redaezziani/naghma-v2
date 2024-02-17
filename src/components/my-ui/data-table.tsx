@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export type DataItem = Record<string, any>;
 
@@ -29,6 +29,7 @@ interface DataTableProps {
     data: DataItem[];
     columns: ColumnDef<DataItem>[];
     loading?: boolean;
+    total ?: number;
 }
 
 export type Cell<T = any> = {
@@ -57,7 +58,7 @@ export type Row<T = any> = {
     getValue: (accessorKey: keyof T) => T[keyof T];
 };
 
-export function DataTable({ data, columns, loading = false }: DataTableProps) {
+export function DataTable({ data, columns, loading = false, total=0 }: DataTableProps) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -180,6 +181,16 @@ export function DataTable({ data, columns, loading = false }: DataTableProps) {
                             </TableRow>
                         )}
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TableCell colSpan={3}>
+                                السعر الإجمالي
+                            </TableCell>
+                            <TableCell className="text-right">
+                                {total} د.م
+                            </TableCell>
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </div>
 

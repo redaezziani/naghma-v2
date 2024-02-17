@@ -160,7 +160,8 @@ export const getProducts = async () => {
         return {
             status: 'success',
             message: 'تم العثور على المنتجات',
-            data: products
+            data: products,
+            total_price: products.reduce((acc, product) => acc + (product.price * product.quantity), 0)
         }
     } catch (err) {
         console.log(err);

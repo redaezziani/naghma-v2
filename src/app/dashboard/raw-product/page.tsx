@@ -10,10 +10,12 @@ import { Button } from '@/components/ui/button';
 
 const RawProducts = () => {
   const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
   const handelProducts = async () => {
     try {
       const res = await getProducts();
       setProducts(res.data);
+      setTotal(res.total_price);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +24,12 @@ const RawProducts = () => {
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteProduct(id);
-      console.log(res);
+      if (res.status === 'error') {
+        alert(res.message);
+        return;
+      }
+      setProducts(products.filter((product) => product.id !== id));
+
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +59,7 @@ const RawProducts = () => {
     {
       accessorKey: 'total',
       header: 'المجموع',
-      cell: ({ row }) => <div>{row.getValue('quantity') * row.getValue('price')}</div>,
+      cell: ({ row }) => <div>{row.getValue('quantity') * row.getValue('price')} د.م</div>,
     },
     {
 
@@ -76,6 +83,7 @@ const RawProducts = () => {
   ];
   useEffect(() => {
     handelProducts();
+    
   }, []);
   return (
     <div className=" mt-20
@@ -88,8 +96,10 @@ const RawProducts = () => {
       <Button>
         <Link href='/dashboard/raw-product/add-product'>إضافة منتج</Link>
       </Button>
-      <DataTable columns={columns} data={products} />
-
+      <DataTable
+      total = {total}
+      columns={columns} data={products} />
+       
     </div>
   );
 };
