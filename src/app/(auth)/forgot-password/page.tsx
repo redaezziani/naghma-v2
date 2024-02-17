@@ -35,19 +35,18 @@ const ForgetPasswordPage = () => {
       const response = await ForgetPassword(result.email);
         
       if (response.type === "error") {
-        toast.error(response.message, {
-          description: "حدث خطأ",
-          action: {
-            label: "تراجع",
-            onClick: () => console.log("تراجع"),
+        toast.error('حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.',{
+          style: {
+            background: "rgb(253 236 234)",
+            color: "rgb(185 28 28)",
           },
         });
       } else {
-        toast.success(response.message, {
-          description: "تم بنجاح",
-          action: {
-            label: "تراجع",
-            onClick: () => console.log("تراجع"),
+        toast.success('تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.',{
+          style: {
+
+            background: "rgb(209 250 229)",
+            color: "rgb(5 150 105)",
           },
         });
         
@@ -68,7 +67,7 @@ const ForgetPasswordPage = () => {
 
 
   return (
-    <main className="flex min-h-screen px-2 flex-col items-center justify-center relative ">
+    <main className="flex  min-h-screen px-2 flex-col items-center justify-center relative ">
       <div
        className="absolute top-4 right-4"
       >
@@ -93,7 +92,7 @@ const ForgetPasswordPage = () => {
         <div className="w-full mt-4 flex flex-col gap-2 justify-start items-start">
           <label
           htmlFor="email"
-          className="text-xs text-gray-800 dark:text-gray-100 tracking-tight"
+          className="text-sm font-bold text-gray-800 dark:text-gray-100 tracking-tight"
           >
             البريد الإلكتروني
           </label>
@@ -101,6 +100,7 @@ const ForgetPasswordPage = () => {
           type="email"
           name="email"
           id="email"
+          className=" py-5"
           value={email}
           onChange={handleChange}
           placeholder="أدخل بريدك الإلكتروني ..."
@@ -108,7 +108,7 @@ const ForgetPasswordPage = () => {
           {error && <p className="text-xs text-[#ff5420] dark:text-[#ff5420]">{error}</p>}
         </div>
         <span
-        className="text-xs w-full text-gray-800 dark:text-gray-100 tracking-tight hover:underline"
+        className="text-xs w-full flex justify-start items-center gap-2 text-gray-800 dark:text-gray-100 tracking-tight hover:underline"
         >
          العودة إلى
           <Link
@@ -122,7 +122,7 @@ const ForgetPasswordPage = () => {
         type="submit"
         onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleSubmit(e)}
         isloading={loading}
-        className="w-full mt-4"
+        className="w-full mt-4 py-5"
         size={"default"}
         >
           إعادة تعيين كلمة المرور

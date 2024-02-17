@@ -2,7 +2,7 @@
 import { createHash } from 'crypto';
 import { prisma } from '@/(secrets)/secrets';
 import { signinSchema } from './shema/signin';
-import { forgetPassoword, generateToken } from './resnd/core';
+import { forgetPassoword, generateToken, verifyToken } from './resnd/core';
 import { cookies } from "next/headers"
 import { revalidatePath } from 'next/cache';
 interface UserCredentials {
@@ -118,6 +118,35 @@ export const ResetPassword = async (token: string, password: string) => {
         return { type: 'error', message: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
     }
 }
+
+
+export const ChangePassword = async ( newPassword: string) => {
+    try {
+        const payload = verifyToken();
+
+        const { id, password } = payload;
+        if (!id || !password) {
+            return { type: 'error', message: 'الرمز غير صالح.' };
+        }
+        const hashedPassword = createHash('sha256').update
+        (newPassword).digest('hex');
+        await prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                password: hashedPassword,
+            },
+        });
+        
+        return { type: 'success', message: 'تم تغيير كلمة المرور بنجاح.' };
+    }
+    catch (error) {
+        console.error('خطأ أثناء تغيير كلمة المرور:', error);
+        return { type: 'error', message: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
+    }
+}   
+
 
 export const SignOut = async () => {
     cookies().set('token', '', {
