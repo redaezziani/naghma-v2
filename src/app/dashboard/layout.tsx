@@ -34,7 +34,7 @@ export default function RootLayout({
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
-          <SheetContent>
+          <SheetContent className=" bg-primary">
             
               <Sidemenu />
            
