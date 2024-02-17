@@ -1,5 +1,5 @@
 'use client';
-import { updateProduct } from '@/(db)/product-pr';
+import { updateProduct, getProduct } from '@/(db)/product-pr';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -12,6 +12,15 @@ const UpdateProductPage = ({...props}) => {
     price: 0,
     quantity: 0
   })
+  const [product , setProduct] = React.useState({})
+  const handelProduct = async ()=>{
+    const res = await getProduct(params.id[0])
+    if (res.status === 'error') {
+      alert(res.message)
+      return
+    }
+    setProduct(res.data)
+  }
   const [isLoading , setIsLoading] = React.useState(false)
   const handelChangeName = (e)=>{
     // lets check if the type is number insert it as number
@@ -48,6 +57,9 @@ const UpdateProductPage = ({...props}) => {
 
   }
 
+  React.useEffect(()=>{
+    handelProduct()
+  },[])
   return (
     <div
       className='flex flex-col gap-4  w-full justify-start items-start'
@@ -55,7 +67,7 @@ const UpdateProductPage = ({...props}) => {
       <h1
         className='text-2xl text-primary font-bold'
       >
-        تحديث المنتج {id}
+        تحديث المنتج {product.name}
       </h1>
       <p>
         هذه هي صفحة تحديث المنتج
