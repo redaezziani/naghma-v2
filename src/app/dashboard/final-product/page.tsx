@@ -94,7 +94,7 @@ const FinalProducts = () => {
     lg:w-2/3
     px-6 py-3 relative">
       <Button>
-        <Link href='/dashboard/raw-product/add-product'>إضافة منتج</Link>
+        <Link href='/dashboard/final-product/add-final-product'>إضافة منتج</Link>
       </Button>
       <DataTable
       total = {total}

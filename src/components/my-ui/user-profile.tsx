@@ -105,7 +105,7 @@ export function UserProfile() {
         <DropdownMenuLabel>حسابي</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/">
+          <Link href="/dashboard">
             <DropdownMenuItem>
               الصفحة الرئيسية
               <DropdownMenuShortcut>
