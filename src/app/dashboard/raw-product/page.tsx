@@ -1,68 +1,83 @@
+'use client';
 
-import { getProduct, getProducts } from "@/(db)/product-pr";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
+import { Cog, Trash } from 'lucide-react';
+import Link from 'next/link';
+import { DialogTrigger } from '@/components/ui/dialog';
+import { getProducts, deleteProduct } from '@/(db)/product-pr';
 
+const RawProducts = () => {
+  const [products, setProducts] = useState([]);
+  const handelProducts = async () => {
+    try {
+      const res = await getProducts();
+      setProducts(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await deleteProduct(id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-const RawProducts = async () => {
-  const res = await getProducts();
-  console.log(res); 
+  const columns: ColumnDef[] = [
+    {
+      accessorKey: 'id',
+      header: 'معرف',
+      cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    },
+    {
+      accessorKey: 'name',
+      header: 'اسم',
+      cell: ({ row }) => <div>{row.getValue('name')}</div>,
+    },
+    {
+      accessorKey: 'price',
+      header: 'السعر',
+      cell: ({ row }) => <div>{row.getValue('price')}</div>,
+    },
+    {
+      accessorKey: 'quantity',
+      header: 'الكمية',
+      cell: ({ row }) => <div>{row.getValue('quantity')}</div>,
+    },
+    {
 
-  
+      accessorKey: 'action',
+      header: 'إجراء',
+      cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
+        <DialogTrigger asChild>
+          <Trash
+            onClick={() => handleDelete(row.getValue('id'))}
+            className='cursor-pointer text-muted-foreground hover:text-secondary-foreground hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
+            size={16}
 
+          />
+        </DialogTrigger>
 
-  
+        <Link href={`/dashboard/category/edit?id=${row.getValue('id')}`}>
+          <Cog
+            className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105 hover:rotate-180 transition-all duration-300 ease-in-out'
+            size={16} />
+        </Link>
+      </div>
+    },
+  ];
+  useEffect(() => {
+    handelProducts();
+  }, []);
   return (
-    <div className="w-[80%] mt-20">
-      <Table>
-        <TableCaption>قائمة المنتجات الخام</TableCaption>
-
-        <TableHeader>
-          <TableRow>
-            <TableCell className="w-[100px]">
-              <TableHead>المنتج</TableHead>
-            </TableCell>
-            <TableCell>
-              <TableHead>السعر</TableHead>
-            </TableCell>
-            <TableCell>
-              <TableHead>الكمية</TableHead>
-            </TableCell>
-            <TableCell className="text-left">
-              <TableHead>الإجمالي</TableHead>
-            </TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {res.data.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell>{product.name}</TableCell>
-              <TableCell>{product.price}</TableCell>
-              <TableCell>{product.quantity}</TableCell>
-              
-            </TableRow>
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={2}></TableCell>
-            <TableCell className="">الإجمالي الكلي</TableCell>
-            <TableCell className="text-left">
-
-            </TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
+    <div className=" mt-20
+    w-2/3
+    px-6 py-3 relative">
+      <DataTable columns={columns} data={products} />
     </div>
   );
 };
