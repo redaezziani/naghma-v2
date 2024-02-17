@@ -13,6 +13,7 @@ html,body{
 }
 
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -34,7 +35,7 @@ html,body{
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 262.1 83.3% 57.8%;
-    --radius: 0.3rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -63,6 +64,7 @@ html,body{
 
 
 
+
  
 @layer base {
   * {
@@ -74,5 +76,5 @@ html,body{
 }
 
 .text{
-  color: hsl(267, 100%, 50%);
+  color: #7300ff;
 }

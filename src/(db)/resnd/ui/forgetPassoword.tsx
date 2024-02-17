@@ -32,15 +32,7 @@ const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailPr
         }}
         >
           <Container className="border border-solid border-gray-300 rounded my-10 mx-auto p-8 w-[55rem]">
-            <Row>
-              <Img
-                className="rounded-full w-16 h-16 aspect-square object-cover"
-                alt="Reset Password Form"
-                src="https://ytufhhjagjdypstaklfh.supabase.co/storage/v1/object/public/data/impressed.png"
-                width={40}
-                height={40}
-              />
-            </Row>
+           
             <Row>
               <Column>
                 <Heading className="text-3xl font-bold text-gray-900">
@@ -57,7 +49,7 @@ const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailPr
             </Row>
             <Row>
               <Column>
-                <Link className="text-white bg-[#ff5420] rounded px-4 py-2 mt-2 inline-block" href={resetPasswordLink}>
+                <Link className="text-white bg-[#7300ff] rounded px-4 py-2 mt-2 inline-block" href={resetPasswordLink}>
                   إعادة تعيين كلمة المرور
                 </Link>
               </Column>
@@ -77,7 +69,7 @@ const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailPr
             <Row>
               <Column>
                 <span
-                className="px-4 text-sm text-[#ff5420] bg-[#ff842096] rounded-full mt-4 inline-block"
+                className="px-4 text-sm text-[#7300ff]  rounded-full mt-4 inline-block"
                 >
                   {store_name}
                 </span>
