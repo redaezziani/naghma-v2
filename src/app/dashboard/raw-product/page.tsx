@@ -68,7 +68,7 @@ const RawProducts = () => {
       cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
           <Trash
             onClick={() => handleDelete(row.getValue('id'))}
-            className='cursor-pointer text-muted-foreground hover:text-secondary-foreground hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
+            className='cursor-pointer text-muted-foreground hover:text-destructive hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
             size={16}
 
           />
