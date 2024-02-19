@@ -1,3 +1,4 @@
 // Vendur 
 
 createVendur : name:string
+getVendurs: viod 
