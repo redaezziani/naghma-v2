@@ -1,6 +1,5 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
-import { serverHooks } from "next/dist/server/app-render/entry-base";
 
 interface IProduit {
     nom: string;
@@ -36,12 +35,11 @@ export const getProduits = async () => {
         if (produits.length === 0) {
             return { status: 'error', message: 'لا يوجد منتجات' };
         }
-        // get the total of price * quantity of all products
         let total = 0;
         produits.forEach((produit) => {
             total += produit.prix_vente * produit.quantite;
         });
-        
+
         return { status: 'success', data: produits , total_price: total};
     } catch (error: any) {
         console.error(error);
@@ -61,6 +59,25 @@ export const deleteProduit = async (id: string) => {
             return { status: 'error', message: 'لم يتم حذف المنتج' };
         }
         return { status: 'success', message: 'تم حذف المنتج بنجاح' };
+    } catch (error: any) {
+        console.error(error);
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+// return just the name and id of the produit
+export const getAllProduits = async () => {
+    try {
+        const produits = await prisma.produit_Final.findMany({
+            select: {
+                id: true,
+                nom: true
+            }
+        });
+        if (produits.length === 0) {
+            return { status: 'error', message: 'لا يوجد منتجات' };
+        }
+        return { status: 'success', data: produits };
     } catch (error: any) {
         console.error(error);
     } finally {
