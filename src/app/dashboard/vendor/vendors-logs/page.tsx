@@ -21,9 +21,22 @@ interface IVendur_log {
 }
 */
 
+interface IVendur {
+    id: string;
+    nom: string;
+    le_prix_a_paye: number;
+    le_prix_a_payer: number;
+}
+
+interface IProduit {
+    id: string;
+    nom: string;
+    prix: number;
+    quantite: number;
+}
 const VendorLogs = () => {
-  const [listProduits, setListProduits] = React.useState([])
-  const [listVendurs, setListVendurs] = React.useState([])
+  const [listProduits, setListProduits] = React.useState<IProduit[]>([])
+  const [listVendurs, setListVendurs] = React.useState<IVendur[]>([])
   const [vendurId, setVendurId] = React.useState('');
   const [produitId, setProduitId] = React.useState('');
   const [quantite, setQuantite] = React.useState(0);
@@ -39,18 +52,6 @@ const VendorLogs = () => {
     setProduitId(e.target.value)
   }
 
-  const handelChangeQuantite = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantite(Number(e.target.value))
-  }
-
-  const handelChangePrix = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrix(Number(e.target.value))
-  }
-
-  const handelChangePrixAPaye = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrixAPaye(Number(e.target.value))
-  }
-
   const handelSubmit = async () => {
     try {
       setLoading(true)
@@ -62,7 +63,7 @@ const VendorLogs = () => {
       }
       console.log(data);
       const res = await createVendur_log(data)
-      if (res.status === 'error') {
+      if (res?.status === 'error') {
         toast.error(res.message)
         return
       }
@@ -83,11 +84,17 @@ const VendorLogs = () => {
   const handelGetProduits = async () => {
     try {
       const res = await getAllProduits();
-      if (res.status === 'error') {
+      if (res?.status === 'error') {
         alert(res.message);
         return;
       }
-      setListProduits(res.data)
+      const produits: IProduit[] = res?.data?.map((item: { id: string; nom: string; }) => ({
+        id: item.id,
+        nom: item.nom,
+        prix: 0,
+        quantite: 0
+      })) ?? [];
+      setListProduits(produits);
     } catch (error) {
       console.log(error);
     }
@@ -96,11 +103,18 @@ const VendorLogs = () => {
   const handelGetVendurs = async () => {
     try {
       const res = await getAllVendurs();
-      if (res.status === 'error') {
+      if (res?.status === 'error') {
         alert(res.message);
         return;
       }
-      setListVendurs(res.data)
+      const vendurs: IVendur[] = res?.data?.map((item: { id: string; nom: string; }) => ({
+        id: item.id,
+        nom: item.nom,
+        le_prix_a_paye: 0,
+        le_prix_a_payer: 0
+      })) ?? [];
+      setListVendurs(vendurs);
+      
     } catch (error) {
       console.log(error);
     }
@@ -109,6 +123,7 @@ const VendorLogs = () => {
   useEffect(() => {
     handelGetProduits()
     handelGetVendurs()
+    
   }
     , [])
 
@@ -122,6 +137,7 @@ const VendorLogs = () => {
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>رقم البائع</label>
         <select
+          defaultValue={listVendurs[0]?.id}
           onChange={handelChangeVendurId} // Use onChange instead of onSelect
           className='bg-white'
           id="vendurID" // Unique ID for the select element
@@ -136,6 +152,7 @@ const VendorLogs = () => {
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>رقم المنتج</label>
         <select
+          defaultValue={listProduits[0]?.id}
           onChange={handelChangeProduitId} // Use onChange instead of onSelect
           className='bg-white'
           id="produitID" // Unique ID for the select element

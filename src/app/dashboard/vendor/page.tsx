@@ -1,22 +1,39 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
+import { DataTable } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { getVendurs,deleteVendur } from '@/(db)/vendur';
+import { getVendurs, deleteVendur } from '@/(db)/vendur';
+
+export interface ColumnDef {
+  accessorKey: string;
+  header: string;
+  cell: ({ row }: { row: any }) => JSX.Element;
+}
+
+interface IVendur {
+  id: string;
+  nom: string;
+  le_prix_a_paye: number;
+  le_prix_a_payer: number;
+  frais_de_prix: number;
+  balance: number;
+}
 
 const Vendors = () => {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<IVendur[]>([]);
   const [total, setTotal] = useState(0);
   const handelProducts = async () => {
     try {
       const res = await getVendurs();
-      setProducts(res.data);
-      console.log(res);
-      setTotal(res.total_price);
-      console.log(res);
+      if (res) {
+        setProducts(res.data || []);
+        console.log(res);
+        setTotal(res.total_price || 0);
+        console.log(res);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -25,7 +42,7 @@ const Vendors = () => {
   const handleDelete = async (id: string) => {
     try {
       const res = await deleteVendur(id);
-      if (res.status === 'error') {
+      if (res?.status === 'error') {
         alert(res.message);
         return;
       }
@@ -40,37 +57,37 @@ const Vendors = () => {
     {
       accessorKey: 'id',
       header: 'معرف',
-      cell: ({ row }) => <div>{row.getValue('id')}</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('id')}</div>,
     },
     {
       accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }) => <div>{row.getValue('nom')}</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('nom')}</div>,
     },
     {
       accessorKey: 'le_prix_a_paye',
       header: 'المبلغ المطلوب',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_paye')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('le_prix_a_paye')} د.م</div>,
     },
     {
       accessorKey: 'le_prix_a_payer',
-    header: 'المبلغ المدفوع',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} د.م </div>,
+      header: 'المبلغ المدفوع',
+      cell: ({ row }: { row: any }) => <div>{row.getValue('le_prix_a_payer')} د.م </div>,
     },
     {
       accessorKey: 'frais_de_prix',
       header: 'المصاريف',
-      cell: ({ row }) => <div>{row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('frais_de_prix')} د.م</div>,
     },
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-600 flex justify-center items-center px-4 bg-emerald-50 border-emerald-300 border rounded-full text-xs' : 'text-destructive bg-destructive/10  flex justify-center items-center px-4 border-destructive/55 rounded-full border '}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')}</div>,
+      cell: ({ row }: { row: any }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-600 font-semibold' : 'text-destructive font-semibold'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
     },
     {
       accessorKey: 'action',
       header: 'إجراء',
-      cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
+      cell: ({ row }: { row: any }) => <div className='flex justify-start items-center gap-4'>
           <Trash
             onClick={() => handleDelete(row.getValue('id'))}
             className='cursor-pointer text-muted-foreground hover:text-destructive hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'

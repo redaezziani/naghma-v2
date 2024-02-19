@@ -50,6 +50,7 @@ export type Cell<T = any> = {
     };
 };
 
+
 export type Row<T = any> = {
     id: string;
     original: T;
@@ -85,7 +86,7 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
 
     return (
         <div className="w-full">
-            <div className="flex items-center py-4 lowercase">
+            <div className="flex items-center gap-3 py-4 lowercase">
                 <Input
                     placeholder="تصفية..."
                     value={(table.getColumn(columns[1]?.accessorKey)?.getFilterValue() as string) ?? ""}
@@ -181,12 +182,18 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TableCell colSpan={3}>
+                    <TableFooter
+                    className="w-full"
+                    >
+                        <TableRow
+                        className="w-full"
+                        >
+                            <TableCell
+                            className="text-right font-semibold"
+                            colSpan={3}>
                                 السعر الإجمالي
                             </TableCell>
-                            <TableCell className="text-right">
+                            <TableCell className="text-right font-semibold">
                                 {total} د.م
                             </TableCell>
                         </TableRow>
@@ -199,7 +206,7 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
                     {table.getFilteredSelectedRowModel().rows.length} من{" "}
                     {table.getFilteredRowModel().rows.length} صف محدد.
                 </div>
-                <div className="space-x-2">
+                <div className=" flex gap-2 justify-center items-center">
                     <Button
                         variant="outline"
                         size="sm"
