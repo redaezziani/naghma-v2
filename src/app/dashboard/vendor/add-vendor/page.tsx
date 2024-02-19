@@ -11,6 +11,7 @@ const AddVendorPage = () => {
   const [name , setName] = React.useState('')
   const [Loading , setLoading] = React.useState(false)
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
       setName(e.target.value)
   }
   
@@ -22,7 +23,6 @@ const AddVendorPage = () => {
               alert(res.message);
               return;
           }
-          alert(res.message);
           setLoading(false)
           setName('')
           toast.success('تم إضافة البائع بنجاح')

@@ -32,7 +32,10 @@ export const getVendurs = async () => {
                 balance: vendur.le_prix_a_payer - vendur.le_prix_a_paye + vendur.frais_de_prix
             }
         });
-        return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendursWithBalance };        
+
+        // total price for all vendurs
+        const total_price = vendurs.reduce((acc: number, vendur: any) => acc + vendur.le_prix_a_payer, 0);
+        return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendursWithBalance , total_price };   
     } catch (error: any) {
         console.error(error);
     } finally {

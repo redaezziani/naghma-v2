@@ -4,9 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import vendor from './profile/[...id]/page';
 import { getVendurs,deleteVendur } from '@/(db)/vendur';
 
 const Vendors = () => {
@@ -17,6 +15,7 @@ const Vendors = () => {
       const res = await getVendurs();
       setProducts(res.data);
       setTotal(res.total_price);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -43,24 +42,29 @@ const Vendors = () => {
       cell: ({ row }) => <div>{row.getValue('id')}</div>,
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }) => <div>{row.getValue('name')}</div>,
+      cell: ({ row }) => <div>{row.getValue('nom')}</div>,
     },
     {
-      accessorKey: 'price',
-      header: 'السعر (د.م)',
-      cell: ({ row }) => <div>{row.getValue('price')} د.م</div>,
+      accessorKey: 'le_prix_a_payer',
+      header: 'المبلغ المطلوب',
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} د.م</div>,
     },
     {
-      accessorKey: 'Expenses',
-    header: 'المصاريف',
+      accessorKey: 'le_prix_a_paye',
+    header: 'المبلغ المدفوع',
       cell: ({ row }) => <div>{row.getValue('quantity')} كجم </div>,
     },
     {
-      accessorKey: 'total',
-      header: 'المجموع',
-      cell: ({ row }) => <div>{row.getValue('quantity') * row.getValue('price')} د.م</div>,
+      accessorKey: 'frais_de_prix',
+      header: 'المصاريف',
+      cell: ({ row }) => <div>{row.getValue('frais_de_prix')} د.م</div>,
+    },
+    {
+      accessorKey: 'balance',
+      header: 'الأرباح',
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
     },
     {
 
