@@ -58,7 +58,6 @@ const VendorLogs = () => {
         vendur_id: vendurId,
         produit_id: produitId,
         quantite,
-        prix,
         prix_a_paye: prixAPaye
       }
       console.log(data);
@@ -70,7 +69,6 @@ const VendorLogs = () => {
       setVendurId('')
       setProduitId('')
       setQuantite(0)
-      setPrix(0)
       setPrixAPaye(0)
 
       toast.success('تم إضافة البائع بنجاح')
@@ -158,16 +156,7 @@ const VendorLogs = () => {
           placeholder='الكمية'
         />
       </div>
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>السعر</label>
-        <Input
-          name='prix'
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrix(Number(e.target.value))}
-          type='number'
-          value={prix}
-          placeholder='السعر'
-        />
-      </div>
+     
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>السعر المدفوع</label>
         <Input
