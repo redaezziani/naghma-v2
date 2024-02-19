@@ -116,9 +116,11 @@ const VendorLogs = () => {
 
   return (
     <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
-      <h1 className='text-2xl text-primary font-bold'>إضافة بائع جديد</h1>
-      <p>هذه هي صفحة إضافة بائع جديد</p>
-
+      <h1 className='text-2xl text-primary font-bold'>تحديث  بيانات البائع</h1>
+      <p>
+        يمكنك من هنا تحديث   بيانات  البائع
+      </p>
+      
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>رقم البائع</label>
         <select
@@ -177,7 +179,8 @@ const VendorLogs = () => {
         />
       </div>
       <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
-        إضافة البائع
+        نحديث البيانات
+
       </Button>
     </div>
   );
