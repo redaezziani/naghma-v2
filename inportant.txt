@@ -2,3 +2,7 @@
 
 createVendur : name:string
 getVendurs: viod 
+
+// Produit 
+
+createProduit : name:string, price:number, vendurId:number // data {name, price, vendurId}
