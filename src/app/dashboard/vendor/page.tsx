@@ -8,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { getVendurs,deleteVendur } from '@/(db)/vendur';
 
 const Vendors = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const handelProducts = async () => {
     try {
       const res = await getVendurs();
       setProducts(res.data);
+      console.log(res);
       setTotal(res.total_price);
       console.log(res);
     } catch (error) {
