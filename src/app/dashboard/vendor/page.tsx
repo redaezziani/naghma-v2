@@ -55,7 +55,7 @@ const Vendors = () => {
     {
       accessorKey: 'le_prix_a_paye',
     header: 'المبلغ المدفوع',
-      cell: ({ row }) => <div>{row.getValue('quantity')} كجم </div>,
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_paye')} كجم </div>,
     },
     {
       accessorKey: 'frais_de_prix',
@@ -65,7 +65,7 @@ const Vendors = () => {
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? 'text-success-foreground' : 'text-destructive'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
     },
     {
 
