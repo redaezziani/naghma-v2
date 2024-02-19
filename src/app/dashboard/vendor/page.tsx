@@ -65,7 +65,7 @@ const Vendors = () => {
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-600 bg-emerald-50 border-emerald-300 border rounded-full text-xs' : 'text-destructive bg-destructive/10 border-destructive/55 rounded-full border '}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')}</div>,
+      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-600 flex justify-center items-center px-4 bg-emerald-50 border-emerald-300 border rounded-full text-xs' : 'text-destructive bg-destructive/10  flex justify-center items-center px-4 border-destructive/55 rounded-full border '}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')}</div>,
     },
     {
       accessorKey: 'action',
