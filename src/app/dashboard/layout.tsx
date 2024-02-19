@@ -32,7 +32,7 @@ export default function RootLayout({
       <div className="top-4 fixed z-50 right-4 lg:hidden block">
         <Sheet>
           <SheetTrigger>
-            <Menu />
+            <Menu />s
           </SheetTrigger>
           <SheetContent className=" bg-primary">
             
