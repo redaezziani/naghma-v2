@@ -15,7 +15,7 @@ const Vendors = () => {
     try {
       const res = await get
       setProducts(res.data);
-      setTotal(res.total_price);a
+      setTotal(res.total_price);
     } catch (error) {
       console.log(error);
     }
