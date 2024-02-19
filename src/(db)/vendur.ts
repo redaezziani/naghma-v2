@@ -38,3 +38,21 @@ export const getVendurs = async () => {
         await prisma.$disconnect();
     }
 }
+
+export const deleteVendur = async (id: string) => {
+    try {
+        const vendur = await prisma.vendur.delete({
+            where: {
+                id
+            }
+        });
+        if (!vendur) {
+            return { status: 'error', message: 'لم يتم حذف البائع' };
+        }
+        return { status: 'success', message: 'تم حذف البائع بنجاح' };
+    } catch (error: any) {
+        console.error(error);
+    } finally {
+        await prisma.$disconnect();
+    }
+}
