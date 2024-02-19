@@ -55,7 +55,7 @@ const Vendors = () => {
     {
       accessorKey: 'le_prix_a_payer',
     header: 'المبلغ المدفوع',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} كجم </div>,
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} د.م </div>,
     },
     {
       accessorKey: 'frais_de_prix',
@@ -65,10 +65,9 @@ const Vendors = () => {
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-500' : 'text-destructive'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-600 bg-emerald-50 border-emerald-300 border rounded-full text-xs' : 'text-destructive bg-destructive/10 border-destructive/55 rounded-full border '}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix').toFixed(2)} د.م</div>,
     },
     {
-
       accessorKey: 'action',
       header: 'إجراء',
       cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
