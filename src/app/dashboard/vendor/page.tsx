@@ -5,7 +5,6 @@ import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { DialogTrigger } from '@/components/ui/dialog';
-import { getProducts, deleteProduct } from '@/(db)/product-pr';
 import { Button } from '@/components/ui/button';
 import vendor from './profile/[...id]/page';
 
@@ -14,7 +13,7 @@ const Vendors = () => {
   const [total, setTotal] = useState(0);
   const handelProducts = async () => {
     try {
-      const res = await getProducts();
+      const res = await get
       setProducts(res.data);
       setTotal(res.total_price);a
     } catch (error) {
