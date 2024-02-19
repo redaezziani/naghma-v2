@@ -36,8 +36,12 @@ export const getProduits = async () => {
         if (produits.length === 0) {
             return { status: 'error', message: 'لا يوجد منتجات' };
         }
-        // get the total of price of all products
-        const total = produits.reduce((acc, current) => acc + current.prix_vente, 0);
+        // get the total of price * quantity of all products
+        let total = 0;
+        produits.forEach((produit) => {
+            total += produit.prix_vente * produit.quantite;
+        });
+        
         return { status: 'success', data: produits , total_price: total};
     } catch (error: any) {
         console.error(error);

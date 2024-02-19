@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { DialogTrigger } from '@/components/ui/dialog';
 import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 const FinalProducts = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -16,7 +17,7 @@ const FinalProducts = () => {
     try {
       const res = await createProduit(name, quantity, vendurId);
       if (res.status === 'error') {
-        alert(res.message);
+       toast.error(res.message);
         return;
       }
       handelProducts();
@@ -31,7 +32,8 @@ const FinalProducts = () => {
     try {
       const res = await getProduits();
       setProducts(res?.data??[]);
-      setTotal(res?.data?.length??0);
+      setTotal(res?.total_price??0);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -41,7 +43,7 @@ const FinalProducts = () => {
     try {
       const res = await deleteProduit(id);
       if (res?.status === 'error') {
-        alert(res.message);
+        toast.error(res.message);
         return;
       }
       setProducts(products.filter((product) => product.id !== id));
@@ -58,24 +60,24 @@ const FinalProducts = () => {
       cell: ({ row }) => <div>{row.getValue('id')}</div>,
     },
     {
-      accessorKey: 'nome',
+      accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }) => <div>{row.getValue('name')}</div>,
+      cell: ({ row }) => <div>{row.getValue('nom')}</div>,
     },
     {
-      accessorKey: 'price',
+      accessorKey: 'prix_vente',
       header: 'السعر (د.م)',
-      cell: ({ row }) => <div>{row.getValue('price')} د.م</div>,
+      cell: ({ row }) => <div>{row.getValue('prix_vente')} د.م</div>,
     },
     {
-      accessorKey: 'quantity',
+      accessorKey: 'quantite',
       header: 'الكمية',
-      cell: ({ row }) => <div>{row.getValue('quantity')} كجم </div>,
+      cell: ({ row }) => <div>{row.getValue('quantite')} كجم </div>,
     },
     {
       accessorKey: 'total',
       header: 'المجموع',
-      cell: ({ row }) => <div>{row.getValue('quantity') * row.getValue('price')} د.م</div>,
+      cell: ({ row }) => <div>{row.getValue('quantite') * row.getValue('prix_vente')} د.م</div>,
     },
     {
 
