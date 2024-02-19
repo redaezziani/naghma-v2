@@ -12,9 +12,6 @@ interface IVendur_log {
 
 export const createVendur_log = async (data: IVendur_log) => {
     try {
-        if (data.quantite === 0 || data.prix === 0 || data.prix_a_paye === 0 || data.vendur_id === '' || data.produit_id === '') {
-            return { status: 'error', message: 'الرجاء ملئ جميع الحقول' };
-        }
 
         const checkProduct = await prisma.produit_Final.findUnique({
             where: {
@@ -31,10 +28,10 @@ export const createVendur_log = async (data: IVendur_log) => {
         const vendur_log = await prisma.vente_logs.create({
             data: {
                 vendur_id: data.vendur_id,
-                produit_id: data.produit_id,
-                quantite: data.quantite,
-                prix: data.prix,
-                prix_a_paye: data.prix_a_paye
+                produit_id: data.produit_id? data.produit_id : '',
+                quantite: data.quantite? data.quantite : 0,
+                prix: data.prix? data.prix : 0,
+                prix_a_paye: data.prix_a_paye? data.prix_a_paye : 0
             }
         });
 
