@@ -48,14 +48,14 @@ const Vendors = () => {
       cell: ({ row }) => <div>{row.getValue('nom')}</div>,
     },
     {
-      accessorKey: 'le_prix_a_payer',
+      accessorKey: 'le_prix_a_paye',
       header: 'المبلغ المطلوب',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} د.م</div>,
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_paye')} د.م</div>,
     },
     {
-      accessorKey: 'le_prix_a_paye',
+      accessorKey: 'le_prix_a_payer',
     header: 'المبلغ المدفوع',
-      cell: ({ row }) => <div>{row.getValue('le_prix_a_paye')} كجم </div>,
+      cell: ({ row }) => <div>{row.getValue('le_prix_a_payer')} كجم </div>,
     },
     {
       accessorKey: 'frais_de_prix',
@@ -65,7 +65,7 @@ const Vendors = () => {
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? 'text-success-foreground' : 'text-destructive'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') > 0 ? ' text-emerald-500' : 'text-destructive'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
     },
     {
 
