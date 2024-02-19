@@ -58,7 +58,7 @@ const FinalProducts = () => {
       cell: ({ row }) => <div>{row.getValue('id')}</div>,
     },
     {
-      accessorKey: 'name',
+      accessorKey: 'nome',
       header: 'اسم',
       cell: ({ row }) => <div>{row.getValue('name')}</div>,
     },
