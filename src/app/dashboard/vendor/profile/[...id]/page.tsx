@@ -1,7 +1,9 @@
+"use client";
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 function Vendor_profile() {
+
     return (
         <div className=" mt-20 
         flex
