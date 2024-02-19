@@ -99,9 +99,14 @@ const Vendors = () => {
      w-full
     lg:w-2/3
     px-6 py-3 relative">
+       <div className='flex gap-3'>
        <Button >
             <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
+        <Button >
+            <Link href="/dashboard/vendor/vendors-logs">تحديث  بيانات البائع</Link>
+        </Button >
+       </div>
       <DataTable
       total = {total}
       columns={columns} data={products} />
