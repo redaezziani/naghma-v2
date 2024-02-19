@@ -11,6 +11,22 @@ import { Button } from '@/components/ui/button';
 const FinalProducts = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+
+  const createProduit = async (name: string, quantity: number, vendurId: number) => {
+    try {
+      const res = await createProduit(name, quantity, vendurId);
+      if (res.status === 'error') {
+        alert(res.message);
+        return;
+      }
+      handelProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
   const handelProducts = async () => {
     try {
       const res = await getProducts();

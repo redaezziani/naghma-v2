@@ -5,4 +5,4 @@ getVendurs: viod
 
 // Produit 
 
-createProduit : name:string, price:number, vendurId:number // data {name, price, vendurId}
+createProduit : name:string, quantity:number, vendurId:number // data {name, price, vendurId}
