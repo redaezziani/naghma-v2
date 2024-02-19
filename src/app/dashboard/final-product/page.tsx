@@ -32,7 +32,7 @@ const FinalProducts = () => {
     try {
       const res = await getProduits();
       setProducts(res?.data??[]);
-      setTotal(res?.data?.length??0);
+      setTotal(res?.total_price??0);
       console.log(res);
     } catch (error) {
       console.log(error);
