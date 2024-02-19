@@ -60,3 +60,21 @@ export const deleteVendur = async (id: string) => {
         await prisma.$disconnect();
     }
 }
+export const getAllVendurs = async () => {
+    try {
+        const vendurs = await prisma.vendur.findMany({
+            select: {
+                id: true,
+                nom: true
+            }
+        });
+        if (!vendurs || vendurs.length === 0) {
+            return { status: 'error', message: 'لم يتم العثور على البائعين' };
+        }
+        return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendurs };
+    } catch (error: any) {
+        console.error(error);
+    } finally {
+        await prisma.$disconnect();
+    }
+}
