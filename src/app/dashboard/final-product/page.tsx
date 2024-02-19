@@ -5,17 +5,17 @@ import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { DialogTrigger } from '@/components/ui/dialog';
-import { getProducts, deleteProduct } from '@/(db)/product-fn';
+import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
 
 const FinalProducts = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const handelProducts = async () => {
     try {
-      const res = await getProducts();
-      setProducts(res.data);
-      setTotal(res.total_price);
+      const res = await getProduits();
+      setProducts(res?.data??[]);
+      setTotal(res?.data?.length??0);
     } catch (error) {
       console.log(error);
     }
@@ -23,8 +23,8 @@ const FinalProducts = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await deleteProduct(id);
-      if (res.status === 'error') {
+      const res = await deleteProduit(id);
+      if (res?.status === 'error') {
         alert(res.message);
         return;
       }

@@ -1,16 +1,21 @@
 'use client';
-import { createProduct } from '@/(db)/product-pr';
+import { createProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
 import { toast } from 'sonner';
+interface IProduit {
+    nom: string;
+    prix_vente: number;
+    quantite: number;
+}
 
 const AddfinalProduct = () => {
-  const [data , setData] = React.useState({
-    name: '',
-    price: 0,
-    quantity: 0
+  const [data , setData] = React.useState<IProduit>({
+    nom: '',
+    prix_vente: 0,
+    quantite: 0
   })
   const [isLoading , setIsLoading] = React.useState(false)
   const handleChangeName = (e)=>{
@@ -25,19 +30,19 @@ const AddfinalProduct = () => {
     try {
       e.preventDefault()
       setIsLoading(true)
-      if (data.name === '' || data.price === 0 || data.quantity === 0) {
+      if (data.nom === '' || data.prix_vente === 0 || data.quantite === 0) {
         return
       }
       
-      const res= await createProduct(data)
+      const res= await createProduit(data)
       if (res.status === 'error') {
         alert(res.message)
         return
       }
       setData({
-        name: '',
-        price: 0,
-        quantity: 0
+        nom: '',
+        prix_vente: 0,
+        quantite: 0
       })
       toast.success('تم إضافة المنتج بنجاح')
 
@@ -69,10 +74,10 @@ const AddfinalProduct = () => {
           اسم المنتج
         </Label>
         <Input
-          name='name'
+          name='nom'
           onChange={handleChangeName}
           type='text'
-          value={data.name}
+          value={data.nom}
           placeholder='اسم المنتج'
         />
       </div>
@@ -83,10 +88,10 @@ const AddfinalProduct = () => {
           سعر المنتج
         </Label>
         <Input
-          name='price'
+          name='prix_vente'
           onChange={handleChangeName}
           type='number'
-          value={data.price}
+          value={data.prix_vente}
           placeholder='سعر المنتج'
         />
        </div>
@@ -97,10 +102,10 @@ const AddfinalProduct = () => {
           كمية المنتج
         </Label>
         <Input
-          name='quantity'
+          name='quantite'
           onChange={handleChangeName}
           type='number'
-          value={data.quantity}
+          value={data.quantite}
           placeholder='كمية المنتج'
         />
        </div>
