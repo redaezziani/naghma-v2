@@ -44,25 +44,69 @@ model UserVerificationRequest {
 }
 
 
-model PrimaryProduct {
-  id          String   @id @default(uuid())
-  name        String
-  price       Float
-  quantity    Int
-  priceTotal  Float   @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+
+model Matiere_Premiere {
+    id        String   @id @default(uuid()) @db.VarChar(36)
+    nom       String
+    prix_achat Float
+    quantite  Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
 }
 
-model FinalProduct {
-  id          String   @id @default(uuid())
-  name        String
-  price       Float
-  quantity    Int
-  priceTotal  Float   @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Produit_Final {
+    id        String   @id @default(uuid()) @db.VarChar(36)
+    nom       String
+    prix_vente Float
+    quantite  Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
 }
 
+model Vendur {
+    id String @id @default(uuid()) @db.VarChar(36)
+    nom String
+    le_prix_a_payer Float @default(0)
+    le_prix_a_paye Float @default(0)
+    frais_de_prix Float @default(0)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Matiere_Premiere_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    stock_initial Int
+    consomation Int
+    achat Int 
+    ventes Int 
+    offres Int
+    retours Int
+    stock_final Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Produit_Final_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    stock_initial Int
+    production Int
+    ventes Int 
+    retours Int
+    changes Int
+    stock_final Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Vente_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    vendur_id String
+    produit_id String
+    quantite Int
+    prix Float
+    prix_a_paye Float  @default(0)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
 
 
