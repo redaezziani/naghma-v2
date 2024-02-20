@@ -40,8 +40,6 @@ const VendorLogs = () => {
   const [vendurId, setVendurId] = React.useState('');
   const [produitId, setProduitId] = React.useState('');
   const [quantite, setQuantite] = React.useState(0);
-  const [prix, setPrix] = React.useState(0);
-  const [prixAPaye, setPrixAPaye] = React.useState(0);
   const [Loading, setLoading] = React.useState(false)
 
   const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -58,8 +56,7 @@ const VendorLogs = () => {
       const data = {
         vendur_id: vendurId,
         produit_id: produitId,
-        quantite,
-        prix_a_paye: prixAPaye
+        quantite
       }
       console.log(data);
       const res = await createVendur_log(data)
@@ -70,7 +67,6 @@ const VendorLogs = () => {
       setVendurId('')
       setProduitId('')
       setQuantite(0)
-      setPrixAPaye(0)
 
       toast.success('تم إضافة البائع بنجاح')
     } catch (error) {
@@ -172,22 +168,6 @@ const VendorLogs = () => {
           value={quantite}
           placeholder='الكمية'
         />
-      </div>
-     
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>
-          المصاريف
-        </label>
-        <Input
-          name='prixAPaye'
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrixAPaye(Number(e.target.value))}
-          type='number'
-          value={prixAPaye}
-          placeholder='المصاريف'
-        />
-        
-        
-       
       </div>
       <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
         نحديث البيانات

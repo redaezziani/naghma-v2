@@ -6,6 +6,8 @@ import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs, deleteVendur } from '@/(db)/vendur';
+import { useRouter } from 'next/navigation';
+
 
 export interface ColumnDef {
   accessorKey: string;
@@ -109,6 +111,28 @@ const Vendors = () => {
     handelProducts();
     
   }, []);
+
+// Add the following code to the Vendors component
+// Add the following code to the Vendors component
+  // Add the following code to the Vendors component
+  const history = useRouter();
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
+  const handlePaymentMethodChange = (event:any) => {
+    const selectedMethod = event.target.value;
+    setSelectedPaymentMethod(selectedMethod);
+
+    // Navigate to the selected page based on the chosen payment method
+    switch (selectedMethod) {
+      case 'pay-cash':
+        history.push('/dashboard/vendor/pay-cash');
+        break;
+      // Add other cases as needed for different payment methods
+      default:
+        // Handle default case or do nothing
+        break;
+    }
+  };
+
   return (
     <div className=" mt-20
     flex
@@ -126,15 +150,14 @@ const Vendors = () => {
         </Button >
         <select  // Use onChange instead of onSelect
           className='bg-primary border-[1.5px] border-primary rounded-sm pr-3 text-white'
-          id="paymentMethod" // Unique ID for the select element
-          name="paymentMethod">
-            <option value="0" disabled selected>تحديث طريقة الدفع</option>
-            <option value="">
-              <Link href="/pay-cash">
-              الدفع كاش
-              </Link>
           
-            </option>
+          id="paymentMethod"
+      name="paymentMethod"
+      onChange={handlePaymentMethodChange}
+      value={selectedPaymentMethod}
+    >
+            <option value="0"  selected>تحديث طريقة الدفع</option>
+            <option value="pay-cash">الدفع كاش</option>
             <option value="1">الدفع عبر استرداد المنتج</option>
             <option value="2">الدفع بالشيك</option>
         </select>
