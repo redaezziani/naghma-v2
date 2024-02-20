@@ -112,26 +112,6 @@ const Vendors = () => {
     
   }, []);
 
-// Add the following code to the Vendors component
-// Add the following code to the Vendors component
-  // Add the following code to the Vendors component
-  const history = useRouter();
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
-  const handlePaymentMethodChange = (event:any) => {
-    const selectedMethod = event.target.value;
-    setSelectedPaymentMethod(selectedMethod);
-
-    // Navigate to the selected page based on the chosen payment method
-    switch (selectedMethod) {
-      case 'pay-cash':
-        history.push('/dashboard/vendor/pay-cash');
-        break;
-      // Add other cases as needed for different payment methods
-      default:
-        // Handle default case or do nothing
-        break;
-    }
-  };
 
   return (
     <div className=" mt-20
@@ -146,21 +126,12 @@ const Vendors = () => {
             <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
         <Button >
-            <Link href="/dashboard/vendor/vendors-logs">تحديث  بيانات البائع</Link>
+            <Link href="/dashboard/vendor/vendors-logs">
+                بيع المنتج للبائع
+           
+            </Link>
         </Button >
-        <select  // Use onChange instead of onSelect
-          className='bg-primary border-[1.5px] border-primary rounded-sm pr-3 text-white'
-          
-          id="paymentMethod"
-      name="paymentMethod"
-      onChange={handlePaymentMethodChange}
-      value={selectedPaymentMethod}
-    >
-            <option value="0"  selected>تحديث طريقة الدفع</option>
-            <option value="pay-cash">الدفع كاش</option>
-            <option value="1">الدفع عبر استرداد المنتج</option>
-            <option value="2">الدفع بالشيك</option>
-        </select>
+       
        </div>
       <DataTable
       total = {total}

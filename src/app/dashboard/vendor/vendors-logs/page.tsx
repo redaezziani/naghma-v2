@@ -131,7 +131,7 @@ const VendorLogs = () => {
       </p>
       
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>رقم البائع</label>
+        <label className='font-semibold'>اسم البائع</label>
         <select
           defaultValue={listVendurs[0]?.id}
           onChange={handelChangeVendurId} // Use onChange instead of onSelect
