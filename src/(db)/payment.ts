@@ -1,57 +1,6 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider  = "postgresql"
-  url       = env("DIRECT_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-
-//جدول المستخدم
-model User {
-  id         String    @id @default(uuid()) @db.VarChar(36)
-  email      String    @unique
-  name       String?
-  password   String
-  role       String    @default("user")
-  image      String?   @default("")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  deletedAt  DateTime?
-}
-
-//طلب نسيت كلمة السر
-model ResetPasswordRequest {
-  id        String    @id @default(uuid()) @db.VarChar(36)
-  token     String    @unique
-  expires   DateTime
-  userId    String    @db.VarChar(36)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-}
-//طلب التاكد من المستخدم
-model UserVerificationRequest {
-  id        String    @id @default(uuid()) @db.VarChar(36)
-  token     String    @unique
-  expires   DateTime
-  userId    String    @db.VarChar(36)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-}
-// المنتج الاولي
-model Matiere_Premiere {
-    id        String   @id @default(uuid()) @db.VarChar(36)
-    nom       String
-    prix_achat Float
-    quantite  Int
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//المنتج النهائي
+'use server';
+import { prisma } from "@/(secrets)/secrets";
+/*
 model Produit_Final {
     id        String   @id @default(uuid()) @db.VarChar(36)
     nom       String
@@ -143,4 +92,90 @@ model loss {
     created_at DateTime @default(now())
     updated_at DateTime @updatedAt
 }
+*/
 
+export const prix_a_paye = async (data: any) => {
+    try {
+        const { vendur_id, prix , type } = data;
+        const vendur = await prisma.vendur.findUnique({
+            where: {
+                id: vendur_id
+            }
+        });
+        if (!vendur) {
+            return { status: 'error', message: 'الموزع غير موجود' };
+        }
+
+        const prix_paye = await prisma.prix_a_paye.create({
+            data: {
+                vendur_id,
+                prix,
+                type
+            }
+        });
+        if (!prix_paye) {
+            return { status: 'error', message: 'لم يتم إضافة المبلغ' };
+        }
+        
+        const updateVendur = await prisma.vendur.update({
+            where: {
+                id: vendur_id
+            },
+            data: {
+                le_prix_a_payer: {
+                    increment: prix // this is mean le_prix_a_payer = le_prix_a_payer + prix
+                }
+            }
+        });
+        if (!updateVendur) {
+            return { status: 'error', message: 'لم يتم تحديث الموزع' };
+        }
+
+        return { status: 'success', message: 'تم إضافة المبلغ بنجاح' };
+    } catch (error: any) {
+        console.error(error);   
+    }
+}
+
+
+export const frais_de_prix = async (data: any) => {
+    try {
+        const { vendur_id, prix } = data;
+        const vendur = await prisma.vendur.findUnique({
+            where: {
+                id: vendur_id
+            }
+        });
+        if (!vendur) {
+            return { status: 'error', message: 'الموزع غير موجود' };
+        }
+
+        const frais = await prisma.frais_de_prix.create({
+            data: {
+                vendur_id,
+                prix
+            }
+        });
+        if (!frais) {
+            return { status: 'error', message: 'لم يتم إضافة المصاريف' };
+        }
+        
+        const updateVendur = await prisma.vendur.update({
+            where: {
+                id: vendur_id
+            },
+            data: {
+                frais_de_prix: {
+                    increment: prix // this is mean frais_de_prix = frais_de_prix + prix
+                }
+            }
+        });
+        if (!updateVendur) {
+            return { status: 'error', message: 'لم يتم تحديث الموزع' };
+        }
+
+        return { status: 'success', message: 'تم إضافة المصاريف بنجاح' };
+    } catch (error: any) {
+        console.error(error);   
+    }
+}
