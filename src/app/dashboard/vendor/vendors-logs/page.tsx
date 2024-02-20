@@ -186,14 +186,19 @@ const VendorLogs = () => {
         />
       </div>
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>السعر المدفوع</label>
+        <label className='font-semibold'>
+          المصاريف
+        </label>
         <Input
           name='prixAPaye'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrixAPaye(Number(e.target.value))}
           type='number'
           value={prixAPaye}
-          placeholder='السعر المدفوع'
+          placeholder='المصاريف'
         />
+        
+        
+       
       </div>
       <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
         نحديث البيانات

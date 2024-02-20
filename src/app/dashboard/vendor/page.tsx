@@ -122,6 +122,20 @@ const Vendors = () => {
         <Button >
             <Link href="/dashboard/vendor/vendors-logs">تحديث  بيانات البائع</Link>
         </Button >
+        <select  // Use onChange instead of onSelect
+          className='bg-primary border-[1.5px] border-primary rounded-sm pr-3 text-white'
+          id="paymentMethod" // Unique ID for the select element
+          name="paymentMethod">
+            <option value="0" disabled selected>تحديث طريقة الدفع</option>
+            <option value="">
+              <Link href="/pay-cash">
+              الدفع كاش
+              </Link>
+          
+            </option>
+            <option value="1">الدفع عبر استرداد المنتج</option>
+            <option value="2">الدفع بالشيك</option>
+        </select>
        </div>
       <DataTable
       total = {total}
