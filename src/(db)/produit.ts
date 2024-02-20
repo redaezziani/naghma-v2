@@ -9,10 +9,30 @@ interface IProduit {
 
 export const createProduit = async (data: IProduit) => {
     try {
-
+        const checkProduct = await prisma.produit_Final.findFirst({
+            where: {
+                nom: data.nom.toLowerCase()
+            }
+        });
+        if (checkProduct) {
+            const produit = await prisma.produit_Final.update({
+                where: {
+                    id: checkProduct.id
+                },
+                data: {
+                    quantite: {
+                        increment: data.quantite
+                    }
+                }
+            });
+            if (!produit) {
+                return { status: 'error', message: 'لم يتم تحديث المنتج' };
+            }
+            return { status: 'success', message: 'تم تحديث المنتج بنجاح', data: produit };
+        }   
         const produit = await prisma.produit_Final.create({
             data: {
-                nom: data.nom,
+                nom: data.nom.toLowerCase(),
                 prix_vente: data.prix_vente,
                 quantite: data.quantite
             }

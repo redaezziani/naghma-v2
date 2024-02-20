@@ -24,7 +24,7 @@ export const createVendur_log = async (data: IVendur_log) => {
         if (checkProduct.quantite < data.quantite) {
             return { status: 'error', message: 'الكمية المطلوبة غير متوفرة' };
         }
-        console.log(checkProduct);
+        console.log(checkProduct.prix_vente*data.quantite);
 
         const vendur_log = await prisma.vente_logs.create({
             data: {
@@ -35,7 +35,7 @@ export const createVendur_log = async (data: IVendur_log) => {
                 prix_a_paye: data.prix_a_paye? data.prix_a_paye : 0
             }
         });
-
+        console.log(vendur_log);
         if (!vendur_log) {
             return { status: 'error', message: 'لم يتم إنشاء سجل البيع' };
         }
@@ -47,19 +47,20 @@ export const createVendur_log = async (data: IVendur_log) => {
             },
             data: {
                 le_prix_a_paye: {
-                    increment: data.prix_a_paye * data.quantite
+                    increment: checkProduct.prix_vente*data.quantite
                 }
-                
+            
             }
         });
-        if(data.prix_a_paye > 0){
+        if (data.prix_a_paye) {
             const vendur = await prisma.vendur.update({
                 where: {
                     id: data.vendur_id
                 },
                 data: {
+                   
                     le_prix_a_payer: {
-                        increment: data.prix_a_paye
+                        increment: data.prix_a_paye // is mean old price + new price
                     }
                 }
             });
@@ -83,7 +84,6 @@ export const createVendur_log = async (data: IVendur_log) => {
         return { status: 'success', message: 'تم إنشاء سجل البيع بنجاح', data: vendur_log };
     } catch (error: any) {
         console.error(error);
-    } finally {
-        await prisma.$disconnect();
     }
 }
+    
