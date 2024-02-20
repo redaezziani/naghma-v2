@@ -28,12 +28,14 @@ const Vendors = () => {
   const handelProducts = async () => {
     try {
       const res = await getVendurs();
-      if (res) {
-        setProducts(res.data || []);
-        console.log(res);
-        setTotal(res.total_price || 0);
-        console.log(res);
+      if (res?.status === 'error') {
+        setProducts([]);
+        return;
       }
+      setProducts(res.data);
+        console.log(res);
+        setTotal(res.total_price);
+        console.log(res);
     } catch (error) {
       console.log(error);
     }

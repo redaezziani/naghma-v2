@@ -9,10 +9,30 @@ interface IProduit {
 
 export const createProduit = async (data: IProduit) => {
     try {
-
+        const checkProduct = await prisma.produit_Final.findFirst({
+            where: {
+                nom: data.nom.toLowerCase()
+            }
+        });
+        if (checkProduct) {
+            const produit = await prisma.produit_Final.update({
+                where: {
+                    id: checkProduct.id
+                },
+                data: {
+                    quantite: {
+                        increment: data.quantite
+                    }
+                }
+            });
+            if (!produit) {
+                return { status: 'error', message: 'لم يتم تحديث المنتج' };
+            }
+            return { status: 'success', message: 'تم تحديث المنتج بنجاح', data: produit };
+        }   
         const produit = await prisma.produit_Final.create({
             data: {
-                nom: data.nom,
+                nom: data.nom.toLowerCase(),
                 prix_vente: data.prix_vente,
                 quantite: data.quantite
             }
@@ -68,16 +88,47 @@ export const deleteProduit = async (id: string) => {
 // return just the name and id of the produit
 export const getAllProduits = async () => {
     try {
-        const produits = await prisma.produit_Final.findMany({
-            select: {
-                id: true,
-                nom: true
+        const products = await prisma.produit_Final.findMany({
+            orderBy: {
+                created_at: 'asc',
+            },
+        });
+
+        // Create a map to store products grouped by name
+        const productMap = new Map<string, any>();
+
+        // Group products by name
+        products.forEach(product => {
+            if (!productMap.has(product.nom)) {
+                productMap.set(product.nom, product);
             }
         });
-        if (produits.length === 0) {
-            return { status: 'error', message: 'لا يوجد منتجات' };
+
+        // Iterate through the products
+        for (const [name, product] of productMap) {
+            // Check if the product has a quantity of 0
+            if (product.quantite === 0) {
+                // Delete the product with quantity 0
+                await prisma.produit_Final.delete({
+                    where: {
+                        id: product.id,
+                    },
+                });
+
+                // Remove the product from the map
+                productMap.delete(name);
+
+                const nextProduct = products.find(p => p.nom === name && p.quantite > 0);
+                if (nextProduct) {
+                    productMap.set(name, nextProduct);
+                }
+
+
+            }
         }
-        return { status: 'success', data: produits };
+
+        // Return the products
+        return { status: 'success', data: Array.from(productMap.values()) };
     } catch (error: any) {
         console.error(error);
     } finally {
