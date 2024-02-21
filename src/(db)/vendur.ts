@@ -190,40 +190,35 @@ export const getVendurById = async (id: string) => {
         if (!vendur) {
             return { status: 'error', message: 'لم يتم العثور على البائع' };
         }
-
-        let totalSales = 0;
-        let totalReturns = 0;
-        let totalPayments = 0;
-
-        vendur.Vente_logs.forEach((log: any) => {
-            totalSales += log.prix;
+        let data ;
+        const vendur_info = {
+            id: vendur.id,
+            nom: vendur.nom,
+            le_prix_a_payer: vendur.le_prix_a_payer,
+            le_prix_a_paye: vendur.le_prix_a_paye,
+            frais_de_prix: vendur.frais_de_prix,
+            balance: vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix
+        }
+        // get all products that sold to this vendur with the total price
+        const products = vendur.produit_sell.map((product: any) => {
+            return {
+                ...product,
+                total_price: product.quantite * product.prix
+            }
         });
-
-        vendur.produit_sell.forEach((sell: any) => {
-            totalSales += sell.prix;
-        });
-
-        vendur.loss.forEach((loss: any) => {
-            totalReturns += loss.prix;
-        });
-
-        vendur.prix_a_paye.forEach((payment: any) => {
-            totalPayments += payment.prix;
-        });
-
-        const balance = vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix;
-
-        const data = {
-            vendur: {
-                id: vendur.id,
-                nom: vendur.nom
-            },
-            sales: totalSales,
-            returns: totalReturns,
-            payments: totalPayments,
-            balance: balance
-        };
-
+        // get all payments that paid to this vendur
+        const payments = vendur.prix_a_paye;
+        // get all sales that sold to this vendur
+        const sales = vendur.Vente_logs;
+        // get all loss that this vendur have
+        const loss = vendur.loss;
+        data = {
+            vendur_info,
+            products,
+            payments,
+            sales,
+            loss
+        }
         return { status: 'success', message: 'تم العثور على البائع بنجاح', data };
     } catch (error: any) {
         console.error(error);
