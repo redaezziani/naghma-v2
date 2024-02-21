@@ -9,6 +9,7 @@ import { paid_by_return } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
 import { getSellsByVendur } from '@/(db)/sell-produit';
 import { toast } from 'sonner';
+import { get } from 'http';
 interface return_fra {
     vendur_id: string,
     produit_id: string,
@@ -23,17 +24,18 @@ const Payment = () => {
     const [isloading, setIsLoading] = React.useState(false)
     const [quantite_attendue_retourner, setQuantite_attendue_retourner] = React.useState('0');
     const [quantite_reel_retourner, setQuantite_reel_retourner] = React.useState('0');
-    
-    const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const handelChangeVendurId = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         setVendurId(e.target.value)
+        await allProducts(e.target.value)
     }
     const handelChangeProductId = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setProductId(e.target.value)
     }
 
-    const allVendurs= async () => {
+    const allVendurs = async () => {
         try {
-            const res= await getAllVendurs()
+            const res = await getAllVendurs()
             if (res?.status === 'error') {
                 return
             }
@@ -44,15 +46,17 @@ const Payment = () => {
         }
     }
 
-    const allProducts = async () => {
+    const allProducts = async (vendurId: string = '') => {
         try {
+            console.log(vendurId)
             const res = await getSellsByVendur(vendurId)
             if (res?.status === 'error') {
                 return
             }
+            console.log(res)
             setProducts(res?.data)
         } catch (error) {
-            console.error(error)   
+            console.error(error)
         }
     }
 
@@ -60,7 +64,7 @@ const Payment = () => {
         try {
             if (vendurId === '' || productId === '' || quantite_attendue_retourner === '' || quantite_reel_retourner === '') {
                 toast.error('الرجاء ملء جميع الحقول')
-                return  
+                return
             }
 
             const data: return_fra = {
@@ -78,7 +82,7 @@ const Payment = () => {
             }
             toast.success(res?.message)
 
-            
+
         } catch (error) {
             console.error(error)
         }
@@ -89,14 +93,13 @@ const Payment = () => {
 
     useEffect(() => {
         allVendurs()
-        allProducts()
     }, [])
 
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                 تحديث طريقة الدفع للبائع
-                </h1>
+            </h1>
             <p>
                 هذه هي صفحة تحديث طريقة الدفع للبائع
             </p>
@@ -104,9 +107,9 @@ const Payment = () => {
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم البائع</label>
                 <select
-                    onChange={handelChangeVendurId} 
+                    onChange={handelChangeVendurId}
                     className='bg-white'
-                    id="vendurID" 
+                    id="vendurID"
                     defaultValue={vendurId}
                     name="vendurID">
                     {vendurs.map((vendur: any) => (
@@ -118,20 +121,36 @@ const Payment = () => {
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم المنتج</label>
-                <select
-                    onChange={handelChangeProductId} 
-                    className='bg-white'
-                    id="productID" 
-                    defaultValue={productId}
-                    name="productID">
-                    {products.map((product: any) => (
-                        <option key={product.id} value={product.id}>
-                            {product.nom}
+                {
+                    products.length > 0 ? (
+                        <select
+                            onChange={handelChangeProductId}
+                            className='bg-white'
+                            id="productID"
+                            defaultValue={productId}
+                            name="productID">
+                            {products?.map((item: any) => (
+                                <option key={item.produit.id} value={item.produit.id}>
+                                    {item.produit.nom}
+                                </option>
+                            ))}
+                        </select>
+                    ) : <select
+                        onChange={handelChangeProductId}
+                        className='bg-white'
+                        id="productID"
+                        disabled
+                        value={'0'}
+                        name="productID">
+                        <option
+                            disabled
+                        >
+                            البائع لا يحتوي على منتجات
                         </option>
-                    ))}
-                </select>
+                    </select>
+                }
             </div>
-           
+
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <Label>
                     الكمية المتوقعة للإرجاع
@@ -153,9 +172,9 @@ const Payment = () => {
                 />
             </div>
             <Button
-            isloading={isloading}
-            disabled={isloading}
-            className='bg-primary text-white' onClick={handelSubmit}>
+                isloading={isloading}
+                disabled={isloading}
+                className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
         </div>

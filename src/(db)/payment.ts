@@ -242,7 +242,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 quantite: {
-                    increment: quantite_attendue_retourner
+                    increment: quantite_attendue_retourner // this is mean quantite = quantite + quantite_attendue_retourner
                 }
             }
         });
@@ -277,9 +277,10 @@ export const paid_by_return = async (data: return_fra) => {
                 id: vendur_id
             },
             data: {
-                le_prix_a_payer: {
-                    increment: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_payer = le_prix_a_payer + quantite_reel_retourner * produit.prix_vente
+                le_prix_a_paye: {
+                    increment: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_paye = le_prix_a_paye + quantite_reel_retourner * produit.prix_vente
                 }
+
             }
         });
         if (!updateVendur) {
