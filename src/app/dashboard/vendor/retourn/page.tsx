@@ -90,17 +90,17 @@ const Payment = () => {
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
-                تحديث طريقة الدفع للبائع
+                المنتجات التي تم إرجاعها من قبل البائع
                 </h1>
             <p>
-                هذه هي صفحة تحديث طريقة الدفع للبائع
+                هذه هي صفحة تحديث المنتجات التي تم إرجاعها من قبل البائع
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم البائع</label>
                 <select
                     onChange={handelChangeVendurId} 
-                    className='bg-white'
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                     id="vendurID" 
                     defaultValue={vendurId}
                     name="vendurID">
@@ -112,10 +112,13 @@ const Payment = () => {
                 </select>
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>رقم المنتج</label>
+                <label className='font-semibold'>
+                    رقم المنتج المرجع
+            
+                </label>
                 <select
                     onChange={handelChangeProductId} 
-                    className='bg-white'
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                     id="productID" 
                     defaultValue={productId}
                     name="productID">
