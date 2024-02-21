@@ -131,6 +131,11 @@ const Vendors = () => {
            
             </Link>
         </Button >
+        <Button >
+            <Link href="/dashboard/vendor/payment">
+               دفع مستحقات البائع
+            </Link>
+        </Button >
        
        </div>
       <DataTable

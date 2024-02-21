@@ -33,9 +33,11 @@ const Payment = () => {
 
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
-            <h1 className='text-2xl text-primary font-bold'>تحديث  بيانات البائع</h1>
+            <h1 className='text-2xl text-primary font-bold'>
+                تحديث طريقة الدفع للبائع
+                </h1>
             <p>
-                من هنا يمكنك تحديث معلومات طريقة الدفع الخاصة بالبائع
+                هذه هي صفحة تحديث طريقة الدفع للبائع
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
