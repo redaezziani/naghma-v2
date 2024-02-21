@@ -3,24 +3,53 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect } from 'react';
-
-import { createVendur_log } from '@/(db)/vendur-log';
-import { getAllVendurs } from '@/(db)/vendur';
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-
-interface IVendur {
-    id: string;
-    nom: string;
+import { prix_a_paye } from '@/(db)/payment';
+import { getAllVendurs } from '@/(db)/vendur';
+import { getAllProduits } from '@/(db)/produit';
+interface payment {
+    vendur_id: string,
+    prix: number,
+    type: string
 }
-
 const Payment = () => {
+    const [vendurs, setVendurs] = React.useState([]) as any[];
     const [vendurId, setVendurId] = React.useState('');
     const [price, setPrice] = React.useState('0');
     const [validationDate, setValidationDate] = React.useState('');
-
+    interface payment {
+        vendur_id: string,
+        prix: number,
+        type: string
+    }
     const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
         // Leave this function blank
+    }
+
+    const allVendurs= async () => {
+        try {
+            const res= await getAllVendurs()
+            if (res?.status === 'error') {
+                return
+            }
+            setVendurs(res?.data)
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const allProducts = async () => {
+        try {
+            const res = await getAllProduits()
+            if (res?.status === 'error') {
+                return
+            }
+            setVendurs(res?.data)
+        } catch (error) {
+            console.error(error)   
+        }
     }
 
     const handelSubmit = async () => {
@@ -28,7 +57,8 @@ const Payment = () => {
     }
 
     useEffect(() => {
-        // Leave this function blank
+        allVendurs()
+        allProducts()
     }, [])
 
     return (
@@ -64,15 +94,15 @@ const Payment = () => {
                 />
             </div>
             {/* make an input type radio that have the type of the payment a chash payment or a banck check payment  */}
-            <div className='flex w-full lg:w-1/2 gap-3  flex-col items-start  '>
+            <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start '>
                 <RadioGroup
                 className=''
                 defaultValue="option-one">
-                    <div className=" flex w-full  items-start justify-end gap-2">
+                    <div className=" flex w-full  items-start justify-start gap-2">
                         <Label htmlFor="option-one">الدفع نقدًا</Label>
                         <RadioGroupItem value="option-one" id="option-one" />
                     </div>
-                    <div className="flex w-full items-start justify-end space-x-2">
+                    <div className="flex w-full items-start justify-start space-x-2">
                         <Label htmlFor="option-two">الدفع بشيك بنكي</Label>
                         <RadioGroupItem value="option-two" id="option-two" />
                     </div>
