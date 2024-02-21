@@ -62,15 +62,15 @@ const Payment = () => {
                 />
             </div>
             {/* make an input type radio that have the type of the payment a chash payment or a banck check payment  */}
-            <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start '>
+            <div className='flex w-full lg:w-1/2 gap-3  flex-col items-start  '>
                 <RadioGroup
                 className=''
                 defaultValue="option-one">
-                    <div className=" flex w-full  items-start justify-start gap-2">
+                    <div className=" flex w-full  items-start justify-end gap-2">
                         <Label htmlFor="option-one">الدفع نقدًا</Label>
                         <RadioGroupItem value="option-one" id="option-one" />
                     </div>
-                    <div className="flex w-full items-start justify-start space-x-2">
+                    <div className="flex w-full items-start justify-end space-x-2">
                         <Label htmlFor="option-two">الدفع بشيك بنكي</Label>
                         <RadioGroupItem value="option-two" id="option-two" />
                     </div>
