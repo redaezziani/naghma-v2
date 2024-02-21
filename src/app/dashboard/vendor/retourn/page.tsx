@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { paid_by_return } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
-import { getAllProduits } from '@/(db)/produit';
+import { getSellsByVendur } from '@/(db)/sell-produit';
 import { toast } from 'sonner';
 interface return_fra {
     vendur_id: string,
@@ -46,7 +46,7 @@ const Payment = () => {
 
     const allProducts = async () => {
         try {
-            const res = await getAllProduits()
+            const res = await getSellsByVendur(vendurId)
             if (res?.status === 'error') {
                 return
             }
