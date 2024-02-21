@@ -20,6 +20,7 @@ const Payment = () => {
     const [vendurId, setVendurId] = React.useState('');
     const [products, setProducts] = React.useState([]) as any[];
     const [productId, setProductId] = React.useState('');
+    const [isloading, setIsLoading] = React.useState(false)
     const [quantite_attendue_retourner, setQuantite_attendue_retourner] = React.useState('0');
     const [quantite_reel_retourner, setQuantite_reel_retourner] = React.useState('0');
     
@@ -49,7 +50,7 @@ const Payment = () => {
             if (res?.status === 'error') {
                 return
             }
-            setVendurs(res?.data)
+            setProducts(res?.data)
         } catch (error) {
             console.error(error)   
         }
@@ -68,17 +69,21 @@ const Payment = () => {
                 quantite_attendue_retourner: Number(quantite_attendue_retourner),
                 quantite_reel_retourner: Number(quantite_reel_retourner)
             }
+            setIsLoading(true)
 
             const res = await paid_by_return(data)
             if (res?.status === 'error') {
                 toast.error(res.message)
                 return
             }
-            toast.success(res.message)
+            toast.success(res?.message)
 
             
         } catch (error) {
             console.error(error)
+        }
+        finally {
+            setIsLoading(false)
         }
     }
 
@@ -126,12 +131,7 @@ const Payment = () => {
                     ))}
                 </select>
             </div>
-            <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>
-                    التمن
-                </label>
-                
-            </div>
+           
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <Label>
                     الكمية المتوقعة للإرجاع
@@ -152,7 +152,10 @@ const Payment = () => {
                     value={quantite_reel_retourner}
                 />
             </div>
-            <Button className='bg-primary text-white' onClick={handelSubmit}>
+            <Button
+            isloading={isloading}
+            disabled={isloading}
+            className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
         </div>
