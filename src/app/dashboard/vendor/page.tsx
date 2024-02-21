@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/my-ui/data-table';
-import { Cog, Trash } from 'lucide-react';
+import { UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs, deleteVendur } from '@/(db)/vendur';
@@ -34,10 +34,9 @@ const Vendors = () => {
         setProducts([]);
         return;
       }
-      setProducts(res.data);
+      setProducts(res?.data??[]);
         console.log(res);
-        setTotal(res.total_price);
-        console.log(res);
+        setTotal(res?.total_price??0);
     } catch (error) {
       console.log(error);
     }
@@ -92,16 +91,9 @@ const Vendors = () => {
       accessorKey: 'action',
       header: 'إجراء',
       cell: ({ row }: { row: any }) => <div className='flex justify-start items-center gap-4'>
-          <Trash
-            onClick={() => handleDelete(row.getValue('id'))}
-            className='cursor-pointer text-muted-foreground hover:text-destructive hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
-            size={16}
-
-          />
-
-        <Link href={`/dashboard/raw-product/update-product/${row.getValue('id')}`}>
-          <Cog
-            className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105 hover:rotate-180 transition-all duration-300 ease-in-out'
+        <Link href={`/dashboard/vendor/${row.getValue('id')}`}>
+          <UserRound
+            className='cursor-pointer  text-muted-foreground hover:font-bold hover:text-green-500 transition-all duration-300 ease-in-out'
             size={16} />
         </Link>
       </div>

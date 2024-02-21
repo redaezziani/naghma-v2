@@ -1,7 +1,99 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
 import { revalidatePath } from "next/cache";
+/*
+model Produit_Final {
+    id        String   @id @default(uuid()) @db.VarChar(36)
+    nom       String
+    prix_vente Float
+    quantite  Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//الموزع
+model Vendur {
+    id String @id @default(uuid()) @db.VarChar(36)
+    nom String
+    le_prix_a_payer Float @default(0)//المستحقات
+    le_prix_a_paye Float @default(0) //المدفوعات
+    frais_de_prix Float @default(0) //المصاريف
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//المنتج الاولي المباع
+model Matiere_Premiere_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    stock_initial Int
+    consomation Int
+    achat Int 
+    ventes Int 
+    offres Int
+    retours Int
+    stock_final Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//المنتج النهائي المباع
+model Produit_Final_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    stock_initial Int
+    production Int
+    ventes Int 
+    retours Int
+    changes Int
+    stock_final Int
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//جدول المبيعات
+model Vente_logs {
+    id String @id @default(uuid()) @db.VarChar(36)
+    vendur_id String//الموزع
+    produit_id String//المنتج
+    quantite Int//الكمية
+    prix Float//السعر
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//المنتجات التي بيعت لكل موزع
+model produit_sell {
+    id String @id @default(uuid()) @db.VarChar(36)
+    produit_id String//المنتج
+    vendur_id String//الموزع
+    quantite Int//الكمية  
+    prix Float//السعر
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//جدول دفع المستحقات
+model prix_a_paye {
+    id String @id @default(uuid()) @db.VarChar(36)
+    vendur_id String//الموزع
+    type String//النوع
+    prix Float//المبلغ
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+//جدول المصاريف لكل موزع
+model frais_de_prix {
+    id String @id @default(uuid()) @db.VarChar(36)
+    vendur_id String//الموزع
+    prix Float//المبلغ
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
 
+//الخسائر المترتة عن ارجاع المنتوج ناقصا
+model loss {
+    id String @id @default(uuid()) @db.VarChar(36)
+    vendur_id String//الموزع
+    prix Float//المبلغ
+    produit_id String//المنتج
+    quantite Int//الكمية
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+*/
 export const createVendur = async (nom:string) => {
     try {
         const vendur = await prisma.vendur.create({
@@ -81,36 +173,62 @@ export const getAllVendurs = async () => {
     }
 }
 
-// lets get the vendur by id and how much the amount that he take every day
 export const getVendurById = async (id: string) => {
     try {
-        const vendur_log = await prisma.vente_logs.findMany({
+        const vendur = await prisma.vendur.findUnique({
             where: {
                 id
             },
-            orderBy: {
-                created_at: 'desc'
+            include: {
+                produit_sell: true,
+                prix_a_paye: true,
+                Vente_logs: true,
+                loss: true
             }
         });
-        const vendur_log_with_date = vendur_log.map((vendur: any) => {
-            return {
-                date: vendur.created_at,
-                amount: vendur.prix_a_paye
-            }
+
+        if (!vendur) {
+            return { status: 'error', message: 'لم يتم العثور على البائع' };
+        }
+
+        let totalSales = 0;
+        let totalReturns = 0;
+        let totalPayments = 0;
+
+        vendur.Vente_logs.forEach((log: any) => {
+            totalSales += log.prix;
         });
-        // now lets group the amount by date
-        const vendur_log_grouped = vendur_log_with_date.reduce((acc: any, vendur: any) => {
-            if (!acc[vendur.date]) {
-                acc[vendur.date] = 0;
-            }
-            acc[vendur.date] += vendur.amount;
-            return acc;
-        }, {});
-        
-        return { status: 'success', message: 'تم العثور على البائع بنجاح', data: vendur_log_grouped };
+
+        vendur.produit_sell.forEach((sell: any) => {
+            totalSales += sell.prix;
+        });
+
+        vendur.loss.forEach((loss: any) => {
+            totalReturns += loss.prix;
+        });
+
+        vendur.prix_a_paye.forEach((payment: any) => {
+            totalPayments += payment.prix;
+        });
+
+        const balance = vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix;
+
+        const data = {
+            vendur: {
+                id: vendur.id,
+                nom: vendur.nom
+            },
+            sales: totalSales,
+            returns: totalReturns,
+            payments: totalPayments,
+            balance: balance
+        };
+
+        return { status: 'success', message: 'تم العثور على البائع بنجاح', data };
     } catch (error: any) {
         console.error(error);
+        return { status: 'error', message: 'حدث خطأ ما أثناء جلب البيانات' };
     } finally {
         await prisma.$disconnect();
     }
-}
+};

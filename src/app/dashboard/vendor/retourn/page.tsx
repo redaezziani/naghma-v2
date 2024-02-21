@@ -7,8 +7,9 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { paid_by_return } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
-import { getAllProduits } from '@/(db)/produit';
+import { getSellsByVendur } from '@/(db)/sell-produit';
 import { toast } from 'sonner';
+import { get } from 'http';
 interface return_fra {
     vendur_id: string,
     produit_id: string,
@@ -20,19 +21,21 @@ const Payment = () => {
     const [vendurId, setVendurId] = React.useState('');
     const [products, setProducts] = React.useState([]) as any[];
     const [productId, setProductId] = React.useState('');
+    const [isloading, setIsLoading] = React.useState(false)
     const [quantite_attendue_retourner, setQuantite_attendue_retourner] = React.useState('0');
     const [quantite_reel_retourner, setQuantite_reel_retourner] = React.useState('0');
-    
-    const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
+
+    const handelChangeVendurId = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         setVendurId(e.target.value)
+        await allProducts(e.target.value)
     }
     const handelChangeProductId = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setProductId(e.target.value)
     }
 
-    const allVendurs= async () => {
+    const allVendurs = async () => {
         try {
-            const res= await getAllVendurs()
+            const res = await getAllVendurs()
             if (res?.status === 'error') {
                 return
             }
@@ -43,15 +46,17 @@ const Payment = () => {
         }
     }
 
-    const allProducts = async () => {
+    const allProducts = async (vendurId: string = '') => {
         try {
-            const res = await getAllProduits()
+            console.log(vendurId)
+            const res = await getSellsByVendur(vendurId)
             if (res?.status === 'error') {
                 return
             }
-            setVendurs(res?.data)
+            console.log(res)
+            setProducts(res?.data)
         } catch (error) {
-            console.error(error)   
+            console.error(error)
         }
     }
 
@@ -59,7 +64,7 @@ const Payment = () => {
         try {
             if (vendurId === '' || productId === '' || quantite_attendue_retourner === '' || quantite_reel_retourner === '') {
                 toast.error('الرجاء ملء جميع الحقول')
-                return  
+                return
             }
 
             const data: return_fra = {
@@ -68,29 +73,32 @@ const Payment = () => {
                 quantite_attendue_retourner: Number(quantite_attendue_retourner),
                 quantite_reel_retourner: Number(quantite_reel_retourner)
             }
+            setIsLoading(true)
 
             const res = await paid_by_return(data)
             if (res?.status === 'error') {
                 toast.error(res.message)
                 return
             }
-            toast.success(res.message)
+            toast.success(res?.message)
 
-            
+
         } catch (error) {
             console.error(error)
+        }
+        finally {
+            setIsLoading(false)
         }
     }
 
     useEffect(() => {
         allVendurs()
-        allProducts()
     }, [])
 
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
-                المنتجات التي تم إرجاعها من قبل البائع
+                تحديث طريقة الدفع للبائع
                 </h1>
             <p>
                 هذه هي صفحة تحديث المنتجات التي تم إرجاعها من قبل البائع
@@ -100,7 +108,7 @@ const Payment = () => {
                 <label className='font-semibold'>رقم البائع</label>
                 <select
                     onChange={handelChangeVendurId} 
-                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
+                    className='bg-white'
                     id="vendurID" 
                     defaultValue={vendurId}
                     name="vendurID">
@@ -112,13 +120,10 @@ const Payment = () => {
                 </select>
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>
-                    رقم المنتج المرجع
-            
-                </label>
+                <label className='font-semibold'>رقم المنتج</label>
                 <select
                     onChange={handelChangeProductId} 
-                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
+                    className='bg-white'
                     id="productID" 
                     defaultValue={productId}
                     name="productID">
@@ -129,12 +134,7 @@ const Payment = () => {
                     ))}
                 </select>
             </div>
-            <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>
-                    التمن
-                </label>
-                
-            </div>
+
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <Label>
                     الكمية المتوقعة للإرجاع
@@ -155,7 +155,10 @@ const Payment = () => {
                     value={quantite_reel_retourner}
                 />
             </div>
-            <Button className='bg-primary text-white' onClick={handelSubmit}>
+            <Button
+                isloading={isloading}
+                disabled={isloading}
+                className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
         </div>
