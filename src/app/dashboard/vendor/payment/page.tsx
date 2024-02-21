@@ -98,11 +98,11 @@ const Payment = () => {
                 <RadioGroup
                 className=''
                 defaultValue="option-one">
-                    <div className=" flex w-full  items-start justify-start gap-2">
+                    <div className=" flex w-full  items-start justify-end gap-2">
                         <Label htmlFor="option-one">الدفع نقدًا</Label>
                         <RadioGroupItem value="option-one" id="option-one" />
                     </div>
-                    <div className="flex w-full items-start justify-start space-x-2">
+                    <div className="flex w-full items-start justify-end space-x-2">
                         <Label htmlFor="option-two">الدفع بشيك بنكي</Label>
                         <RadioGroupItem value="option-two" id="option-two" />
                     </div>
