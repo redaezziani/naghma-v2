@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { prix_a_paye } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
-import { getAllProduits } from '@/(db)/produit';
+import { toast } from 'sonner';
 interface payment {
     vendur_id: string,
     prix: number,
@@ -17,22 +17,21 @@ const Payment = () => {
     const [vendurs, setVendurs] = React.useState([]) as any[];
     const [vendurId, setVendurId] = React.useState('');
     const [price, setPrice] = React.useState('0');
-    const [validationDate, setValidationDate] = React.useState('');
-    interface payment {
-        vendur_id: string,
-        prix: number,
-        type: string
-    }
+    const [type, setType] = React.useState('cash');
+    const [isLoading, setIsLoading] = React.useState(false);
+    
     const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        // Leave this function blank
+        setVendurId(e.target.value)
     }
 
-    const allVendurs= async () => {
+    const allVendurs = async () => {
         try {
-            const res= await getAllVendurs()
+            
+            const res = await getAllVendurs()
             if (res?.status === 'error') {
                 return
             }
+
             setVendurs(res?.data)
 
         } catch (error) {
@@ -40,32 +39,46 @@ const Payment = () => {
         }
     }
 
-    const allProducts = async () => {
-        try {
-            const res = await getAllProduits()
-            if (res?.status === 'error') {
-                return
-            }
-            setVendurs(res?.data)
-        } catch (error) {
-            console.error(error)   
-        }
+    const handelType = (event: string) => {
+        setType(event)
     }
 
     const handelSubmit = async () => {
-        // Leave this function blank
+        try {
+            if (!vendurId || !price || price === '0' || !type) {
+                toast.error('الرجاء ملء جميع الحقول')
+                return
+            }
+            const data: payment = {
+                vendur_id: vendurId,
+                prix: Number(price),
+                type: type
+            }
+            setIsLoading(true)
+            const res = await prix_a_paye(data)
+            if (res?.status === 'error') {
+                toast.error(res.message)
+                return
+            }
+            toast.success(res?.message)
+            console.log(data);
+        } catch (error) {
+            console.error(error)
+        }
+        finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
         allVendurs()
-        allProducts()
     }, [])
 
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                 تحديث طريقة الدفع للبائع
-                </h1>
+            </h1>
             <p>
                 هذه هي صفحة تحديث طريقة الدفع للبائع
             </p>
@@ -73,15 +86,22 @@ const Payment = () => {
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم البائع</label>
                 <select
-                    onChange={handelChangeVendurId} // Use onChange instead of onSelect
-                    className='bg-white'
-                    id="vendurID" // Unique ID for the select element
-                    name="vendurID">
-                    <option >
-                        ahmed
-                    </option>
+                    name='vendur_id'
+                    onChange={handelChangeVendurId}
+                    defaultValue={vendurId}
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
+                >
+                    <option
+                        disabled
+                    >اختر البائع</option>
+                    {vendurs.map((vendur: any) => (
+                        <option key={vendur.id} value={vendur.id}>
+                            {vendur.nom}
+                        </option>
+                    ))}
                 </select>
             </div>
+
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>
                     التمن
@@ -90,26 +110,36 @@ const Payment = () => {
                     name='quantite'
                     type='number'
                     value={price}
-                    placeholder='الكمية'
+                    onChange={(e) => setPrice(e.target.value)}
+                    placeholder='التمن'
                 />
             </div>
-            {/* make an input type radio that have the type of the payment a chash payment or a banck check payment  */}
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start '>
                 <RadioGroup
-                className=''
-                defaultValue="option-one">
+                    className=''
+                    defaultValue='cash'
+                    onValueChange={handelType}
+                >
                     <div className=" flex w-full  items-start justify-end gap-2">
                         <Label htmlFor="option-one">الدفع نقدًا</Label>
-                        <RadioGroupItem value="option-one" id="option-one" />
+                        <RadioGroupItem
+
+                            value='cash'
+                            id="option-one" />
                     </div>
                     <div className="flex w-full items-start justify-end space-x-2">
                         <Label htmlFor="option-two">الدفع بشيك بنكي</Label>
-                        <RadioGroupItem value="option-two" id="option-two" />
+                        <RadioGroupItem
+                            value='bank-check'
+                            id="option-two" />
                     </div>
                 </RadioGroup>
 
             </div>
-            <Button className='bg-primary text-white' onClick={handelSubmit}>
+            <Button
+            isloading={isLoading}
+            disabled={isLoading}
+            className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
         </div>

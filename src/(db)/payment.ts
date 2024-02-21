@@ -187,14 +187,13 @@ export const frais_de_prix = async (data: any) => {
 // make  A function for the return fra
 interface return_fra {
     vendur_id: string,
-    prix: number,
     produit_id: string,
     quantite_attendue_retourner: number,
     quantite_reel_retourner: number
 }
 export const paid_by_return = async (data: return_fra) => {
     try {
-        const { vendur_id, prix, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
+        const { vendur_id, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
         const vendur = await prisma.vendur.findUnique({
             where: {
                 id: vendur_id
@@ -229,7 +228,7 @@ export const paid_by_return = async (data: return_fra) => {
         const prix_paye = await prisma.prix_a_paye.create({
             data: {
                 vendur_id,
-                prix,
+                prix: quantite_reel_retourner * produit.prix_vente,
                 type: 'return'
             }
         });
@@ -243,7 +242,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 le_prix_a_payer: {
-                    increment: prix // this is mean le_prix_a_payer = le_prix_a_payer + prix
+                    increment: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_payer = le_prix_a_payer + quantite_reel_retourner * produit.prix_vente
                 }
             }
         });

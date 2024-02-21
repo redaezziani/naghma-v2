@@ -121,7 +121,7 @@ const Vendors = () => {
      w-full
     lg:w-2/3
     px-6 py-3 relative">
-       <div className='flex gap-3'>
+       <div className='flex gap-3 flex-wrap'>
        <Button >
             <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
