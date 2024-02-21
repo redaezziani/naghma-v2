@@ -19,11 +19,7 @@ const Payment = () => {
     const [price, setPrice] = React.useState('0');
     const [type, setType] = React.useState('cash');
     const [isLoading, setIsLoading] = React.useState(false);
-    interface payment {
-        vendur_id: string,
-        prix: number,
-        type: string
-    }
+    
     const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setVendurId(e.target.value)
     }
