@@ -15,6 +15,7 @@ interface payment {
 }
 const Payment = () => {
     const [vendurs, setVendurs] = React.useState([]) as any[];
+    const [produits, setProduits] = React.useState([]) as any[];
     const [vendurId, setVendurId] = React.useState('');
     const [price, setPrice] = React.useState('0');
     const [validationDate, setValidationDate] = React.useState('');
@@ -46,7 +47,7 @@ const Payment = () => {
             if (res?.status === 'error') {
                 return
             }
-            setVendurs(res?.data)
+            setProduits(res?.data)
         } catch (error) {
             console.error(error)   
         }
@@ -73,13 +74,32 @@ const Payment = () => {
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم البائع</label>
                 <select
-                    onChange={handelChangeVendurId} // Use onChange instead of onSelect
-                    className='bg-white'
-                    id="vendurID" // Unique ID for the select element
-                    name="vendurID">
-                    <option >
-                        ahmed
-                    </option>
+                    name='vendur_id'
+                    onChange={handelChangeVendurId}
+                    value={vendurId}
+                    className='w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary'
+                >
+                    <option value=''>اختر البائع</option>
+                    {vendurs.map((vendur: any) => (
+                        <option key={vendur.id} value={vendur.id}>
+                            {vendur.nom}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+                <label className='font-semibold'>المنتج</label>
+                <select
+                    name='produit_id'
+                    value={vendurId}
+                    className='w-1/2 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-primary'
+                >
+                    <option value=''>اختر المنتج</option>
+                    {produits.map((produit: any) => (
+                        <option key={produit.id} value={produit.id}>
+                            {produit.nom}
+                        </option>
+                    ))}
                 </select>
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
