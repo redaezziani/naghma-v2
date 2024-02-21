@@ -179,3 +179,77 @@ export const frais_de_prix = async (data: any) => {
         console.error(error);   
     }
 }
+
+// make  A function for the return fra
+interface return_fra {
+    vendur_id: string,
+    prix: number,
+    produit_id: string,
+    quantite_attendue_retourner: number,
+    quantite_reel_retourner: number
+}
+export const paid_by_return = async (data: return_fra) => {
+    try {
+        const { vendur_id, prix, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
+        const vendur = await prisma.vendur.findUnique({
+            where: {
+                id: vendur_id
+            }
+        });
+        if (!vendur) {
+            return { status: 'error', message: 'الموزع غير موجود' };
+        }
+        const produit = await prisma.produit_Final.findUnique({
+            where: {
+                id: produit_id
+            }
+        });
+        if (!produit) {
+            return { status: 'error', message: 'المنتج غير موجود' };
+        }
+        const loss = quantite_attendue_retourner - quantite_reel_retourner;
+        if (loss > 0) {
+            const loss_data = {
+                vendur_id,
+                prix: loss * produit.prix_vente,
+                produit_id,
+                quantite: loss
+            }
+            const add_loss = await prisma.loss.create({
+                data: loss_data
+            });
+            if (!add_loss) {
+                return { status: 'error', message: 'لم يتم إضافة الخسارة' };
+            }
+        }
+        const prix_paye = await prisma.prix_a_paye.create({
+            data: {
+                vendur_id,
+                prix,
+                type: 'return'
+            }
+        });
+        if (!prix_paye) {
+            return { status: 'error', message: 'لم يتم إضافة المبلغ' };
+        }
+
+        const updateVendur = await prisma.vendur.update({
+            where: {
+                id: vendur_id
+            },
+            data: {
+                le_prix_a_payer: {
+                    increment: prix // this is mean le_prix_a_payer = le_prix_a_payer + prix
+                }
+            }
+        });
+        if (!updateVendur) {
+            return { status: 'error', message: 'لم يتم تحديث الموزع' };
+        }
+
+        return { status: 'success', message: 'تم إضافة المبلغ بنجاح' };
+
+    } catch (error: any) {
+        console.error(error);   
+    }
+}
