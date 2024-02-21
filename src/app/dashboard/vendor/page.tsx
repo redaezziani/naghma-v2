@@ -37,7 +37,6 @@ const Vendors = () => {
       setProducts(res?.data??[]);
         console.log(res);
         setTotal(res?.total_price??0);
-        console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -94,7 +93,7 @@ const Vendors = () => {
       cell: ({ row }: { row: any }) => <div className='flex justify-start items-center gap-4'>
         <Link href={`/dashboard/vendor/${row.getValue('id')}`}>
           <UserRound
-            className='cursor-pointer  text-muted-foreground hover:font-bold hover:text-green-400 transition-all duration-300 ease-in-out'
+            className='cursor-pointer  text-muted-foreground hover:font-bold hover:text-green-500 transition-all duration-300 ease-in-out'
             size={16} />
         </Link>
       </div>

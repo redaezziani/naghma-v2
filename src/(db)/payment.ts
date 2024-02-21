@@ -278,7 +278,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 le_prix_a_paye: {
-                    increment: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_paye = le_prix_a_paye + quantite_reel_retourner * produit.prix_vente
+                    decrement: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_paye = le_prix_a_paye + quantite_reel_retourner * produit.prix_vente
                 }
 
             }
