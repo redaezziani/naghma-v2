@@ -210,6 +210,42 @@ export const paid_by_return = async (data: return_fra) => {
         if (!produit) {
             return { status: 'error', message: 'المنتج غير موجود' };
         }
+        const produit_sell = await prisma.produit_sell.findFirst({
+            where: {
+                vendur_id,
+                produit_id
+            }
+        });
+        if (!produit_sell) {
+            return { status: 'error', message: 'لم يتم العثور على المنتج' };
+        }
+        if (produit_sell.quantite < quantite_attendue_retourner) {
+            return { status: 'error', message: 'الكمية المطلوبة أكبر من الكمية المباعة' };
+        }
+
+        const update_produit_sell = await prisma.produit_sell.update({
+            where: {
+                id: produit_sell.id
+            },
+            data: {
+                quantite: {
+                    decrement: quantite_attendue_retourner
+                }
+            }
+        });
+        if (!update_produit_sell) {
+            return { status: 'error', message: 'لم يتم تحديث المنتج' };
+        }
+        const update_produit = await prisma.produit_Final.update({
+            where: {
+                id: produit_id
+            },
+            data: {
+                quantite: {
+                    increment: quantite_attendue_retourner
+                }
+            }
+        });
         const loss = quantite_attendue_retourner - quantite_reel_retourner;
         if (loss > 0) {
             const loss_data = {
