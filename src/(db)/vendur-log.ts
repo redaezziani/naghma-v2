@@ -63,7 +63,31 @@ export const createVendur_log = async (data: IVendur_log) => {
         if (!produit) {
             return { status: 'error', message: 'لم يتم تحديث المنتج' };
         }
-
+        // check if is already sold to the vendur
+        const checkIfAlreadySold = await prisma.produit_sell.findFirst({
+            where: {
+                produit_id: data.produit_id,
+                vendur_id: data.vendur_id
+            }
+        });
+        if (checkIfAlreadySold) {
+            // lets update the product
+            const produit_sell = await prisma.produit_sell.update({
+                where: {
+                    id: checkIfAlreadySold.id
+                },
+                data: {
+                    quantite: {
+                        increment: data.quantite
+                    }
+                }
+            });
+            if (!produit_sell) {
+                return { status: 'error', message: 'لم يتم تحديث سجل البيع' };
+            }
+            return { status: 'success', message: 'تم تحديث سجل البيع بنجاح', data: vendur_log };
+        }
+        
         const produit_sell = await prisma.produit_sell.create({
             data: {
                 produit_id: data.produit_id,
