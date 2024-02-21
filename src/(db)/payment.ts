@@ -93,8 +93,12 @@ model loss {
     updated_at DateTime @updatedAt
 }
 */
-
-export const prix_a_paye = async (data: any) => {
+interface payment {
+    vendur_id: string,
+    prix: number,
+    type: string
+}
+export const prix_a_paye = async (data: payment) => {
     try {
         const { vendur_id, prix , type } = data;
         const vendur = await prisma.vendur.findUnique({
