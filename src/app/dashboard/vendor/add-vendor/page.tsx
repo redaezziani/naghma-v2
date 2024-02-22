@@ -11,7 +11,6 @@ const AddVendorPage = () => {
   const [name , setName] = React.useState('')
   const [Loading , setLoading] = React.useState(false)
   const handelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
       setName(e.target.value)
   }
   
@@ -19,7 +18,7 @@ const AddVendorPage = () => {
       try {
           setLoading(true)
           const res = await createVendur(name);
-          if (res.status === 'error') {
+          if (res?.status === 'error') {
               alert(res.message);
               return;
           }

@@ -86,6 +86,7 @@ const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
+    //@ts-ignore
   <motion.td
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}

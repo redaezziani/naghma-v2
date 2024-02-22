@@ -104,6 +104,7 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
     // @ts-ignore
     <Line
     style={{width: "100%", height: "100%"}}
+    //@ts-ignore
      data={data} options={options}></Line>
   );
 }
