@@ -3,21 +3,20 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect } from 'react';
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { prix_a_paye } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
 import { toast } from 'sonner';
-interface payment {
+import { frais_de_prix } from '@/(db)/payment'; 
+interface frais_de_prix {
     vendur_id: string,
-    prix: number,
-    type: string
+    prix: number
+    type : string
 }
 const Expenses = () => {
     const [vendurs, setVendurs] = React.useState([]) as any[];
     const [vendurId, setVendurId] = React.useState('');
     const [price, setPrice] = React.useState('0');
-    const [type, setType] = React.useState('cash');
+    const [type, setType] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
     
     const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -43,19 +42,21 @@ const Expenses = () => {
         setType(event)
     }
 
+
     const handelSubmit = async () => {
         try {
             if (!vendurId || !price || price === '0' || !type) {
                 toast.error('الرجاء ملء جميع الحقول')
                 return
             }
-            const data: payment = {
+
+            const data: frais_de_prix = {
                 vendur_id: vendurId,
                 prix: Number(price),
                 type: type
             }
             setIsLoading(true)
-            const res = await prix_a_paye(data)
+            const res = await frais_de_prix(data) // Use the imported function frais_de_prix
             if (res?.status === 'error') {
                 toast.error(res.message)
                 return
@@ -107,7 +108,7 @@ const Expenses = () => {
                     التمن
                 </label>
                 <Input
-                    name='quantite'
+                    name='price'
                     type='number'
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
@@ -119,11 +120,11 @@ const Expenses = () => {
                     ملاحظة
                 </label>
                 <Input
-                    name='observation'
+                    name='type'
                     type='text'
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder='التمن'
+                    value={type}
+                    onChange={(e) => setType(e.target.value)}
+                    placeholder='ملاحظة'
                 />
             </div>
             
