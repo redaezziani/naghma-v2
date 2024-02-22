@@ -6,7 +6,6 @@ import { UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs, deleteVendur } from '@/(db)/vendur';
-import { useRouter } from 'next/navigation';
 
 
 export interface ColumnDef {
@@ -117,25 +116,33 @@ const Vendors = () => {
         <Button >
           <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
-        <Button >
+        <Button
+        variant={'outline'}
+        >
           <Link href="/dashboard/vendor/vendors-logs">
             بيع المنتج للبائع
 
           </Link>
         </Button >
-        <Button >
+        <Button
+        variant={'outline'}
+        >
           <Link href="/dashboard/vendor/payment">
             دفع مستحقات البائع
 
           </Link>
         </Button >
-        <Button >
+        <Button
+        variant={'outline'}
+        >
           <Link href="/dashboard/vendor/retourn">
             المنتجات التي ارجعت
 
           </Link>
         </Button >
-        <Button >
+        <Button
+        variant={'outline'}
+        >
           <Link href="/dashboard/vendor/expenses">
             المصاريف
 

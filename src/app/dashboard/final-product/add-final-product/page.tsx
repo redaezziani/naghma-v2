@@ -18,7 +18,7 @@ const AddfinalProduct = () => {
     quantite: 0
   })
   const [isLoading , setIsLoading] = React.useState(false)
-  const handleChangeName = (e)=>{
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>)=>{
     // lets check if the type is number insert it as number
     if(e.target.type === 'number'){
       setData({...data, [e.target.name]: Number(e.target.value)})
@@ -26,7 +26,7 @@ const AddfinalProduct = () => {
     }
     setData({...data, [e.target.name]: e.target.value})  
   }
-  const handleSubmit = async (e)=>{
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
     try {
       e.preventDefault()
       setIsLoading(true)
@@ -35,7 +35,7 @@ const AddfinalProduct = () => {
       }
       
       const res= await createProduit(data)
-      if (res.status === 'error') {
+      if (res?.status === 'error') {
         alert(res.message)
         return
       }

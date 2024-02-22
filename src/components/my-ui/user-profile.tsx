@@ -42,7 +42,7 @@ export function UserProfile() {
     setOpen(!open);
     console.log(open);
   }
-   const logout = async () => {
+  const logout = async () => {
     try {
       const res = await fetch("/api/auth/logout");
       const data = await res.json();
@@ -58,47 +58,47 @@ export function UserProfile() {
 
   return (
     <DropdownMenu
-    onOpenChange={toggle}
+      onOpenChange={toggle}
     >
       <DropdownMenuTrigger
-      asChild>
+        asChild>
         {data &&
-         <div
-         
-         className=' flex gap-2 z-50 justify-start items-center cursor-pointer'
-         >
-           <Avatar
-            className=" cursor-pointer"
+          <div
+
+            className=' flex gap-2 z-50 justify-start items-center cursor-pointer'
           >
-            <AvatarImage
-              className=""
-              src={data.image}
-              alt="صورة الملف الشخصي للمستخدم"
-            />
-            <AvatarFallback>
-              {data.name.charAt(0).toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-         <div
-         className='flex-flex-col gap-2'
-         >
-          <p
-          className="text-sm font-semibold"
-          >
-            {data.name}
-          </p>
-          <p
-          className="text-xs"
-          >
-            {data.email}
-          </p>
-          </div>
-            
+            <Avatar
+              className=" cursor-pointer"
+            >
+              <AvatarImage
+                className=""
+                src={data.image}
+                alt="صورة الملف الشخصي للمستخدم"
+              />
+              <AvatarFallback>
+                {data.name.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div
+              className='flex-flex-col gap-2'
+            >
+              <p
+                className="text-sm font-semibold"
+              >
+                {data.name}
+              </p>
+              <p
+                className="text-xs"
+              >
+                {data.email}
+              </p>
+            </div>
+
             <ChevronDown
-            className={`w-4 h-4 transform duration-500 select-none transition-all ease-in-out ${open ? 'rotate-180' : 'rotate-0'}`}
+              className={`w-4 h-4 transform duration-500 select-none transition-all ease-in-out ${open ? 'rotate-180' : 'rotate-0'}`}
             />
-         
-         </div>
+
+          </div>
         }
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
@@ -106,43 +106,60 @@ export function UserProfile() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/dashboard">
-            <DropdownMenuItem>
-              الصفحة الرئيسية
-              <DropdownMenuShortcut>
+            <DropdownMenuItem
+            className=" cursor-pointer  text-destructive-500 justify-between w-full flex gap-2 items-center"
+            
+            >
+             
                 <HomeIcon
                   className="w-4 h-4"
                 />
-              </DropdownMenuShortcut>
+             
+              الصفحة الرئيسية
+
             </DropdownMenuItem>
           </Link>
           <Link href="/dashboard/profile">
-            <DropdownMenuItem>
-              الملف الشخصي
-              <DropdownMenuShortcut>
+            <DropdownMenuItem
+            className="  cursor-pointer text-destructive-500 justify-between w-full flex gap-2 items-center"
+            
+            >
+             
                 <UserRound
                   className="w-4 h-4"
                 />
-              </DropdownMenuShortcut>
+             
+              الملف الشخصي
+
             </DropdownMenuItem>
           </Link>
           <Link href="/dashboard/settings">
-            <DropdownMenuItem>
-              الإعدادات
-              <DropdownMenuShortcut>
+            <DropdownMenuItem
+            className=" cursor-pointer  text-destructive-500 justify-between w-full flex gap-2 items-center"
+            
+            >
+             
                 <Cog
                   className="w-4 h-4"
                 />
-              </DropdownMenuShortcut>
+              
+              الإعدادات
+
             </DropdownMenuItem>
           </Link>
 
           <DropdownMenuItem
-          onClick={logout}
+            onClick={logout}
+            className=" bg-slate-300/15  text-destructive-500 justify-between w-full flex gap-2 items-center"
           >
+            <ExitIcon
+              className=" tex-red-600"
+            />
+            <p
+              className="text-destructive-500"
+            >
               تسجيل الخروج
-            <DropdownMenuShortcut>
-              <ExitIcon />
-            </DropdownMenuShortcut>
+            </p>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

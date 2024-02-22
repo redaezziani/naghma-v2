@@ -48,7 +48,7 @@ const CompanyLoss = ({...props}) => {
          justify-start items-start
          ">
             <h3 className=' w-full px-2 text-lg text-primary'>
-                المنتجات المباعة
+                المنتجات المفقودة
             </h3>
             <DataTable
                 columns={columns}

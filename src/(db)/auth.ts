@@ -120,32 +120,6 @@ export const ResetPassword = async (token: string, password: string) => {
 }
 
 
-export const ChangePassword = async ( newPassword: string) => {
-    try {
-        const payload = verifyToken();
-
-        const { id, password } = payload;
-        if (!id || !password) {
-            return { type: 'error', message: 'الرمز غير صالح.' };
-        }
-        const hashedPassword = createHash('sha256').update
-        (newPassword).digest('hex');
-        await prisma.user.update({
-            where: {
-                id,
-            },
-            data: {
-                password: hashedPassword,
-            },
-        });
-        
-        return { type: 'success', message: 'تم تغيير كلمة المرور بنجاح.' };
-    }
-    catch (error) {
-        console.error('خطأ أثناء تغيير كلمة المرور:', error);
-        return { type: 'error', message: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
-    }
-}   
 
 
 export const SignOut = async () => {
