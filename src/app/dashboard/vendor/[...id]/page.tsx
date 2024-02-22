@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { getVendurById } from "@/(db)/vendur";
 import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
@@ -36,12 +36,8 @@ const VendorPage = ({ ...props }: any) => {
                 ملف البائع
             </h1>
             <div>
-                <VendorInfo />
+                <VendorInfo   vendur={data.vendur} />
             </div>
-            <div className='w-full  '>
-                <SelledProducts />  
-            </div> 
-
         </div>
     )
 }
