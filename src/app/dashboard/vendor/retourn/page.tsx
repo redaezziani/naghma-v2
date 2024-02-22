@@ -128,8 +128,8 @@ const Payment = () => {
                     defaultValue={productId}
                     name="productID">
                     {products.map((product: any) => (
-                        <option key={product.id} value={product.id}>
-                            {product.nom}
+                        <option key={product.produit.id} value={product.produit.id}>
+                            {product.produit.nom}
                         </option>
                     ))}
                 </select>

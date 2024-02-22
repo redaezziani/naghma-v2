@@ -10,7 +10,9 @@ function VendorInfo(props: any) {
         <p>المبلغ الذي يجب أن يدفع : <span className=' text-green-400'>{le_prix_a_paye}</span></p>
         <p>المبلغ الذي تم إرجاعه : <span className=' text-green-400'>{le_prix_a_payer}</span></p>
         <p>النفقات والمصاريف : <span className=' text-green-400'>{frais_de_prix}</span></p>
-        <p>الرصيد : <span className=' text-red-400'>{balance}</span></p>
+        <p>
+          المبلغ المتبقي لدفعه
+           : <span className=' text-red-400'>{balance}</span></p>
       </div>
     </div>
   )
