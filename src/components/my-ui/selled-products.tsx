@@ -1,10 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/my-ui/data-table';
-import { getVendurs, deleteVendur } from '@/(db)/vendur';
-import { useRouter } from 'next/navigation';
-
 
 export interface ColumnDef {
     accessorKey: string;
@@ -19,39 +15,26 @@ interface IVendur {
     totalAmount: number;
 }
 
-const SelledProducts = () => {
-    const [products, setProducts] = useState<IVendur[]>([]);
-    const [total, setTotal] = useState(0);
-    const handleDelete = async (id: string) => {
-        try {
-            const res = await deleteVendur(id);
-            if (res?.status === 'error') {
-                alert(res.message);
-                return;
-            }
-            setProducts(products.filter((product) => product.id !== id));
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
+const SelledProducts = ({...props}) => {
+    const payments = props.payments ?? [];
+    const total = payments.reduce((acc: number, curr: any) => acc + curr.price* curr.quantity, 0);
     const columns: ColumnDef[] = [
+        {
+            accessorKey: 'date',
+            header: 'التاريخ',
+            cell: ({ row }: { row: any }) => <div>{new Date(row.getValue('date')).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</div>,
+        },
         {
             accessorKey: 'type',
             header: 'النوع',
             cell: ({ row }: { row: any }) => <div>{row.getValue('type')}</div>,
         },
         {
-            accessorKey: 'quantity',
-            header: 'الكمية',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('quantity')}</div>,
+            accessorKey: 'price',
+            header: 'السعر',
+            cell: ({ row }: { row: any }) => <div>{row.getValue('price')}</div>,
         },
-        {
-            accessorKey: 'totalAmount',
-            header: 'المبلغ الإجمالي',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('totalAmount')} د.م</div>,
-        },
+        
     ];
 
    
@@ -69,9 +52,8 @@ const SelledProducts = () => {
                 المنتجات المباعة
             </h3>
             <DataTable
-                total={total}
                 columns={columns}
-                data={products} 
+                data={payments} 
             />
         </div>
     );

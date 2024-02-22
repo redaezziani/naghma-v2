@@ -1,8 +1,9 @@
 'use client';
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import { getVendurById } from "@/(db)/vendur";
 import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
+import CompantLoss from "@/components/my-ui/copanyloss";
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const [data, setData] = useState<any>({})
@@ -12,12 +13,13 @@ const VendorPage = ({ ...props }: any) => {
             if (res?.status === 'error') {
                 return;
             }
-            console.log(res.data);
+            console.log(res?.data);
             setData(res?.data ?? {});
         } catch (error) {
             console.log(error);
         }
     }
+
     useEffect(() => {
         handelData();
     }, [])
@@ -36,7 +38,17 @@ const VendorPage = ({ ...props }: any) => {
                 ملف البائع
             </h1>
             <div>
-                <VendorInfo   vendur={data.vendur} />
+                <VendorInfo vendur={data.vendur} />
+            </div>
+            <div
+                className='w-full'
+            >
+               {data.payments && <SelledProducts payments={data.payments} />}
+            </div>
+            <div
+                className='w-full'
+            >
+               {data.losses && <CompantLoss losses={data.losses} />}
             </div>
         </div>
     )
