@@ -1,7 +1,22 @@
 'use client';
+import { getVendurById } from '@/(db)/vendur';
+import React, { useEffect } from 'react';
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
-
+    const handelData = async () => {
+        try {
+            const res = await getVendurById(id);
+            if (res?.status === 'error') {
+                return;
+            }
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        handelData();
+    }, [])
     return (
         <div className=" mt-20
     flex

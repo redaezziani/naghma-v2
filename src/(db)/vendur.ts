@@ -190,7 +190,7 @@ export const getVendurById = async (id: string) => {
         if (!vendur) {
             return { status: 'error', message: 'لم يتم العثور على البائع' };
         }
-        let data ;
+
         const vendur_info = {
             id: vendur.id,
             nom: vendur.nom,
@@ -198,27 +198,55 @@ export const getVendurById = async (id: string) => {
             le_prix_a_paye: vendur.le_prix_a_paye,
             frais_de_prix: vendur.frais_de_prix,
             balance: vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix
-        }
-        // get all products that sold to this vendur with the total price
-        const products = vendur.produit_sell.map((product: any) => {
-            return {
-                ...product,
-                total_price: product.quantite * product.prix
+        };
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set hours to 0 for start of the day
+
+        const data = {
+            vendur: vendur_info,
+            payments: vendur.prix_a_paye.map(payment => ({
+                type: payment.type, 
+                price: payment.prix,
+                date: payment.created_at
+            })),
+            sales: await Promise.all(vendur.Vente_logs.map(async sale => {
+                const productName = await prisma.produit_Final.findUnique({
+                    where: {
+                        id: sale.produit_id,
+                    },
+                    select: {
+                        nom: true
+                    }
+                });
+
+                return {
+                    productName: productName?.nom,
+                    quantity: sale.quantite,
+                    price: sale.prix,
+                    date :sale.created_at
+                };
             }
-        });
-        // get all payments that paid to this vendur
-        const payments = vendur.prix_a_paye;
-        // get all sales that sold to this vendur
-        const sales = vendur.Vente_logs;
-        // get all loss that this vendur have
-        const loss = vendur.loss;
-        data = {
-            vendur_info,
-            products,
-            payments,
-            sales,
-            loss
-        }
+            )),
+            losses: await Promise.all(vendur.loss.map(async loss => {
+                const productName = await prisma.produit_Final.findUnique({
+                    where: {
+                        id: loss.produit_id,
+                    },
+                    select: {
+                        nom: true
+                    }
+                });
+
+                return {
+                    productName: productName?.nom,
+                    quantity: loss.quantite,
+                    price: loss.prix,
+                    date :loss.created_at
+                };
+            }))
+        };
+
         return { status: 'success', message: 'تم العثور على البائع بنجاح', data };
     } catch (error: any) {
         console.error(error);
