@@ -48,7 +48,6 @@ const Payment = () => {
 
     const allProducts = async (vendurId: string = '') => {
         try {
-            console.log(vendurId)
             const res = await getSellsByVendur(vendurId)
             if (res?.status === 'error') {
                 return
