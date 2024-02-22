@@ -190,23 +190,22 @@ export const getVendurById = async (id: string) => {
         if (!vendur) {
             return { status: 'error', message: 'لم يتم العثور على البائع' };
         }
-
+        const total_sell_price = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.prix*product.quantite, 0);
+        const total_sell_quantity = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.quantite, 0);
+        const total_loss_price = vendur.loss.reduce((acc: number, loss: any) => acc + loss.prix, 0);
         const vendur_info = {
             id: vendur.id,
             nom: vendur.nom,
             le_prix_a_payer: vendur.le_prix_a_payer,
             le_prix_a_paye: vendur.le_prix_a_paye,
             frais_de_prix: vendur.frais_de_prix,
-            balance: vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix
+            balance: vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix,
+            total_sell_price,
+            total_sell_quantity,
+            total_loss_price
+
         };
-        // total price for all sell products and losses and quantity of products
-        const total_price = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.prix, 0);
-        const total_losses = vendur.loss.reduce((acc: number, loss: any) => acc + loss.prix, 0);
-        const total_quantity = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.quantite, 0);
-        const total_quantity_losses = vendur.loss.reduce((acc: number, loss: any) => acc + loss.quantite, 0);
-        const total_quantity_sales = vendur.Vente_logs.reduce((acc: number, sale: any) => acc + sale.quantite, 0);
-        const total_price_sales = vendur.Vente_logs.reduce((acc: number, sale: any) => acc + sale.prix, 0);
-        
+       
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Set hours to 0 for start of the day
 
@@ -216,12 +215,6 @@ export const getVendurById = async (id: string) => {
                 type: payment.type, 
                 price: payment.prix,
                 date: payment.created_at,
-                total_price,
-                total_losses,
-                total_quantity,
-                total_quantity_losses,
-                total_quantity_sales,
-                total_price_sales
             })),
             sales: await Promise.all(vendur.Vente_logs.map(async sale => {
                 const productName = await prisma.produit_Final.findUnique({
