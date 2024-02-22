@@ -87,6 +87,7 @@ export const createVendur_log = async (data: IVendur_log) => {
             }
             return { status: 'success', message: 'تم تحديث سجل البيع بنجاح', data: vendur_log };
         }
+        // if the is already sold to the vendur update the product quantity
         
         const produit_sell = await prisma.produit_sell.create({
             data: {

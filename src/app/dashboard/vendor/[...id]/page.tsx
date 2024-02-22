@@ -1,10 +1,20 @@
 'use client';
-import React from 'react'
-import VendorInfo from '@/components/my-ui/vendor-Info';
-import SelledProducts from '@/components/my-ui/selled-products';
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
-
+    const handelData = async () => {
+        try {
+            const res = await getVendurById(id);
+            if (res?.status === 'error') {
+                return;
+            }
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        handelData();
+    }, [])
     return (
         <div className=" mt-20
     flex
