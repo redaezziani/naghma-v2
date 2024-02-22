@@ -175,7 +175,7 @@ export const frais_de_prix = async (data: frais_de_prix) => {
             },
             data: {
                 frais_de_prix: {
-                    increment: prix // this is mean frais_de_prix = frais_de_prix + prix
+                    increment: prix 
                 }
             }
         });
