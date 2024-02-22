@@ -99,17 +99,17 @@ const Payment = () => {
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                 تحديث طريقة الدفع للبائع
-            </h1>
+                </h1>
             <p>
-                هذه هي صفحة تحديث طريقة الدفع للبائع
+                هذه هي صفحة تحديث المنتجات التي تم إرجاعها من قبل البائع
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم البائع</label>
                 <select
-                    onChange={handelChangeVendurId}
+                    onChange={handelChangeVendurId} 
                     className='bg-white'
-                    id="vendurID"
+                    id="vendurID" 
                     defaultValue={vendurId}
                     name="vendurID">
                     {vendurs.map((vendur: any) => (
@@ -121,34 +121,18 @@ const Payment = () => {
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم المنتج</label>
-                {
-                    products.length > 0 ? (
-                        <select
-                            onChange={handelChangeProductId}
-                            className='bg-white'
-                            id="productID"
-                            defaultValue={productId}
-                            name="productID">
-                            {products?.map((item: any) => (
-                                <option key={item.produit.id} value={item.produit.id}>
-                                    {item.produit.nom}
-                                </option>
-                            ))}
-                        </select>
-                    ) : <select
-                        onChange={handelChangeProductId}
-                        className='bg-white'
-                        id="productID"
-                        disabled
-                        value={'0'}
-                        name="productID">
-                        <option
-                            disabled
-                        >
-                            البائع لا يحتوي على منتجات
+                <select
+                    onChange={handelChangeProductId} 
+                    className='bg-white'
+                    id="productID" 
+                    defaultValue={productId}
+                    name="productID">
+                    {products.map((product: any) => (
+                        <option key={product.id} value={product.id}>
+                            {product.nom}
                         </option>
-                    </select>
-                }
+                    ))}
+                </select>
             </div>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
