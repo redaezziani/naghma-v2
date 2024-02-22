@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { getVendurById } from "@/(db)/vendur";
 import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
+import VendorPayments from "@/components/my-ui/vendorpayments";
+import CompantLoss from "@/components/my-ui/copanyloss";
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const handelData = async () => {
@@ -27,7 +29,7 @@ const VendorPage = ({ ...props }: any) => {
      w-full
     lg:w-2/3
     px-6 py-3 relative">
-            
+
             <h1
                 className='text-2xl text-primary font-bold'
             >
@@ -37,8 +39,14 @@ const VendorPage = ({ ...props }: any) => {
                 <VendorInfo />
             </div>
             <div className='w-full  '>
-                <SelledProducts />  
-            </div> 
+                <SelledProducts />
+            </div>
+            <div className='w-full  '>
+                <VendorPayments />
+            </div>
+            <div className='w-full  '>
+                <CompantLoss />
+            </div>
 
         </div>
     )

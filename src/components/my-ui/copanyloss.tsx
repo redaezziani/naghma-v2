@@ -16,10 +16,11 @@ interface IVendur {
     id: string;
     type: string;
     quantity: number;
+    price: number; // Added "price" property
     totalAmount: number;
 }
 
-const SelledProducts = () => {
+const CompantLoss = () => {
     const [products, setProducts] = useState<IVendur[]>([]);
     const [total, setTotal] = useState(0);
     const handelProducts = async () => {
@@ -63,10 +64,11 @@ const SelledProducts = () => {
             cell: ({ row }: { row: any }) => <div>{row.getValue('quantity')}</div>,
         },
         {
-            accessorKey: 'totalAmount',
-            header: 'المبلغ الإجمالي',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('totalAmount')} د.م</div>,
+            accessorKey: 'price',
+            header: 'السعر',
+            cell: ({ row }: { row: any }) => <div>{row.getValue('price')}</div>, // Added "price" cell
         },
+       
     ];
 
     useEffect(() => {
@@ -83,7 +85,7 @@ const SelledProducts = () => {
          justify-start items-start
          ">
             <h3 className=' w-full text-lg text-primary'>
-                المنتجات المباعة
+               جدول الخسائر للشركة بالنسبة للمنتجات المعادة ناقصة
             </h3>
             <DataTable
                 total={total}
@@ -94,4 +96,4 @@ const SelledProducts = () => {
     );
 };
 
-export default SelledProducts;
+export default CompantLoss;
