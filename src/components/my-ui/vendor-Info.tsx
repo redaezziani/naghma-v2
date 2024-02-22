@@ -1,5 +1,3 @@
-import React from 'react'
-
 function VendorInfo(props: any) {
   const { nom, le_prix_a_payer, le_prix_a_paye, frais_de_prix, balance } = props.vendur??{};
   return (
