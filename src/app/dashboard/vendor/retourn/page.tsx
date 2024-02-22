@@ -48,7 +48,6 @@ const Payment = () => {
 
     const allProducts = async (vendurId: string = '') => {
         try {
-            console.log(vendurId)
             const res = await getSellsByVendur(vendurId)
             if (res?.status === 'error') {
                 return
@@ -130,9 +129,6 @@ const Payment = () => {
                     id="productID" 
                     defaultValue={productId}
                     name="productID">
-                        <option disabled>
-                            اختر المنتج
-                        </option>
                     {products.map((product: any) => (
                         <option key={product.produit.id} value={product.produit.id}>
                             {product.produit.nom}
