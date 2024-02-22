@@ -34,9 +34,9 @@ const Vendors = () => {
         setProducts([]);
         return;
       }
-      setProducts(res?.data??[]);
-        console.log(res);
-        setTotal(res?.total_price??0);
+      setProducts(res?.data ?? []);
+      console.log(res);
+      setTotal(res?.total_price ?? 0);
     } catch (error) {
       console.log(error);
     }
@@ -101,7 +101,7 @@ const Vendors = () => {
   ];
   useEffect(() => {
     handelProducts();
-    
+
   }, []);
 
 
@@ -113,34 +113,40 @@ const Vendors = () => {
      w-full
     lg:w-2/3
     px-6 py-3 relative">
-       <div className='flex gap-3 flex-wrap'>
-       <Button >
-            <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
+      <div className='flex gap-3 flex-wrap'>
+        <Button >
+          <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
         <Button >
-            <Link href="/dashboard/vendor/vendors-logs">
-                بيع المنتج للبائع
-           
-            </Link>
+          <Link href="/dashboard/vendor/vendors-logs">
+            بيع المنتج للبائع
+
+          </Link>
         </Button >
         <Button >
-            <Link href="/dashboard/vendor/payment">
-               دفع مستحقات البائع
-           
-            </Link>
+          <Link href="/dashboard/vendor/payment">
+            دفع مستحقات البائع
+
+          </Link>
         </Button >
         <Button >
-            <Link href="/dashboard/vendor/retourn">
-               المنتجات التي ارجعت
-           
-            </Link>
+          <Link href="/dashboard/vendor/retourn">
+            المنتجات التي ارجعت
+
+          </Link>
         </Button >
-       
-       </div>
+        <Button >
+          <Link href="/dashboard/vendor/expenses">
+            المصاريف
+
+          </Link>
+        </Button >
+
+      </div>
       <DataTable
-      total = {total}
-      columns={columns} data={products} />
-       
+        total={total}
+        columns={columns} data={products} />
+
     </div>
   );
 };
