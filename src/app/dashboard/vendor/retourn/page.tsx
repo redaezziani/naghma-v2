@@ -110,7 +110,7 @@ const Payment = () => {
                     className='bg-white'
                     id="vendurID" 
                     name="vendurID">
-                        <option disabled >
+                        <option disabled selected>
                             اختر البائع
                         </option>
                     {vendurs.map((vendur: any) => (
@@ -127,7 +127,7 @@ const Payment = () => {
                     className='bg-white'
                     id="productID" 
                     name="productID">
-                        <option disabled >
+                        <option disabled selected>
                             اختر المنتج
                         </option>
                     {products.map((product: any) => (
