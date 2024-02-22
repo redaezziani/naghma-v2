@@ -127,7 +127,7 @@ const Payment = () => {
                     id="productID" 
                     defaultValue={productId}
                     name="productID">
-                    {products.map((product: any) => (
+                    {products?.map((product: any) => (
                         <option key={product.produit.id} value={product.produit.id}>
                             {product.produit.nom}
                         </option>
