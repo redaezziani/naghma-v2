@@ -65,13 +65,12 @@ const Payment = () => {
                 toast.error('الرجاء ملء جميع الحقول')
                 return
             }
-            // regex for number
             const regex = /^[0-9]*$/
             if (!regex.test(quantite_attendue_retourner) || !regex.test(quantite_reel_retourner)) {
                 toast.error('الرجاء إدخال أرقام فقط')
                 return
             }
-            
+
             const data: return_fra = {
                 vendur_id: vendurId,
                 produit_id: productId,
