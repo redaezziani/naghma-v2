@@ -22,21 +22,6 @@ interface IVendur {
 const SelledProducts = () => {
     const [products, setProducts] = useState<IVendur[]>([]);
     const [total, setTotal] = useState(0);
-    const handelProducts = async () => {
-        try {
-            const res = await getVendurs();
-            if (res?.status === 'error') {
-                setProducts([]);
-                return;
-            }
-            setProducts(res?.data??[]);
-            console.log(res);
-            setTotal(res?.total_price??0);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     const handleDelete = async (id: string) => {
         try {
             const res = await deleteVendur(id);
@@ -82,7 +67,7 @@ const SelledProducts = () => {
          overflow-hidden
          justify-start items-start
          ">
-            <h3 className=' w-full text-lg text-primary'>
+            <h3 className=' w-full px-2 text-lg text-primary'>
                 المنتجات المباعة
             </h3>
             <DataTable

@@ -3,17 +3,17 @@ import { useEffect } from "react";
 import { getVendurById } from "@/(db)/vendur";
 import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
-import VendorPayments from "@/components/my-ui/vendorpayments";
-import CompantLoss from "@/components/my-ui/copanyloss";
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
+    const [data, setData] = useState<any>({})
     const handelData = async () => {
         try {
             const res = await getVendurById(id);
             if (res?.status === 'error') {
                 return;
             }
-            console.log(res);
+            console.log(res.data);
+            setData(res?.data ?? {});
         } catch (error) {
             console.log(error);
         }
@@ -39,14 +39,8 @@ const VendorPage = ({ ...props }: any) => {
                 <VendorInfo />
             </div>
             <div className='w-full  '>
-                <SelledProducts />
-            </div>
-            <div className='w-full  '>
-                <VendorPayments />
-            </div>
-            <div className='w-full  '>
-                <CompantLoss />
-            </div>
+                <SelledProducts />  
+            </div> 
 
         </div>
     )
