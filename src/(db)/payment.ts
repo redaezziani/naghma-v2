@@ -140,11 +140,14 @@ export const prix_a_paye = async (data: payment) => {
         console.error(error);   
     }
 }
-
-
-export const frais_de_prix = async (data: any) => {
+interface frais_de_prix {
+    vendur_id: string,
+    prix: number
+    type : string
+}
+export const frais_de_prix = async (data: frais_de_prix) => {
     try {
-        const { vendur_id, prix } = data;
+        const { vendur_id, prix, type } = data;
         const vendur = await prisma.vendur.findUnique({
             where: {
                 id: vendur_id
@@ -157,7 +160,8 @@ export const frais_de_prix = async (data: any) => {
         const frais = await prisma.frais_de_prix.create({
             data: {
                 vendur_id,
-                prix
+                prix,
+                type
             }
         });
         if (!frais) {
@@ -194,6 +198,9 @@ interface return_fra {
 export const paid_by_return = async (data: return_fra) => {
     try {
         const { vendur_id, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
+        if (quantite_reel_retourner > quantite_attendue_retourner) {
+            return { status: 'error', message: 'الكمية المدفوعة أكبر من الكمية المطلوبة' };
+        }
         const vendur = await prisma.vendur.findUnique({
             where: {
                 id: vendur_id
@@ -242,7 +249,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 quantite: {
-                    increment: quantite_attendue_retourner // this is mean quantite = quantite + quantite_attendue_retourner
+                    increment: quantite_attendue_retourner
                 }
             }
         });
