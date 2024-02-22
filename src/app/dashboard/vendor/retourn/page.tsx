@@ -40,7 +40,7 @@ const Payment = () => {
                 return
             }
             setVendurs(res?.data)
-
+            
         } catch (error) {
             console.error(error)
         }
