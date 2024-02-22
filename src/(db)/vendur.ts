@@ -219,7 +219,7 @@ export const getVendurById = async (id: string) => {
                         nom: true
                     }
                 });
-                const totalQuantity = await prisma.Vente_logs.aggregate({
+                const totalQuantity = await prisma.vente_logs.aggregate({
                     where: {
                         vendur_id: id,
                         created_at: {
@@ -227,7 +227,7 @@ export const getVendurById = async (id: string) => {
                         }
                     },
                     sum: {
-                        quantite: true
+                        quantite: true as true | undefined
                     }
                 });
 
