@@ -65,7 +65,13 @@ const Payment = () => {
                 toast.error('الرجاء ملء جميع الحقول')
                 return
             }
-
+            // regex for number
+            const regex = /^[0-9]*$/
+            if (!regex.test(quantite_attendue_retourner) || !regex.test(quantite_reel_retourner)) {
+                toast.error('الرجاء إدخال أرقام فقط')
+                return
+            }
+            
             const data: return_fra = {
                 vendur_id: vendurId,
                 produit_id: productId,
@@ -110,7 +116,7 @@ const Payment = () => {
                     className='bg-white'
                     id="vendurID" 
                     name="vendurID">
-                        <option disabled selected>
+                        <option disabled >
                             اختر البائع
                         </option>
                     {vendurs.map((vendur: any) => (
@@ -122,12 +128,13 @@ const Payment = () => {
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>رقم المنتج</label>
-                <select
+                {products.length > 0 ? (
+                    <select
                     onChange={handelChangeProductId} 
                     className='bg-white'
                     id="productID" 
                     name="productID">
-                        <option disabled selected>
+                        <option disabled >
                             اختر المنتج
                         </option>
                     {products.map((product: any) => (
@@ -136,6 +143,18 @@ const Payment = () => {
                         </option>
                     ))}
                 </select>
+                ) : (
+                    <select
+                    className='bg-white'
+                    id="productID"
+                    name="productID"
+                    disabled>
+                        <option disabled >
+                            اختر المنتج
+                            </option>
+                            </select>
+                            )
+                            }
             </div>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>

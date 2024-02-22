@@ -150,6 +150,7 @@ model frais_de_prix {
   id         String   @id @default(uuid()) @db.VarChar(36)
   vendur_id  String //الموزع
   prix       Float //المبلغ
+  type       String //النوع
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
