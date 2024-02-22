@@ -49,14 +49,18 @@ const Expenses = () => {
                 toast.error('الرجاء ملء جميع الحقول')
                 return
             }
-
+            //check if the price is a number
+            if (isNaN(Number(price))) {
+                toast.error('الرجاء إدخال رقم')
+                return
+            }
             const data: frais_de_prix = {
                 vendur_id: vendurId,
                 prix: Number(price),
                 type: type
             }
             setIsLoading(true)
-            const res = await frais_de_prix(data) // Use the imported function frais_de_prix
+            const res = await frais_de_prix(data) 
             if (res?.status === 'error') {
                 toast.error(res.message)
                 return
