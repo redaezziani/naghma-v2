@@ -112,6 +112,9 @@ const Payment = () => {
                     id="vendurID" 
                     defaultValue={vendurId}
                     name="vendurID">
+                        <option disabled >
+                            اختر البائع
+                        </option>
                     {vendurs.map((vendur: any) => (
                         <option key={vendur.id} value={vendur.id}>
                             {vendur.nom}
@@ -127,6 +130,9 @@ const Payment = () => {
                     id="productID" 
                     defaultValue={productId}
                     name="productID">
+                        <option disabled>
+                            اختر المنتج
+                        </option>
                     {products.map((product: any) => (
                         <option key={product.produit.id} value={product.produit.id}>
                             {product.produit.nom}

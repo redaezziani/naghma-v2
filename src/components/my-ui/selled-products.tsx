@@ -54,9 +54,7 @@ const SelledProducts = () => {
         },
     ];
 
-    useEffect(() => {
-        handelProducts();
-    }, []);
+   
 
     return (
         <div className=" 
