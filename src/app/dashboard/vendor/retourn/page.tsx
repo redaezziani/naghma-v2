@@ -109,7 +109,6 @@ const Payment = () => {
                     onChange={handelChangeVendurId} 
                     className='bg-white'
                     id="vendurID" 
-                    defaultValue={vendurId}
                     name="vendurID">
                         <option disabled >
                             اختر البائع
@@ -127,8 +126,10 @@ const Payment = () => {
                     onChange={handelChangeProductId} 
                     className='bg-white'
                     id="productID" 
-                    defaultValue={productId}
                     name="productID">
+                        <option disabled >
+                            اختر المنتج
+                        </option>
                     {products.map((product: any) => (
                         <option key={product.produit.id} value={product.produit.id}>
                             {product.produit.nom}
