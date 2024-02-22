@@ -204,6 +204,18 @@ export const getVendurById = async (id: string) => {
         today.setHours(0, 0, 0, 0); // Set hours to 0 for start of the day
 
         const data = {
+            // get the total of sell quantity of all products and the total price
+            totals : vendur.produit_sell.reduce((acc: any, sell: any) => {
+                if (sell.created_at > today) {
+                    acc.today += sell.quantite;
+                    acc.today_price += sell.prix;
+                }
+                acc.total += sell.quantite;
+                acc.total_price += sell.prix;
+                return acc;
+            }
+            , { total: 0, total_price: 0, today: 0, today_price: 0 }),
+            
             vendur: vendur_info,
             payments: vendur.prix_a_paye.map(payment => ({
                 type: payment.type, 
@@ -219,21 +231,10 @@ export const getVendurById = async (id: string) => {
                         nom: true
                     }
                 });
-                const data =  await prisma.produit_sell.findMany({
-                    where: {
-                        produit_id: sale.produit_id,
-                        vendur_id: id,      
-                    },
-                    
-                });
-                const totalQuantity = data.reduce((acc, curr) => acc + curr.quantite, 0);
-
-
                 return {
                     productName: productName?.nom,
                     quantity: sale.quantite,
                     price: sale.prix,
-                    totalQuantity: totalQuantity,
                     date :sale.created_at
 
 
