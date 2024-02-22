@@ -1,4 +1,8 @@
 'use client';
+import { useEffect } from "react";
+import { getVendurById } from "@/(db)/vendur";
+import VendorInfo from "@/components/my-ui/vendor-Info";
+import SelledProducts from "@/components/my-ui/selled-products";
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const handelData = async () => {
@@ -34,17 +38,7 @@ const VendorPage = ({ ...props }: any) => {
             </div>
             <div className='w-full  '>
                 <SelledProducts />  
-            </div> <h1
-                className='text-2xl text-primary font-bold'
-            >
-                ملف البائع
-            </h1>
-            <div>
-                <VendorInfo />
-            </div>
-            <div className='w-full bg-slate-700 '>
-                <SelledProducts />  
-            </div>
+            </div> 
 
         </div>
     )
