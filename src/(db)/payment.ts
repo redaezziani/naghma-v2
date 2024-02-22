@@ -164,6 +164,7 @@ export const frais_de_prix = async (data: frais_de_prix) => {
                 type
             }
         });
+        console.log(frais)
         if (!frais) {
             return { status: 'error', message: 'لم يتم إضافة المصاريف' };
         }
