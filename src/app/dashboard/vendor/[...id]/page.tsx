@@ -5,9 +5,19 @@ import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
 import CompantLoss from "@/components/my-ui/copanyloss";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useReactToPrint } from 'react-to-print';
+import { useRef } from 'react';
+import ComponentToPrint from '@/components/my-ui/anlys/invoice';
+import { Button } from '@/components/ui/button';
+import { PrinterIcon } from "lucide-react";
 
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        //@ts-ignore
+        content: () => componentRef.current,
+    });
     const [data, setData] = useState<any>({})
     const [sells, setSells] = useState<any>([])
     const handelData = async () => {
@@ -27,12 +37,11 @@ const VendorPage = ({ ...props }: any) => {
                 acc[curr.productName].totalPrice += curr.price * curr.quantity;
                 return acc;
             }, {});
-            
-            // Convert the grouped object to an array of objects
+
             let groupedArray = Object.values(grouped);
-            
+
             console.log(groupedArray);
-            
+
         } catch (error) {
             console.log(error);
         }
@@ -48,13 +57,34 @@ const VendorPage = ({ ...props }: any) => {
      justify-start items-start gap-7
      w-full
     lg:w-2/3
-    px-6 py-3 relative">
-
-            <h1
+    px-6 py-3  relative">
+            <div className="hidden">
+            <ComponentToPrint
+            vendur={data.vendur}
+            payments={data.payments}
+            sales={data.sales}
+            //@ts-ignore
+            ref={componentRef} />
+           
+           </div>
+           <div className="w-full flex max-w-[1000px] justify-between items-center">
+           <h1
                 className='text-2xl text-primary font-bold'
             >
                 ملف البائع
             </h1>
+           <Button
+           variant={"secondary"}
+            onClick={handlePrint}>
+                <PrinterIcon className="w-6 pr-2 h-6" />
+                <p
+                className="mr-2"
+                >
+                طباعة الفاتورة
+                </p>
+            </Button>
+           </div>
+           
             <div>
                 <VendorInfo vendur={data.vendur} />
             </div>
