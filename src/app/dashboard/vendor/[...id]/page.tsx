@@ -18,6 +18,7 @@ const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const componentRef = useRef();
     const [loading, setLoading] = useState(false);
+    const [trash , setTrash] = useState(false);
     const handlePrint = useReactToPrint({
         //@ts-ignore
         content: () => componentRef.current,
@@ -31,7 +32,6 @@ const VendorPage = ({ ...props }: any) => {
                 return;
             }
             setData(res?.data ?? {});
-            console.log(res?.data);
             let sells = res?.data?.sales ?? [];
             let grouped = sells.reduce((acc: any, curr: any) => {
                 if (!acc[curr.productName]) {
@@ -59,11 +59,16 @@ const VendorPage = ({ ...props }: any) => {
     const handleDeleteVendor = async () => {
         try {
             setLoading(true);
+            
             const res = await deleteVendur(id);
             if (res?.status === 'error') {
                 return;
             }
-            toast.success('تم حذف البائع بنجاح');
+            toast.success('تم حذف البائع بنجاح',{
+                style: {
+                    color: '#4CAF50',
+                },
+            })
             router.push('/dashboard/vendor')
             
         } catch (error) {
@@ -81,6 +86,7 @@ const VendorPage = ({ ...props }: any) => {
      w-full
     lg:w-2/3
     px-6 py-3  relative">
+    
             <div className="hidden">
             <ComponentToPrint
             vendur={data.vendur}
@@ -96,7 +102,8 @@ const VendorPage = ({ ...props }: any) => {
             >
                 ملف البائع
             </h1>
-           <div className="flex gap-4 items-center ">
+           <div className="flex gap-4 items-center relative  ">
+           
            <Button
            variant={"secondary"}
             onClick={handlePrint}>
@@ -134,7 +141,6 @@ const VendorPage = ({ ...props }: any) => {
                         <div className="flex flex-col space-y-3">
                             <div className="space-y-2">
                                 <Skeleton className=" h-44 lg:h-96 w-full lg:w-[550px]" />
-
                             </div>
                         </div>
                     )}
