@@ -135,9 +135,12 @@ const VendorLogs = () => {
         <select
           defaultValue={listVendurs[0]?.id}
           onChange={handelChangeVendurId} // Use onChange instead of onSelect
-          className='bg-white'
+          className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
           id="vendurID" // Unique ID for the select element
           name="vendurID">
+            <option disabled value="" selected>
+              اختر البائع
+            </option>
           {listVendurs.map((vendur: any) => (
             <option key={vendur.id} value={vendur.id}>{vendur.nom}</option> // Ensure each option has a unique key
           ))}
@@ -150,9 +153,12 @@ const VendorLogs = () => {
         <select
           defaultValue={listProduits[0]?.id}
           onChange={handelChangeProduitId} // Use onChange instead of onSelect
-          className='bg-white'
+          className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
           id="produitID" // Unique ID for the select element
           name="produitID">
+            <option disabled value="" selected>
+              اختر المنتج
+            </option>
           {listProduits.map((produit: any) => (
             <option key={produit.id} value={produit.id}>{produit.nom}</option> // Ensure each option has a unique key
           ))}

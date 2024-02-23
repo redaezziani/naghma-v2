@@ -88,12 +88,11 @@ const Payment = () => {
                 <select
                     name='vendur_id'
                     onChange={handelChangeVendurId}
-                    defaultValue={vendurId}
+                    value={vendurId} // Use value instead of defaultValue
                     className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                 >
-                    <option
-                        disabled
-                    >اختر البائع</option>
+                    <option disabled value="" selected>اختر البائع</option>
+                    
                     {vendurs.map((vendur: any) => (
                         <option key={vendur.id} value={vendur.id}>
                             {vendur.nom}

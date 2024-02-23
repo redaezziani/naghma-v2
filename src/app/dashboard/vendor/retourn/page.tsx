@@ -112,10 +112,10 @@ const Payment = () => {
                 <label className='font-semibold'>رقم البائع</label>
                 <select
                     onChange={handelChangeVendurId} 
-                    className='bg-white'
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                     id="vendurID" 
                     name="vendurID">
-                        <option disabled >
+                        <option disabled value="" selected>
                             اختر البائع
                         </option>
                     {vendurs.map((vendur: any) => (
@@ -130,10 +130,10 @@ const Payment = () => {
                 {products.length > 0 ? (
                     <select
                     onChange={handelChangeProductId} 
-                    className='bg-white'
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                     id="productID" 
                     name="productID">
-                        <option disabled >
+                        <option disabled value="" selected >
                             اختر المنتج
                         </option>
                     {products.map((product: any) => (
@@ -144,11 +144,12 @@ const Payment = () => {
                 </select>
                 ) : (
                     <select
-                    className='bg-white'
+                    className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                     id="productID"
                     name="productID"
+
                     disabled>
-                        <option disabled >
+                        <option disabled value="" selected   >
                             اختر المنتج
                             </option>
                             </select>
