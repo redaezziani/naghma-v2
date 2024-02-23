@@ -1,12 +1,13 @@
 "use client";
-
 import { Line } from "react-chartjs-2";
+import React, { useEffect, useState } from "react";
+import { getEarningsByMonth } from "@/(db)/errning";
 
 import {
   Chart as ChartJS,
   LineElement,
-  CategoryScale, // x axis
-  LinearScale, // y axis
+  CategoryScale,
+  LinearScale,
   PointElement,
   Legend,
   Tooltip,
@@ -23,42 +24,87 @@ ChartJS.register(
   Filler
 );
 
-const salesData = [
-  { month: "يناير", sales: 100 },
-  { month: "فبراير", sales: 300 },
-  { month: "مارس", sales: 60 },
-  { month: "أبريل", sales: 80 },
-  { month: "مايو", sales: 180 },
-  { month: "يونيو", sales: 100 },
-  { month: "يوليو", sales: 80 },
-  { month: "أغسطس", sales: 180 },
-  { month: "سبتمبر", sales: 100 },
-  { month: "أكتوبر", sales: 80 },
-  { month: "نوفمبر", sales: 180 },
-  { month: "ديسمبر", sales: 100 },
-];
-
 const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true }) => {
+  const [errningData, setErrningData] = useState([]);
+  const [months, setMonths] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getEarningsByMonth();
+        if (res?.status === 'success') {
+          // Sort the data by month before setting it
+          const sortedData = res.data.sort((a, b) => a.month - b.month);
+          setErrningData(sortedData);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const formattedMonths = errningData.map(entry => {
+      let monthName = "";
+      switch (entry.month) {
+        case 1:
+          monthName = "يناير";
+          break;
+        case 2:
+          monthName = "فبراير";
+          break;
+        case 3:
+          monthName = "مارس";
+          break;
+        case 4:
+          monthName = "أبريل";
+          break;
+        case 5:
+          monthName = "مايو";
+          break;
+        case 6:
+          monthName = "يونيو";
+          break;
+        case 7:
+          monthName = "يوليو";
+          break;
+        case 8:
+          monthName = "أغسطس";
+          break;
+        case 9:
+          monthName = "سبتمبر";
+          break;
+        case 10:
+          monthName = "أكتوبر";
+          break;
+        case 11:
+          monthName = "نوفمبر";
+          break;
+        case 12:
+          monthName = "ديسمبر";
+          break;
+        default:
+          break;
+      }
+      return monthName;
+    });
+
+    setMonths(formattedMonths);
+  }, [errningData]);
+
   const data = {
-    labels: salesData.map((data) => data.month),
+    labels: months,
     datasets: [
       {
         label: "الإيرادات",
-        data: salesData.map((data) => data.sales),
+        data: errningData.map(entry => entry.totalEarnings),
         borderColor: `hsl(${color})`,
         borderWidth: 3,
         pointBorderColor: `hsl(${color})`,
         pointBorderWidth: 3,
         tension: tension,
-        fill: true,
-        backgroundColor: (context: { chart: { ctx: any; }; }) => {
-          const ctx = context.chart.ctx;
-          const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-          gradient.addColorStop(0, isTransparent && "#0488ca00");
-          // lets make it a hsl color to make it transparent and change the lightness
-          gradient.addColorStop(0.8, `hsl(${color},20%)`);
-          return gradient;
-        },
+        fill: false,
       },
     ],
   };
@@ -83,7 +129,6 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
           },
           font: {
             size: 10,
-
           },
         },
         min: 50,
@@ -92,7 +137,6 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
         ticks: {
           font: {
             size: 12,
-
             display: false,
           },
         },
@@ -101,11 +145,7 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
   };
 
   return (
-    // @ts-ignore
-    <Line
-    style={{width: "100%", height: "100%"}}
-    //@ts-ignore
-     data={data} options={options}></Line>
+    <Line data={data} options={options} />
   );
 }
 
