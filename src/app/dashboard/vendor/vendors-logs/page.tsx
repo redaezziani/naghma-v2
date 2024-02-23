@@ -64,8 +64,7 @@ const VendorLogs = () => {
         toast.error(res.message)
         return
       }
-      setVendurId('')
-      setProduitId('')
+    
       setQuantite(0)
 
       toast.success('تم إضافة البائع بنجاح')
@@ -136,7 +135,7 @@ const VendorLogs = () => {
         <select
           defaultValue={listVendurs[0]?.id}
           onChange={handelChangeVendurId} // Use onChange instead of onSelect
-          className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
+          className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
           id="vendurID" // Unique ID for the select element
           name="vendurID">
             <option disabled value="" selected>
@@ -154,7 +153,7 @@ const VendorLogs = () => {
         <select
           defaultValue={listProduits[0]?.id}
           onChange={handelChangeProduitId} // Use onChange instead of onSelect
-          className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
+          className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
           id="produitID" // Unique ID for the select element
           name="produitID">
             <option disabled value="" selected>

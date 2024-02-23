@@ -1,13 +1,25 @@
-
+"use client";
+import { useReactToPrint } from 'react-to-print';
+import { useRef } from 'react';
+import ComponentToPrint from '@/components/my-ui/anlys/invoice';
+import { Button } from '@/components/ui/button';
 const Home =async () => {
-  
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    //@ts-ignore
+    content: () => componentRef.current,
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center relative justify-center p-24">
-      <h1 className="text-5xl font-bold text-center">Welcome to your Next.js app!</h1>
-      <p className="mt-4 text-center text-xl">
-        Get started by editing <code>pages/index.tsx</code>
-      </p>
+       <div>
+      <ComponentToPrint
+      //@ts-ignore
+      ref={componentRef} />
+      <Button
+      
+      onClick={handlePrint}>Print this out!</Button>
+    </div>
     </main>
   );
 }
