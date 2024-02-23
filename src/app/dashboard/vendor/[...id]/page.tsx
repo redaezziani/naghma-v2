@@ -9,7 +9,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRef } from 'react';
 import ComponentToPrint from '@/components/my-ui/anlys/invoice';
 import { Button } from '@/components/ui/button';
-import { PrinterIcon } from "lucide-react";
+import { PrinterIcon, Trash } from "lucide-react";
 import { deleteVendur } from "@/(db)/vendur";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation"
@@ -111,8 +111,14 @@ const VendorPage = ({ ...props }: any) => {
             variant={"destructive"}
             isloading={loading}
             disabled={loading}
-            onClick={handleDeleteVendor}>
+            onClick={handleDeleteVendor}
+            >
+                <Trash className="w-6 pr-2 h-6" />
+                <p
+                className="mr-2"
+                >
                 حذف البائع
+                </p>
             </Button>
            </div>
            </div>

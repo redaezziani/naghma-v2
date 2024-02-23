@@ -159,11 +159,17 @@ export const deleteVendur = async (id: string) => {
                 vendur_id: id
             }
         });
+        const loss = await prisma.loss.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
         const vendur = await prisma.vendur.delete({
             where: {
                 id
             }
         });
+
         if (!vendur) {
             return { status: 'error', message: 'لم يتم حذف البائع' };
         }
