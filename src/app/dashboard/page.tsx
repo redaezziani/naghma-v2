@@ -10,7 +10,20 @@ import { Progress } from "@/components/ui/progress"
 import { UserProfile } from '@/components/my-ui/user-profile';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
+import { useEffect, useState } from 'react';
+import { getEarningsOfCurrentMonth } from '@/(db)/errning';
 const Dashboard = () => {
+  const [earnings, setEarnings] = useState('')
+  const getEarnings = async () => {
+    const res = await getEarningsOfCurrentMonth();
+    
+    //@ts-ignore
+    setEarnings(res?.data ?? 0)
+  }
+  useEffect(() => {
+    getEarnings()
+  }
+    , [])
   return (
     <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
 
@@ -31,7 +44,9 @@ const Dashboard = () => {
             <Card className="w-full col-span-1  shadow-none py-7 px-5 flex justify-between items-center border rounded-lg  ">
               <div>
                 <p className=" text-xs">الأرباح (شهريًا)</p>
-                <p className="font-semibold text-xl mt-1">$40,000</p>
+                <p className="font-semibold text-xl text-emerald-500 mt-1">
+                  {earnings} د.م
+                </p>
               </div>
               <Calendar className="w-9 h-9" />
             </Card>
