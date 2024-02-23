@@ -1,5 +1,4 @@
 'use server';
-import { cookies } from "next/headers";
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -12,7 +11,6 @@ export const middleware= (request: NextRequest) => {
         console.log('redirecting to signin');
         return NextResponse.redirect(new URL('/signin', request.nextUrl.origin).toString());
     }
-    
     
     if (token &&  ['/signin', '/signup', '/forget-password'].includes(pathname)) {
         return NextResponse.redirect(new URL('/dashboard', request.nextUrl.origin).toString());
