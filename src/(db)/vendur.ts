@@ -138,6 +138,27 @@ export const getVendurs = async () => {
 
 export const deleteVendur = async (id: string) => {
     try {
+        // delete the vendur and all the related data on cascade to avoid any conflicts
+        const sells = await prisma.produit_sell.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
+        const logs = await prisma.vente_logs.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
+        const prix = await prisma.prix_a_paye.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
+        const frais = await prisma.frais_de_prix.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
         const vendur = await prisma.vendur.delete({
             where: {
                 id
@@ -147,6 +168,7 @@ export const deleteVendur = async (id: string) => {
             return { status: 'error', message: 'لم يتم حذف البائع' };
         }
         return { status: 'success', message: 'تم حذف البائع بنجاح' };
+
     } catch (error: any) {
         console.error(error);
     } finally {
