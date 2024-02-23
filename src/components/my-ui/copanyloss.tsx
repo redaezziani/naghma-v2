@@ -11,7 +11,7 @@ export interface ColumnDef {
 
 const CompanyLoss = ({...props}) => {
     const loss = props.losses ?? [];
-    console.log(props.losses);
+    const total = loss.reduce((acc: number, curr: any) => acc + curr.price, 0);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',
@@ -39,20 +39,21 @@ const CompanyLoss = ({...props}) => {
    
 
     return (
-        <div className=" 
+        <div className={`
         flex
         flex-col
          w-full
-         
+         ${loss.length > 0 ? 'block' : 'hidden'}
          overflow-hidden
          justify-start items-start
-         ">
+         `}>
             <h3 className=' w-full px-2 text-lg text-primary'>
                 المنتجات المفقودة
             </h3>
             <DataTable
                 columns={columns}
                 data={loss} 
+                total={total}
             />
         </div>
     );

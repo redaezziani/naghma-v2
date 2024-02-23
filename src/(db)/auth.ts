@@ -117,15 +117,55 @@ export const ResetPassword = async (token: string, password: string) => {
         console.error('خطأ أثناء إعادة تعيين كلمة المرور:', error);
         return { type: 'error', message: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
     }
+    finally {
+        await prisma.resetPasswordRequest.delete({
+            where: {
+                token,
+            },
+        });
+         await prisma.$disconnect();
+    }
 }
 
 
+export const userData= async () => {
+    try {
+        const isToken = cookies().has("token");
+        if (!isToken) {
+            return {status :"error", message: "Unauthorized"};
+        }
+        const token = cookies().get("token")?.value;
+        if (!token) {
+            return {status :"error", message: "Unauthorized"};
+        }
+
+        const payload = await verifyToken();
+        if (!payload) {
+            return {status :"error", message: "Unauthorized"};
+            
+        }
+        return {
+            user: {
+                name: payload.username,
+                email: payload.email,
+                image: payload.profile,
+            }
+        };
+    } catch (error) {
+     console.error(error);   
+    }
+    finally {
+        await prisma.$disconnect();
+    }
+}  
 
 
-export const SignOut = async () => {
+
+export const logOut = async () => {
     cookies().set('token', '', {
         path: '/',
         maxAge: 0,
     });
+    return {status :"success", message: "تم تسجيل الخروج بنجاح."};
 }
 

@@ -8,16 +8,9 @@ export interface ColumnDef {
     cell: ({ row }: { row: any }) => JSX.Element;
 }
 
-interface IVendur {
-    id: string;
-    type: string;
-    quantity: number;
-    totalAmount: number;
-}
-
 const SelledProducts = ({...props}) => {
     const payments = props.payments ?? [];
-    const total = payments.reduce((acc: number, curr: any) => acc + curr.price* curr.quantity, 0);
+    const total = payments.reduce((acc: number, curr: any) => acc + curr.price, 0);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',
@@ -51,10 +44,20 @@ const SelledProducts = ({...props}) => {
             <h3 className=' w-full px-2 text-lg text-primary'>
                 المنتجات المباعة
             </h3>
-            <DataTable
+           {
+            payments? (
+                <DataTable
                 columns={columns}
                 data={payments} 
+                total={total}
             />
+            )
+            : (
+                <div className="flex justify-center items-center w-full h-40">
+                    <p>لا توجد منتجات مباعة</p>
+                </div>
+            )
+           }
         </div>
     );
 };

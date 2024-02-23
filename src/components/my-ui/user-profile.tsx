@@ -25,28 +25,32 @@ import { HomeIcon, UserRound, Cog, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { logOut, userData } from "@/(db)/auth";
 export function UserProfile() {
   const [data, setData] = React.useState<User | null>(null);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
   const fetchUser = async () => {
     try {
-      const res = await fetch("/api/auth");
-      const data = await res.json();
-      setData(data.user);
+      const res = await userData();
+      if (res?.status === "error") {
+        router.push("/signin");
+      }
+      //@ts-ignore
+      setData(res.user);
     } catch (error) {
       console.error(error);
     }
   }
   const toggle = () => {
     setOpen(!open);
-    console.log(open);
   }
   const logout = async () => {
     try {
-      const res = await fetch("/api/auth/logout");
-      const data = await res.json();
-      router.refresh();
+     const res= await logOut()
+     if (res?.status === "success") {
+        router.push("/signin");
+      }
     } catch (error) {
       console.error(error);
     }
