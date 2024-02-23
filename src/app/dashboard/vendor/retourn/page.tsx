@@ -165,6 +165,7 @@ const Payment = () => {
                     type='number'
                     onChange={(e) => setQuantite_attendue_retourner(e.target.value)}
                     value={quantite_attendue_retourner}
+                    placeholder='الكمية المتوقعة للإرجاع'
                 />
             </div>
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
@@ -175,6 +176,7 @@ const Payment = () => {
                     type='number'
                     onChange={(e) => setQuantite_reel_retourner(e.target.value)}
                     value={quantite_reel_retourner}
+                    placeholder='الكمية الفعلية للإرجاع'
                 />
             </div>
             <Button
