@@ -5,17 +5,34 @@ import VendorInfo from "@/components/my-ui/vendor-Info";
 import SelledProducts from "@/components/my-ui/selled-products";
 import CompantLoss from "@/components/my-ui/copanyloss";
 import { Skeleton } from "@/components/ui/skeleton";
+
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const [data, setData] = useState<any>({})
+    const [sells, setSells] = useState<any>([])
     const handelData = async () => {
         try {
             const res = await getVendurById(id);
             if (res?.status === 'error') {
                 return;
             }
-            console.log(res?.data);
             setData(res?.data ?? {});
+            console.log(res?.data);
+            let sells = res?.data?.sales ?? [];
+            let grouped = sells.reduce((acc: any, curr: any) => {
+                if (!acc[curr.productName]) {
+                    acc[curr.productName] = { productName: curr.productName, quantity: 0, totalPrice: 0 };
+                }
+                acc[curr.productName].quantity += curr.quantity;
+                acc[curr.productName].totalPrice += curr.price * curr.quantity;
+                return acc;
+            }, {});
+            
+            // Convert the grouped object to an array of objects
+            let groupedArray = Object.values(grouped);
+            
+            console.log(groupedArray);
+            
         } catch (error) {
             console.log(error);
         }
@@ -44,20 +61,20 @@ const VendorPage = ({ ...props }: any) => {
             <div
                 className='w-full'
             >
-               {data.payments ?(<SelledProducts payments={data.payments} />): 
-               (
-                <div className="flex flex-col space-y-3">
-                <div className="space-y-2">
-                  <Skeleton className=" h-44 lg:h-96 w-full lg:w-[550px]" />
-                  
-                </div>
-              </div>
-               )}
+                {data.payments ? (<SelledProducts payments={data.payments} />) :
+                    (
+                        <div className="flex flex-col space-y-3">
+                            <div className="space-y-2">
+                                <Skeleton className=" h-44 lg:h-96 w-full lg:w-[550px]" />
+
+                            </div>
+                        </div>
+                    )}
             </div>
             <div
                 className='w-full'
             >
-               {data.losses && <CompantLoss losses={data.losses} />}
+                {data.losses && <CompantLoss losses={data.losses} />}
             </div>
         </div>
     )
