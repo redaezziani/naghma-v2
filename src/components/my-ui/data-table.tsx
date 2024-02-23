@@ -29,7 +29,7 @@ interface DataTableProps {
     data: DataItem[];
     columns: ColumnDef<DataItem>[];
     loading?: boolean;
-    total ?: number;
+    total?: number;
 }
 
 export type Cell<T = any> = {
@@ -50,7 +50,6 @@ export type Cell<T = any> = {
     };
 };
 
-
 export type Row<T = any> = {
     id: string;
     original: T;
@@ -59,7 +58,7 @@ export type Row<T = any> = {
     getValue: (accessorKey: keyof T) => T[keyof T];
 };
 
-export function DataTable({ data, columns, loading = false, total=0 }: DataTableProps) {
+export function DataTable({ data, columns, loading = false, total = 0 }: DataTableProps) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
     const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -89,8 +88,10 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
             <div className="flex items-center gap-3 py-4 lowercase">
                 <Input
                     placeholder="تصفية..."
+                    // @ts-ignore
                     value={(table.getColumn(columns[1]?.accessorKey)?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
+                        // @ts-ignore
                         table.getColumn(columns[1]?.accessorKey)?.setFilterValue(event.target.value)
                     }
                     className="max-w-sm"
@@ -183,14 +184,14 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
                         )}
                     </TableBody>
                     <TableFooter
-                    className="w-full"
+                        className="w-full"
                     >
                         <TableRow
-                        className="w-full"
+                            className="w-full"
                         >
                             <TableCell
-                            className="text-right font-semibold"
-                            colSpan={3}>
+                                className="text-right font-semibold"
+                                colSpan={3}>
                                 السعر الإجمالي
                             </TableCell>
                             <TableCell className="text-right font-semibold">
@@ -228,3 +229,4 @@ export function DataTable({ data, columns, loading = false, total=0 }: DataTable
         </div>
     );
 }
+export type { ColumnDef };

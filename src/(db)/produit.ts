@@ -105,7 +105,7 @@ export const getAllProduits = async () => {
         });
 
         // Iterate through the products
-        for (const [name, product] of productMap) {
+        for (const [name, product] of Array.from(productMap)) {
             // Check if the product has a quantity of 0
             if (product.quantite === 0) {
                 // Delete the product with quantity 0
@@ -122,8 +122,6 @@ export const getAllProduits = async () => {
                 if (nextProduct) {
                     productMap.set(name, nextProduct);
                 }
-
-
             }
         }
 

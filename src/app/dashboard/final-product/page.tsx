@@ -1,10 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { DataTable, ColumnDef } from '@/components/my-ui/data-table';
+import { DataTable, ColumnDef, DataItem } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { DialogTrigger } from '@/components/ui/dialog';
 import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -16,8 +15,8 @@ const FinalProducts = () => {
   const createProduit = async (name: string, quantity: number, vendurId: number) => {
     try {
       const res = await createProduit(name, quantity, vendurId);
-      if (res.status === 'error') {
-       toast.error(res.message);
+      if ((res as any)?.status === 'error') {
+       toast.error((res as any)?.message);
         return;
       }
       handelProducts();
@@ -53,37 +52,37 @@ const FinalProducts = () => {
     }
   }
 
-  const columns: ColumnDef[] = [
+  const columns: ColumnDef<any>[] = [
     {
       accessorKey: 'id',
       header: 'معرف',
-      cell: ({ row }) => <div>{row.getValue('id')}</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('id')}</div>,
     },
     {
       accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }) => <div>{row.getValue('nom')}</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('nom')}</div>,
     },
     {
       accessorKey: 'prix_vente',
       header: 'السعر (د.م)',
-      cell: ({ row }) => <div>{row.getValue('prix_vente')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('prix_vente')} د.م</div>,
     },
     {
       accessorKey: 'quantite',
       header: 'الكمية',
-      cell: ({ row }) => <div>{row.getValue('quantite')} كجم </div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('quantite')} كجم </div>,
     },
     {
       accessorKey: 'total',
       header: 'المجموع',
-      cell: ({ row }) => <div>{row.getValue('quantite') * row.getValue('prix_vente')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div>{row.getValue('quantite') * row.getValue('prix_vente')} د.م</div>,
     },
     {
 
       accessorKey: 'action',
       header: 'إجراء',
-      cell: ({ row }) => <div className='flex justify-start items-center gap-4'>
+      cell: ({ row }: { row: any }) => <div className='flex justify-start items-center gap-4'>
           <Trash
             onClick={() => handleDelete(row.getValue('id'))}
             className='cursor-pointer text-muted-foreground hover:text-secondary-foreground hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
@@ -115,8 +114,9 @@ const FinalProducts = () => {
         <Link href='/dashboard/final-product/add-final-product'>إضافة منتج</Link>
       </Button>
       <DataTable
-      total = {total}
-      columns={columns} data={products} />
+      total={total}
+      columns={columns as ColumnDef<DataItem>[]}
+      data={products} />
        
     </div>
   );

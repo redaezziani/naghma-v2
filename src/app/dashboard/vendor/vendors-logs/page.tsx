@@ -58,7 +58,7 @@ const VendorLogs = () => {
         produit_id: produitId,
         quantite
       }
-      console.log(data);
+      //@ts-ignore
       const res = await createVendur_log(data)
       if (res?.status === 'error') {
         toast.error(res.message)
@@ -81,6 +81,7 @@ const VendorLogs = () => {
     try {
       const res = await getAllProduits();
       if (res?.status === 'error') {
+        //@ts-ignore
         alert(res.message);
         return;
       }

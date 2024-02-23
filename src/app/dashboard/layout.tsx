@@ -44,7 +44,7 @@ export default function RootLayout({
 
       </div>
       {/*  */}
-      <nav className=" w-full backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
+      <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
           <UserProfile />
         </nav>
 

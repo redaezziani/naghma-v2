@@ -1,8 +1,10 @@
 "use client";
 import React from 'react';
+//@ts-ignore
 import ReactApexChart from 'react-apexcharts';
 
 class ApexChart extends React.Component {
+    //@ts-ignore
     constructor(props) {
         super(props);
 
@@ -53,7 +55,7 @@ class ApexChart extends React.Component {
                 },
                 yaxis: {
                     opposite: true,
-                   
+
                 },
                 legend: {
                     horizontalAlign: 'left'
@@ -74,7 +76,11 @@ class ApexChart extends React.Component {
         return (
             <div className='w-full'>
                 <div id="chart">
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
+                  //@ts-ignore
+                    <ReactApexChart
+                        //@ts-ignore
+
+                        options={this.state.options} series={this.state.series} type="area" height={350} />
                 </div>
                 <div id="html-dist"></div>
             </div>

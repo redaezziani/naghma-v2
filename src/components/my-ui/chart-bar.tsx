@@ -88,7 +88,9 @@ const BarChart: React.FC<{ color?: string; isTransparent?: boolean }> = ({
   return (
     <Bar
     
-    type="bar" data={data} options={options}></Bar>
+    type="bar" data={data}
+    //@ts-ignore
+    options={options}></Bar>
   );
 }
 

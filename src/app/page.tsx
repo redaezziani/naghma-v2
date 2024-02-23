@@ -1,4 +1,3 @@
-import { getBestSellingProductPrice } from "@/(db)/helpers";
 
 const Home =async () => {
   
