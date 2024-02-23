@@ -110,6 +110,9 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
   };
 
   const options = {
+    interaction: {
+      intersect: false
+    },
     plugins: {
       legend: false,
     },
