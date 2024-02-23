@@ -10,10 +10,14 @@ import { useRef } from 'react';
 import ComponentToPrint from '@/components/my-ui/anlys/invoice';
 import { Button } from '@/components/ui/button';
 import { PrinterIcon } from "lucide-react";
+import { deleteVendur } from "@/(db)/vendur";
+import { toast } from 'sonner';
+import { useRouter } from "next/navigation"
 
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const componentRef = useRef();
+    const [loading, setLoading] = useState(false);
     const handlePrint = useReactToPrint({
         //@ts-ignore
         content: () => componentRef.current,
@@ -50,6 +54,25 @@ const VendorPage = ({ ...props }: any) => {
     useEffect(() => {
         handelData();
     }, [])
+    const router = useRouter()
+
+    const handleDeleteVendor = async () => {
+        try {
+            setLoading(true);
+            const res = await deleteVendur(id);
+            if (res?.status === 'error') {
+                return;
+            }
+            toast.success('تم حذف البائع بنجاح');
+            router.push('/dashboard/vendor')
+            
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
     return (
         <div className=" mt-20
     flex
@@ -73,6 +96,7 @@ const VendorPage = ({ ...props }: any) => {
             >
                 ملف البائع
             </h1>
+           <div className="flex gap-4 items-center ">
            <Button
            variant={"secondary"}
             onClick={handlePrint}>
@@ -83,6 +107,14 @@ const VendorPage = ({ ...props }: any) => {
                 طباعة الفاتورة
                 </p>
             </Button>
+            <Button
+            variant={"destructive"}
+            isloading={loading}
+            disabled={loading}
+            onClick={handleDeleteVendor}>
+                حذف البائع
+            </Button>
+           </div>
            </div>
            
             <div>
