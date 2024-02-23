@@ -97,7 +97,7 @@ const Expenses = () => {
                     className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
                 >
                     <option
-                        disabled
+                        disabled value="" selected 
                     >اختر البائع</option>
                     {vendurs.map((vendur: any) => (
                         <option key={vendur.id} value={vendur.id}>
