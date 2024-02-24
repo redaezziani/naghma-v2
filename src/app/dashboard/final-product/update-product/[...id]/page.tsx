@@ -1,59 +1,40 @@
 'use client';
-import { createProduit } from '@/(db)/produit';
+import { updateProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
 import { toast } from 'sonner';
-interface IProduit {
-    nom: string;
-    prix_vente: number;
-    quantite: number;
+
+interface IUpdateProduit {
+  prix_vente: number;
+  nom: string;
 }
 
-const AddfinalProduct = () => {
-  const [data , setData] = React.useState<IProduit>({
-    nom: '',
+const UpdateProduit = ({...props} : any) => {
+  const id = props.params.id[0] as string;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [data, setData] = React.useState<IUpdateProduit>({
     prix_vente: 0,
-    quantite: 0
-  })
-  const [isLoading , setIsLoading] = React.useState(false)
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>)=>{
-    // lets check if the type is number insert it as number
-    if(e.target.type === 'number'){
-      setData({...data, [e.target.name]: Number(e.target.value)})
-      return
-    }
-    setData({...data, [e.target.name]: e.target.value})  
+    nom: ''
+  });
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value
+    });
   }
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
-    try {
-      e.preventDefault()
-      setIsLoading(true)
-      if (data.nom === '' || data.prix_vente === 0 || data.quantite === 0) {
-        return
-      }
-      
-      const res= await createProduit(data)
-      if (res?.status === 'error') {
-        alert(res.message)
-        return
-      }
-      setData({
-        nom: '',
-        prix_vente: 0,
-        quantite: 0
-      })
-      toast.success('تم إضافة المنتج بنجاح')
-
-    } catch (error) {
-      console.log(error)
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    const response = await updateProduit(id,data);
+    if (response?.status === 'success') {
+      toast.success(response.message);
+    } else {
+      toast.error(response?.message);
     }
-    finally{
-      setIsLoading(false)
-    }
-
+    setIsLoading(false);
   }
+
 
   return (
     <div
@@ -109,4 +90,4 @@ const AddfinalProduct = () => {
   )
 }
 
-export default AddfinalProduct
+export default UpdateProduit
