@@ -8,10 +8,9 @@ export interface ColumnDef {
     cell: ({ row }: { row: any }) => JSX.Element;
 }
 
-
-const SelledProducts = ({...props}) => {
-    const selles = props.payments ?? [];
-    const total = selles.reduce((acc: number, curr: any) => acc + curr.price, 0);
+const TablePayments = ({...props}) => {
+    const payments = props.payments ?? [];
+    const total = payments.reduce((acc: number, curr: any) => acc + curr.price, 0);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',
@@ -19,19 +18,14 @@ const SelledProducts = ({...props}) => {
             cell: ({ row }: { row: any }) => <div>{new Date(row.getValue('date')).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</div>,
         },
         {
-            accessorKey: 'productName',
-            header: 'اسم المنتج',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('productName')}</div>,
+            accessorKey: 'type',
+            header: 'النوع',
+            cell: ({ row }: { row: any }) => <div>{row.getValue('type')}</div>,
         },
         {
             accessorKey: 'price',
             header: 'السعر',
             cell: ({ row }: { row: any }) => <div>{row.getValue('price')}</div>,
-        },
-        {
-            accessorKey: 'quantity',
-            header: 'الكمية',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('quantity')}</div>,
         },
         
     ];
@@ -48,13 +42,13 @@ const SelledProducts = ({...props}) => {
          justify-start items-start
          ">
             <h3 className=' w-full px-2 text-lg text-primary'>
-                جدول المنتجات المباعة
+               جدول المدفوعات
             </h3>
            {
-            selles? (
+            payments? (
                 <DataTable
                 columns={columns}
-                data={selles} 
+                data={payments} 
                 total={total}
             />
             )
@@ -68,4 +62,4 @@ const SelledProducts = ({...props}) => {
     );
 };
 
-export default SelledProducts;
+export default TablePayments;
