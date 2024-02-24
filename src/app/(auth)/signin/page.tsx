@@ -1,6 +1,5 @@
 'use client';
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import * as z from "zod";
 import Link from "next/link";
@@ -9,7 +8,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation";
 import { LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
 import React from "react";
-
+import Image from "next/image";
 
 const schema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
@@ -83,7 +82,11 @@ const Signin = () => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative ">
       <div className=" lg:w-[54rem] gap-0 lg:gap-6 flex justify-start items-center">
-        <img
+        <Image
+        width={400}
+        height={400}
+        placeholder="blur"
+        blurDataURL="/cofee.jpeg"
         className=" h-full w-0 md:w-96 rounded-md aspect-auto object-cover"
          src="/cofee.jpeg" alt="" />
       <form

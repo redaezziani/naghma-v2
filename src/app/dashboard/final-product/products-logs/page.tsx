@@ -2,11 +2,9 @@
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createVendur } from '@/(db)/vendur';
 import { toast } from 'sonner';
-import { createVendur_log } from '@/(db)/vendur-log';
 import { getAllProduits } from '@/(db)/produit';
-import { getAllVendurs } from '@/(db)/vendur';
+import { createProduitLog } from '@/(db)/produtc-log';
 
 
 
@@ -16,6 +14,11 @@ interface IProduit {
     nom: string;
     prix: number;
     quantite: number;
+}
+
+interface IProduitLog {
+  produit_id: string;
+  production: number;
 }
 const ProductLogs = () => {
   const [listProduits, setListProduits] = React.useState<IProduit[]>([])
@@ -33,10 +36,16 @@ const ProductLogs = () => {
       setLoading(true)
       const data = {
         produit_id: produitId,
-        quantite
+        production: quantite
       }
-
-    
+      const res = await createProduitLog(data);
+      if (res?.status === 'error') {
+        //@ts-ignore
+        toast.error(res.message);
+        return;
+      }
+      setProduitId(listProduits[0]?.id)
+      
       setQuantite(0)
 
       toast.success('تم إضافة البائع بنجاح')

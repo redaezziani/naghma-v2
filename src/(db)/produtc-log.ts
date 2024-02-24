@@ -74,6 +74,19 @@ export const createProduitLog = async (data: IProduitLog) => {
         if (!produitLog) {
             return { status: 'error', message: 'لم يتم إنشاء سجل المنتج' };
         }
+        // lets update the product quantity by decrement the production
+        const updatedProduct = await prisma.produit_Final.update({
+            where: {
+                id: produit_id
+            },
+            data: {
+                quantite: {
+                    increment: production // is mean add the production to the quantity
+                }
+            }
+        });
+            
+        
         return { status: 'success', message: 'تم إنشاء سجل المنتج بنجاح', data: produitLog };
     } catch (error: any) {
         console.error(error);
