@@ -3,7 +3,6 @@ import React from 'react'
 //  lucide icons
 import { BarChartBig } from 'lucide-react';
 import { Coffee } from 'lucide-react';
-import { Package } from 'lucide-react';
 import { PackageOpen } from 'lucide-react';
 import { Users } from 'lucide-react';
 import Link from 'next/link';
