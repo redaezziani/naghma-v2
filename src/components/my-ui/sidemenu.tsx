@@ -30,6 +30,7 @@ function Sidemenu() {
                         <PackageOpen />
                         المنتج النهائي
                     </Link>
+                    <div >
                     <Accordion
                         color='primary'
                         type="single"
@@ -73,6 +74,7 @@ function Sidemenu() {
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
+                    </div>
                 </div>
                 {/* نهاية عناصر القائمة */}
             </div>
