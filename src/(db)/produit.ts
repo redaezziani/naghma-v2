@@ -157,7 +157,11 @@ export const getProduit = async (id: string) => {
 
 export const updateProduit = async (id: string, data: IProduit) => {
     try {
-        // check if 
+        // check if  the data is here 
+        if (!data.nom || !data.prix_vente || !data.quantite) {
+            return { status: 'error', message: 'الرجاء إدخال جميع البيانات' };
+        }
+        
         const produit = await prisma.produit_Final.update({
             where: {
                 id: id
