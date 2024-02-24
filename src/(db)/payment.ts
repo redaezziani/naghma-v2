@@ -235,7 +235,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 quantite: {
-                    decrement: quantite_attendue_retourner
+                    decrement: quantite_reel_retourner // this is maen quantite = quantite - quantite_reel_retourner
                 }
             }
         });
@@ -270,7 +270,7 @@ export const paid_by_return = async (data: return_fra) => {
         const prix_paye = await prisma.prix_a_paye.create({
             data: {
                 vendur_id,
-                prix: quantite_attendue_retourner * produit.prix_vente,
+                prix: quantite_reel_retourner * produit.prix_vente,
                 type: 'return'
             }
         });

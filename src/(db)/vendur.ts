@@ -164,6 +164,11 @@ export const deleteVendur = async (id: string) => {
                 vendur_id: id
             }
         });
+        const return_logs = await prisma.retorn_logs.deleteMany({
+            where: {
+                vendur_id: id
+            }
+        });
         const vendur = await prisma.vendur.delete({
             where: {
                 id
@@ -319,6 +324,7 @@ export const getVendursWithTotalSellPrice = async () => {
                 total_sell_price
             };
         });
+        console.log(vendursWithTotalSellPrice);
         return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendursWithTotalSellPrice };
 
     } catch (error: any) {
