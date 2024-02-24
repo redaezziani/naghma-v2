@@ -7,7 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 function Sidemenu() {
     return (
         <div className='  flex  h-full z-50'>
-            <div className=" w-full bg-accent/15 text-primary  flex flex-col h-[100%]  ">
+            <div className=" w-full bg-white text-primary  flex flex-col h-[100%]  ">
                 {/* الشعار  */}
                 <div className=" uppercase flex gap-2 justify-center items-center text-xl  mt-5  font-semibold">
                     <span> <Coffee /></span>
