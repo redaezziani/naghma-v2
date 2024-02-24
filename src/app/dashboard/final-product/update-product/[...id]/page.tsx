@@ -6,8 +6,35 @@ import { Label } from '@/components/ui/label'
 import React from 'react'
 import { toast } from 'sonner';
 
+interface IUpdateProduit {
+  prix_vente: number;
+  nom: string;
+}
 
-const AddfinalProduct = () => {
+const UpdateProduit = ({...props} : any) => {
+  const id = props.params.id[0] as string;
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [data, setData] = React.useState<IUpdateProduit>({
+    prix_vente: 0,
+    nom: ''
+  });
+  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value
+    });
+  }
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    const response = await updateProduit(id,data);
+    if (response?.status === 'success') {
+      toast.success(response.message);
+    } else {
+      toast.error(response?.message);
+    }
+    setIsLoading(false);
+  }
+
 
   return (
     <div
@@ -63,4 +90,4 @@ const AddfinalProduct = () => {
   )
 }
 
-export default AddfinalProduct
+export default UpdateProduit
