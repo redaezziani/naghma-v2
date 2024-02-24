@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/my-ui/data-table';
-import { UserRound } from 'lucide-react';
+import { Plus, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs, deleteVendur } from '@/(db)/vendur';
@@ -113,8 +113,16 @@ const Vendors = () => {
     lg:w-2/3
     px-6 py-3 relative">
       <div className='flex gap-3 flex-wrap'>
-        <Button >
-          <Link href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
+        <Button 
+        variant={'ghost'}
+        className='text-primary bg-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all duration-300 ease-in-out border-primary/45 border'
+        >
+          <Plus
+          className=' h-5 w-5'
+          />
+          <Link
+          className='mr-2'
+          href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
         <Button
         variant={'outline'}

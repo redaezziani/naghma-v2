@@ -58,8 +58,8 @@ const Dashboard = () => {
               الأرباح الشهرية
             </p>
             <LineChart
-            color='11, 100%, 50%'
-            tension={0.4}
+            color='228, 100%, 50%'
+            tension={0.1}
             />
           </Card>
           <Card className="w-full col-span-4 flex-col  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
@@ -69,7 +69,7 @@ const Dashboard = () => {
               البائعين الأكثر مبيعًا (الشهر الحالي)
             </p>
             <BarChart
-            color='11, 100%, 50%' />
+            color='228, 100%, 50%' />
           </Card>
         </div>
         <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
