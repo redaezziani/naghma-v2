@@ -64,6 +64,7 @@ model Produit_Final {
   Vente_logs Vente_logs[]
   produit_sell produit_sell[]
   logs Produit_Final_logs[]
+  retorn_logs retorn_logs[]
 }
 
 //الموزع
@@ -80,6 +81,7 @@ model Vendur {
   produit_sell produit_sell[]
   prix_a_paye prix_a_paye[]
   loss loss[]
+  retorn_logs retorn_logs[]
 }
 
 //المنتج الاولي المباع
@@ -163,6 +165,19 @@ model loss {
   vendur     Vendur @relation(fields: [vendur_id], references: [id])
   vendur_id  String //الموزع
   prix       Float //المبلغ
+  produit_id String //المنتج
+  quantite   Int //الكمية
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+// 
+
+model retorn_logs {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  vendur     Vendur @relation(fields: [vendur_id], references: [id])
+  vendur_id  String //الموزع
+  produit    Produit_Final @relation(fields: [produit_id], references: [id])
   produit_id String //المنتج
   quantite   Int //الكمية
   created_at DateTime @default(now())

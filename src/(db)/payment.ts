@@ -292,7 +292,20 @@ export const paid_by_return = async (data: return_fra) => {
         if (!updateVendur) {
             return { status: 'error', message: 'لم يتم تحديث الموزع' };
         }
+        // updathe the return
 
+        const return_log = await prisma.retorn_logs.create({
+            data: {
+                vendur_id,
+                produit_id,
+                quantite:quantite_attendue_retourner,
+              
+            }
+        });
+        if (!return_log) {
+            return { status: 'error', message: 'لم يتم تحديث الموزع' };
+        }
+        
         return { status: 'success', message: 'تم إضافة المبلغ بنجاح' };
 
     } catch (error: any) {
