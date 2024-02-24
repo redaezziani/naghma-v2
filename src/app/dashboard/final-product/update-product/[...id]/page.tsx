@@ -1,59 +1,13 @@
 'use client';
-import { createProduit } from '@/(db)/produit';
+import { updateProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import React from 'react'
 import { toast } from 'sonner';
-interface IProduit {
-    nom: string;
-    prix_vente: number;
-    quantite: number;
-}
+
 
 const AddfinalProduct = () => {
-  const [data , setData] = React.useState<IProduit>({
-    nom: '',
-    prix_vente: 0,
-    quantite: 0
-  })
-  const [isLoading , setIsLoading] = React.useState(false)
-  const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>)=>{
-    // lets check if the type is number insert it as number
-    if(e.target.type === 'number'){
-      setData({...data, [e.target.name]: Number(e.target.value)})
-      return
-    }
-    setData({...data, [e.target.name]: e.target.value})  
-  }
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
-    try {
-      e.preventDefault()
-      setIsLoading(true)
-      if (data.nom === '' || data.prix_vente === 0 || data.quantite === 0) {
-        return
-      }
-      
-      const res= await createProduit(data)
-      if (res?.status === 'error') {
-        alert(res.message)
-        return
-      }
-      setData({
-        nom: '',
-        prix_vente: 0,
-        quantite: 0
-      })
-      toast.success('تم إضافة المنتج بنجاح')
-
-    } catch (error) {
-      console.log(error)
-    }
-    finally{
-      setIsLoading(false)
-    }
-
-  }
 
   return (
     <div

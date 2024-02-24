@@ -152,66 +152,21 @@ export const getProduit = async (id: string) => {
     }
 }
 
+interface IUpdateProduit {
+    prix_vente: number;
+    nom: string;
+}
 
 
-
-export const updateProduit = async (id: string, data: IProduit) => {
+export const updateProduit = async (id: string, data: IUpdateProduit) => {
     try {
-        // check if  the data is here 
-        if (!data.nom || !data.prix_vente || !data.quantite) {
-            return { status: 'error', message: 'الرجاء إدخال جميع البيانات' };
-        }
-        
         const produit = await prisma.produit_Final.update({
             where: {
                 id: id
             },
             data: {
-                nom: data.nom.toLowerCase(),
                 prix_vente: data.prix_vente,
-                quantite: data.quantite
-            }
-        });
-        if (!produit) {
-            return { status: 'error', message: 'لم يتم تحديث المنتج' };
-        }
-        return { status: 'success', message: 'تم تحديث المنتج بنجاح', data: produit };
-    } catch (error: any) {
-        console.error(error);
-    } finally {
-        await prisma.$disconnect();
-    }
-}
-
-export const updateProduitQuantity = async (id: string, quantity: number) => {
-    try {
-        const produit = await prisma.produit_Final.update({
-            where: {
-                id: id
-            },
-            data: {
-                quantite: quantity
-            }
-        });
-        if (!produit) {
-            return { status: 'error', message: 'لم يتم تحديث الكمية' };
-        }
-        return { status: 'success', message: 'تم تحديث الكمية بنجاح', data: produit };
-    } catch (error: any) {
-        console.error(error);
-    } finally {
-        await prisma.$disconnect();
-    }
-}
-
-export const updateProduitPrice = async (id: string, price: number) => {
-    try {
-        const produit = await prisma.produit_Final.update({
-            where: {
-                id: id
-            },
-            data: {
-                prix_vente: price
+                nom: data.nom.toLowerCase()
             }
         });
         if (!produit) {
