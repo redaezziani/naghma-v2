@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { getAllProduits } from '@/(db)/produit';
-import { getAllVendurs } from '@/(db)/vendur';
+import { createProduitLog } from '@/(db)/produtc-log';
 
 
 
