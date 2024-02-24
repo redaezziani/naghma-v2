@@ -34,10 +34,10 @@ export default function RootLayout({
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
-          <SheetContent className=" bg-primary">
-            
-              <Sidemenu />
-           
+          <SheetContent className=" ">
+
+            <Sidemenu />
+
           </SheetContent>
         </Sheet>
 
@@ -45,10 +45,10 @@ export default function RootLayout({
       </div>
       {/*  */}
       <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
-          <UserProfile />
-        </nav>
+        <UserProfile />
+      </nav>
 
-        {/*  */}
+      {/*  */}
       <aside className="w-full bg-primary-foreground z-50 h-screen hidden lg:block lg:col-span-1 border-r border sticky top-0 right-0">
         <Sidemenu />
       </aside>
