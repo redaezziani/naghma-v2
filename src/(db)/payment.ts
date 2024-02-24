@@ -284,7 +284,7 @@ export const paid_by_return = async (data: return_fra) => {
             },
             data: {
                 le_prix_a_paye: {
-                    decrement: quantite_reel_retourner * produit.prix_vente // this is mean le_prix_a_paye = le_prix_a_paye + quantite_reel_retourner * produit.prix_vente
+                    decrement: quantite_attendue_retourner * produit.prix_vente // this is mean le_prix_a_paye = le_prix_a_paye + quantite_reel_retourner * produit.prix_vente
                 }
 
             }
@@ -292,8 +292,6 @@ export const paid_by_return = async (data: return_fra) => {
         if (!updateVendur) {
             return { status: 'error', message: 'لم يتم تحديث الموزع' };
         }
-        // updathe the return
-
         const return_log = await prisma.retorn_logs.create({
             data: {
                 vendur_id,
