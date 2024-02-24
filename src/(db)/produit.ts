@@ -160,12 +160,13 @@ interface IUpdateProduit {
 
 export const updateProduit = async (id: string, data: IUpdateProduit) => {
     try {
+        console.log(data);
         const produit = await prisma.produit_Final.update({
             where: {
                 id: id
             },
             data: {
-                prix_vente: data.prix_vente,
+                prix_vente: Number(data.prix_vente),
                 nom: data.nom.toLowerCase()
             }
         });
