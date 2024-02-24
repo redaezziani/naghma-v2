@@ -10,6 +10,7 @@ import { LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
 
+
 const schema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
   password: z.string().min(8, { message: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل" }),
@@ -75,10 +76,7 @@ const Signin = () => {
       setLoading(false);
     }
   };
-  
-  
-
-
+    
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative ">
       <div className=" lg:w-[54rem] gap-0 lg:gap-6 flex justify-start items-center">
