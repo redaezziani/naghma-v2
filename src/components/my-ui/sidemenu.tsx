@@ -3,7 +3,6 @@ import React from 'react'
 //  lucide icons
 import { BarChartBig } from 'lucide-react';
 import { Coffee } from 'lucide-react';
-import { Package } from 'lucide-react';
 import { PackageOpen } from 'lucide-react';
 import { Users } from 'lucide-react';
 import Link from 'next/link';
@@ -25,10 +24,7 @@ function Sidemenu() {
                 لوحة القيادة
 
             </Link>
-            <Link href="/dashboard/raw-product" className=" font-semibold flex items-center gap-2">
-                <Package  />
-                المنتج الاولي
-            </Link>
+         
             <Link href="/dashboard/final-product" className=" font-semibold flex items-center gap-2">
                 <PackageOpen />
                  المنتج النهائي
