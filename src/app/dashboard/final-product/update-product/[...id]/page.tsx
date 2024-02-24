@@ -21,6 +21,19 @@ const AddfinalProduct = () => {
       <p>
         يمكنك تحديث المنتج من هنا
       </p>
+      <div
+      className='flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start'
+      >
+        <Label>
+          اسم المنتج
+        </Label>
+        <Input
+          name='nom'
+          onChange={handleChangeName}
+          value={data.nom}
+          placeholder='اسم المنتج'
+        />
+      </div>
       
       <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
         <Label
