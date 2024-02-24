@@ -20,7 +20,7 @@ interface ForgetPasswordEmailProps {
 }
 
 const ForgetPasswordEmailTemplate: React.FunctionComponent<ForgetPasswordEmailProps> = ({ username, number, store_name }) => {
-  const resetPasswordLink = `http://localhost:3000/reset-password/${number}`;
+  const resetPasswordLink = `https://naghma-v2.vercel.app/reset-password/${number}`;
 
   return (
     <Html>
