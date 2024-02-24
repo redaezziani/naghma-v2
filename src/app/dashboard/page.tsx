@@ -26,6 +26,7 @@ const Dashboard = () => {
           <h1 className="text-2xl font-bold text-primary">
             الرئيسية
           </h1>
+          
         </div>
         <div className="flex w-full flex-col gap-3 justify-start items-start">
 
