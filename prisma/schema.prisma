@@ -63,6 +63,7 @@ model Produit_Final {
   updated_at DateTime     @updatedAt
   Vente_logs Vente_logs[]
   produit_sell produit_sell[]
+  logs Produit_Final_logs[]
 }
 
 //الموزع
@@ -99,10 +100,11 @@ model Matiere_Premiere_logs {
 model Produit_Final_logs {
   id            String   @id @default(uuid()) @db.VarChar(36)
   stock_initial Int
+  produit    Produit_Final @relation(fields: [produit_id], references: [id])
+  produit_id String //المنتج
   production    Int
   ventes        Int
   retours       Int
-  changes       Int
   stock_final   Int
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
