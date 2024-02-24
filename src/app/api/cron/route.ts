@@ -13,7 +13,5 @@ export async function GET() {
         html:'<h1>Hello world</h1>',
         text: 'Welcome to the store!', 
     });
-
     return NextResponse.json(response);
-
 }
