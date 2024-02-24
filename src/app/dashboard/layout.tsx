@@ -5,9 +5,6 @@ import Sidemenu from '@/components/my-ui/sidemenu';
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Menu } from "lucide-react";
