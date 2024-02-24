@@ -90,7 +90,7 @@ const FinalProducts = () => {
 
           />
 
-        <Link href={`/dashboard/raw-product/update-product/${row.getValue('id')}`}>
+        <Link href={`/dashboard/final-product/update-product/${row.getValue('id')}`}>
           <Cog
             className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105 hover:rotate-180 transition-all duration-300 ease-in-out'
             size={16} />
