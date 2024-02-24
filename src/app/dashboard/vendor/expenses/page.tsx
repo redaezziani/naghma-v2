@@ -7,6 +7,8 @@ import { prix_a_paye } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
 import { toast } from 'sonner';
 import { frais_de_prix } from '@/(db)/payment'; 
+import { Textarea } from "@/components/ui/textarea"
+
 interface frais_de_prix {
     vendur_id: string,
     prix: number
@@ -123,9 +125,8 @@ const Expenses = () => {
                 <label className='font-semibold'>
                     ملاحظة
                 </label>
-                <Input
+                <Textarea
                     name='type'
-                    type='text'
                     value={type}
                     onChange={(e) => setType(e.target.value)}
                     placeholder='ملاحظة'
