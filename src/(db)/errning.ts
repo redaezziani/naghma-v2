@@ -74,20 +74,46 @@ export const getEarningsOfCurrentMonth = async () => {
                 }
             });
         });
+        //@ts-ignore
+        return { status: 'success', message: 'تم العثور على الأرباح بنجاح', data: earnings };
+    } catch (error) {
+        console.error(error);
+        return { status: 'error', message: 'حدث خطأ أثناء جلب البيانات' };
+    } finally {
+        await prisma.$disconnect();
+    }
+};
+
+// Function to get the losses by month for this company current month
+
+export const getLossesByMonth = async () => {
+    try {
+        const losses = await prisma.loss.findMany();
+        if (!losses || losses.length === 0) {
+            return { status: 'error', message: 'لم يتم العثور على الخسائر' };
+        }
+
+        // Variable to store losses data for the current month
+        let totalLosses = 0;
+        let curent = new Date().getMonth() + 1;
+        losses.forEach(loss => {
+            const date = new Date(loss.created_at);
+            const month = date.getMonth() + 1;
+            if (month === curent) {
+                totalLosses += loss.prix;
+            }
+        });
         // lets get the frais
         const frais = await prisma.frais_de_prix.findMany();
         if (!frais || frais.length === 0) {
             return { status: 'error', message: 'لم يتم العثور على الفواتير' };
         }
-        // total frais
-        let totalFrais = 0;
         frais.forEach(frai => {
-            totalFrais += frai.prix;
-        });
-        earnings -= totalFrais;
-
+            totalLosses += frai.prix;
+        }
+        );
         //@ts-ignore
-        return { status: 'success', message: 'تم العثور على الأرباح بنجاح', data: earnings };
+        return { status: 'success', message: 'تم العثور على الخسائر بنجاح', data: totalLosses };
     } catch (error) {
         console.error(error);
         return { status: 'error', message: 'حدث خطأ أثناء جلب البيانات' };

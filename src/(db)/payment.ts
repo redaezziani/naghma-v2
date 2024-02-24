@@ -208,6 +208,7 @@ export const paid_by_return = async (data: return_fra) => {
         if (!vendur) {
             return { status: 'error', message: 'الموزع غير موجود' };
         }
+       
         const produit = await prisma.produit_Final.findUnique({
             where: {
                 id: produit_id
@@ -215,6 +216,10 @@ export const paid_by_return = async (data: return_fra) => {
         });
         if (!produit) {
             return { status: 'error', message: 'المنتج غير موجود' };
+        }
+        // dont add if the price is more than the price to pay or less than 0 or  the quantity is more than the quantity sold or less than 0 or the vendur.price_to_paye is equal 0
+        if (quantite_reel_retourner * produit.prix_vente > vendur.le_prix_a_paye || quantite_reel_retourner < 0 || quantite_reel_retourner > quantite_attendue_retourner || quantite_attendue_retourner < 0 || vendur.le_prix_a_paye == 0) {
+            return { status: 'error', message: 'المبلغ المدفوع أكبر من المبلغ المطلوب' };
         }
         const produit_sell = await prisma.produit_sell.findFirst({
             where: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BarChartBig, CarIcon } from 'lucide-react';
+import { BarChartBig, CarIcon, Truck } from 'lucide-react';
 import { Coffee } from 'lucide-react';
 import { PackageOpen } from 'lucide-react';
 import Link from 'next/link';
@@ -40,8 +40,10 @@ function Sidemenu() {
                             <AccordionTrigger
                                 className='border-none lg:max-w-48'
                             >
-                                <div className="flex justify-start items-center gap-2 hover:no-underline">
-                                    <CarIcon />
+                                <div className="flex font-semibold justify-start items-center gap-2 hover:no-underline">
+                                    <Truck
+                                    className='w-5 h-5'
+                                    />
                                     <p
                                         className='border-none no-underline'
                                     >
@@ -51,7 +53,7 @@ function Sidemenu() {
                             </AccordionTrigger>
                             <AccordionContent>
                                 <Link href="/dashboard/vendor">
-                                سجلات الموزعين
+                                    سجلات الموزعين
                                 </Link>
                             </AccordionContent>
                             <AccordionContent>
@@ -62,6 +64,11 @@ function Sidemenu() {
                             <AccordionContent>
                                 <Link href="/dashboard/vendor/vendors-logs"> 
                                         سجلات المبيعات
+                                </Link>
+                            </AccordionContent>
+                            <AccordionContent>
+                                <Link href="/dashboard/vendor/retourn"> 
+                                        سجلات الارجاع
                                 </Link>
                             </AccordionContent>
                         </AccordionItem>

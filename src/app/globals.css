@@ -76,5 +76,14 @@ html,body{
 }
 
 .text{
-  color: hsl(228, 100%, 50%);
+  color: hsl(200, 87%, 51%);
+}
+.primary{
+  color: hsl(221.2 ,83.2% ,53.3%);
+}
+.primary-foreground{
+  color: hsl(210, 40%, 98%);
+}
+.new-primary{
+  color: #ef1536;
 }
