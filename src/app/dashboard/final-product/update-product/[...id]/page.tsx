@@ -67,20 +67,7 @@ const AddfinalProduct = () => {
       <p>
         يمكنك تحديث المنتج من هنا
       </p>
-      <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
-        <Label
-          className=' font-semibold'
-        >
-          اسم المنتج
-        </Label>
-        <Input
-          name='nom'
-          onChange={handleChangeName}
-          type='text'
-          value={data.nom}
-          placeholder='اسم المنتج'
-        />
-      </div>
+      
       <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
         <Label
           className=' font-semibold'
@@ -95,20 +82,7 @@ const AddfinalProduct = () => {
           placeholder='سعر المنتج'
         />
        </div>
-      <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
-        <Label
-          className=' font-semibold'
-        >
-          كمية المنتج
-        </Label>
-        <Input
-          name='quantite'
-          onChange={handleChangeName}
-          type='number'
-          value={data.quantite}
-          placeholder='كمية المنتج'
-        />
-       </div>
+      
       <Button
         className='bg-primary text-white'
         onClick={handleSubmit}
