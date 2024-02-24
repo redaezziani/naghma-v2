@@ -36,7 +36,8 @@ const AddVendorPage = () => {
   return (
     <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
       <h1 className='text-2xl text-primary font-bold'>إضافة بائع جديد</h1>
-      <p>هذه هي صفحة إضافة بائع جديد</p>
+      <p 
+      className='text-sm text-slate-500'>هذه هي صفحة إضافة بائع جديد</p>
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>اسم البائع</label>
         <Input
