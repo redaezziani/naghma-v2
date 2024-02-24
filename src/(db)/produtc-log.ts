@@ -36,7 +36,6 @@ export const createProduitLog = async (data: IProduitLog) => {
         if (!stock_initial) {
             return { status: 'error', message: 'المنتج غير موجود' };
         }
-        const stock_final = stock_initial.quantite + production;
         // get the product return if exists
         const  retours = await prisma.retorn_logs.findFirst({
             where: {
@@ -46,7 +45,7 @@ export const createProduitLog = async (data: IProduitLog) => {
                 quantite: true
             }
         });
-
+        
         const vents = await prisma.produit_sell.findMany({
             where: {
                 produit_id
@@ -59,6 +58,7 @@ export const createProduitLog = async (data: IProduitLog) => {
         vents.forEach((vent) => {
             ventes += vent.quantite;
         });
+        const stock_final = stock_initial.quantite + production + (retours?.quantite || 0) - ventes;
         
         const produitLog = await prisma.produit_Final_logs.create({
             data: {
