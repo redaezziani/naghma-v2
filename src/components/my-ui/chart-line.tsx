@@ -152,9 +152,11 @@ const LineChart = ({ tension = 0, color = "161, 94%, 30%", isTransparent = true 
   };
 
   return (
-    <Line data={data}
+   <div className="p-4 w-full h-full flex justify-center items-center">
+     <Line data={data}
     //@ts-ignore
     options={options} />
+   </div>
   );
 }
 

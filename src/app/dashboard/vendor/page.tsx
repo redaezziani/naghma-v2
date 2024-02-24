@@ -110,6 +110,7 @@ const Vendors = () => {
     flex-col
      justify-start items-start gap-7
      w-full
+    
     lg:w-2/3
     px-6 py-3 relative">
       <div className='flex gap-3 flex-wrap'>

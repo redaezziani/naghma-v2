@@ -34,17 +34,16 @@ export default function RootLayout({
           <SheetTrigger>
             <Menu />
           </SheetTrigger>
-          <SheetContent className=" bg-primary">
-            
-              <Sidemenu />
-           
+          <SheetContent className=" bg-white">
+              <Sidemenu
+              />
           </SheetContent>
         </Sheet>
 
 
       </div>
       {/*  */}
-      <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-slate-50/10 fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
+      <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-white fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
           <UserProfile />
         </nav>
 
@@ -52,7 +51,7 @@ export default function RootLayout({
       <aside className="w-full bg-primary-foreground z-50 h-screen hidden lg:block lg:col-span-1 border-r border sticky top-0 right-0">
         <Sidemenu />
       </aside>
-      <div className="w-full relative overflow-auto col-span-5 lg:col-span-4 ">
+      <div className="w-full bg-slate-50 relative overflow-auto col-span-5 lg:col-span-4 ">
 
         {children}
         <Toaster
