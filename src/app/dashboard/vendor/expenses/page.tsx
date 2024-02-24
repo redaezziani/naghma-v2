@@ -84,14 +84,16 @@ const Expenses = () => {
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
-                تحديث طريقة الدفع للبائع
+               مصاريف البائع
             </h1>
             <p>
-                هذه هي صفحة تحديث طريقة الدفع للبائع
+                يمكنك من هنا ان تضيف مصاريف البائع 
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>رقم البائع</label>
+                <label className='font-semibold'> 
+                 اسم البائع
+                </label>
                 <select
                     name='vendur_id'
                     onChange={handelChangeVendurId}

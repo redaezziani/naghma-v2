@@ -102,14 +102,16 @@ const Payment = () => {
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
-                تحديث طريقة الدفع للبائع
+                تحديث المنتجات المرجعة
                 </h1>
             <p>
-                هذه هي صفحة تحديث المنتجات التي تم إرجاعها من قبل البائع
+                 يمكنك من هنا تحديث المنتجات المرجعة من طرف البائع
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-                <label className='font-semibold'>رقم البائع</label>
+                <label className='font-semibold'> 
+                اسم البائع
+                </label>
                 <select
                     onChange={handelChangeVendurId} 
                     className='w-1/2 p-2 rounded-md border bg-white text-primary focus:outline-none focus:border-primary'

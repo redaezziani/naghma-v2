@@ -67,7 +67,7 @@ const VendorLogs = () => {
     
       setQuantite(0)
 
-      toast.success('تم إضافة البائع بنجاح')
+      toast.success('تمت العملية بنجاح')
     } catch (error) {
       console.log(error);
     }
@@ -125,9 +125,11 @@ const VendorLogs = () => {
 
   return (
     <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
-      <h1 className='text-2xl text-primary font-bold'>تحديث  بيانات البائع</h1>
+      <h1 className='text-2xl text-primary font-bold'>
+        بيع المنتجات للبائع
+      </h1>
       <p>
-        يمكنك من هنا تحديث   بيانات  البائع
+        يمكنك من هنا بيع المنتجات للبائع
       </p>
       
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
