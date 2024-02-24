@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/provider/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import '@/app/globals.css'
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 export const metadata: Metadata = {
   title: "شركة القهوة التي توصلها",
   description: "تم إنشاؤها بواسطة تطبيق القهوة التالي",
@@ -22,6 +22,7 @@ export default function RootLayout({
        
        >
        {children}
+       <SpeedInsights />
         <Toaster
         position="top-right"
         />
