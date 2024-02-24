@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { DataTable, ColumnDef, DataItem } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { getProduits,deleteProduit } from '@/(db)/produit';
+import { getProduits,deleteProduit, updateProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
-const FinalProducts = () => {
+const UpdateProduit = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
 
@@ -110,9 +110,16 @@ const FinalProducts = () => {
      w-full
     lg:w-2/3
     px-6 py-3 relative">
-      <Button>
+     <div className='flex gap-4 justify-start items-center'>
+     <Button>
         <Link href='/dashboard/final-product/add-final-product'>إضافة منتج</Link>
       </Button>
+      <Button>
+        <Link href='/dashboard/final-product/products-logs'>
+          تحديث كمية المنتج
+        </Link>
+      </Button>
+     </div>
       <DataTable
       total={total}
       columns={columns as ColumnDef<DataItem>[]}
@@ -122,4 +129,4 @@ const FinalProducts = () => {
   );
 };
 
-export default FinalProducts;
+export default UpdateProduit;
