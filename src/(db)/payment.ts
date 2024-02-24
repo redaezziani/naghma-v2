@@ -298,7 +298,7 @@ export const paid_by_return = async (data: return_fra) => {
             data: {
                 vendur_id,
                 produit_id,
-                quantite:quantite_attendue_retourner,
+                quantite:quantite_reel_retourner,
               
             }
         });
