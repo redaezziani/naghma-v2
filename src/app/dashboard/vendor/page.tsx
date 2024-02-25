@@ -1,19 +1,15 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/my-ui/data-table';
 import { Plus, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { getVendurs, deleteVendur } from '@/(db)/vendur';
-
-
+import { getVendurs} from '@/(db)/vendur';
 export interface ColumnDef {
   accessorKey: string;
   header: string;
   cell: ({ row }: { row: any }) => JSX.Element;
 }
-
 interface IVendur {
   id: string;
   nom: string;
@@ -22,7 +18,6 @@ interface IVendur {
   frais_de_prix: number;
   balance: number;
 }
-
 const Vendors = () => {
   const [products, setProducts] = useState<IVendur[]>([]);
   const [total, setTotal] = useState(0);
@@ -34,22 +29,7 @@ const Vendors = () => {
         return;
       }
       setProducts(res?.data ?? []);
-      console.log(res);
       setTotal(res?.total_price ?? 0);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const handleDelete = async (id: string) => {
-    try {
-      const res = await deleteVendur(id);
-      if (res?.status === 'error') {
-        alert(res.message);
-        return;
-      }
-      setProducts(products.filter((product) => product.id !== id));
-
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +110,6 @@ const Vendors = () => {
         >
           <Link href="/dashboard/vendor/vendors-logs">
             بيع المنتج للبائع
-
           </Link>
         </Button >
         <Button
@@ -138,7 +117,6 @@ const Vendors = () => {
         >
           <Link href="/dashboard/vendor/payment">
             دفع مستحقات البائع
-
           </Link>
         </Button >
         <Button
@@ -146,7 +124,6 @@ const Vendors = () => {
         >
           <Link href="/dashboard/vendor/retourn">
             المنتجات التي ارجعت
-
           </Link>
         </Button >
         <Button
@@ -157,12 +134,10 @@ const Vendors = () => {
 
           </Link>
         </Button >
-
       </div>
       <DataTable
         total={total}
         columns={columns} data={products} />
-
     </div>
   );
 };

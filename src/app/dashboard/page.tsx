@@ -48,7 +48,30 @@ const Dashboard = () => {
                 </p>
               </div>
             </Card>
-
+            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
+              <div
+              className=' '
+              >
+                <p className="text-xs text-bold">
+                  الخسائر (شهريًا)
+                </p>
+                <p className="font-semibold text-xl text-destructive mt-1">
+                  {losses} د.م
+                </p>
+              </div>
+            </Card>
+            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
+              <div
+              className=' '
+              >
+                <p className="text-xs text-bold">
+                  الخسائر (شهريًا)
+                </p>
+                <p className="font-semibold text-xl text-destructive mt-1">
+                  {losses} د.م
+                </p>
+              </div>
+            </Card>
             <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
               <div
               className=' '
