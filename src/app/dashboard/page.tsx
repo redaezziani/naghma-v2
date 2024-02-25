@@ -1,12 +1,9 @@
 'use client';
 import { Card } from '@/components/ui/card';
-import { Calendar } from 'lucide-react';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
 import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesByMonth } from '@/(db)/errning';
-import MyComponent from '@/components/my-ui/anlys/chart';
-import Shart from '@/components/my-ui/anlys/chart-two';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState('')
   const [losses, setLosses] = useState('')
@@ -36,7 +33,6 @@ const Dashboard = () => {
           <h1 className="text-2xl font-bold text-primary">
             الرئيسية
           </h1>
-          
         </div>
         <div className="flex w-full flex-col gap-3 justify-start items-start">
 
