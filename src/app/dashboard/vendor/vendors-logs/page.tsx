@@ -1,25 +1,11 @@
 "use client"
-import React, { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { createVendur } from '@/(db)/vendur';
 import { toast } from 'sonner';
 import { createVendur_log } from '@/(db)/vendur-log';
 import { getAllProduits } from '@/(db)/produit';
 import { getAllVendurs } from '@/(db)/vendur';
-
-// the function createVendur_log is take 
-
-/*
-
-interface IVendur_log {
-    vendur_id: string;
-    produit_id: string;
-    quantite: number;
-    prix: number;
-    prix_a_paye: number;
-}
-*/
 
 interface IVendur {
     id: string;
@@ -35,12 +21,12 @@ interface IProduit {
     quantite: number;
 }
 const VendorLogs = () => {
-  const [listProduits, setListProduits] = React.useState<IProduit[]>([])
-  const [listVendurs, setListVendurs] = React.useState<IVendur[]>([])
-  const [vendurId, setVendurId] = React.useState('');
-  const [produitId, setProduitId] = React.useState('');
-  const [quantite, setQuantite] = React.useState(0);
-  const [Loading, setLoading] = React.useState(false)
+  const [listProduits, setListProduits] =useState<IProduit[]>([])
+  const [listVendurs, setListVendurs] =useState<IVendur[]>([])
+  const [vendurId, setVendurId] =useState('');
+  const [produitId, setProduitId] =useState('');
+  const [quantite, setQuantite] =useState(0);
+  const [Loading, setLoading] =useState(false)
 
   const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setVendurId(e.target.value)
@@ -81,7 +67,7 @@ const VendorLogs = () => {
       const res = await getAllProduits();
       if (res?.status === 'error') {
         //@ts-ignore
-        alert(res.message);
+        toast.error(res.message)
         return;
       }
       const produits: IProduit[] = res?.data?.map((item: { id: string; nom: string; }) => ({
@@ -100,7 +86,7 @@ const VendorLogs = () => {
     try {
       const res = await getAllVendurs();
       if (res?.status === 'error') {
-        alert(res.message);
+        toast.error(res.message)
         return;
       }
       const vendurs: IVendur[] = res?.data?.map((item: { id: string; nom: string; }) => ({
@@ -136,33 +122,31 @@ const VendorLogs = () => {
         <label className='font-semibold'>اسم البائع</label>
         <select
           defaultValue={listVendurs[0]?.id}
-          onChange={handelChangeVendurId} // Use onChange instead of onSelect
+          onChange={handelChangeVendurId}
           className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
-          id="vendurID" // Unique ID for the select element
+          id="vendurID" 
           name="vendurID">
             <option disabled value="" selected>
               اختر البائع
             </option>
           {listVendurs.map((vendur: any) => (
-            <option key={vendur.id} value={vendur.id}>{vendur.nom}</option> // Ensure each option has a unique key
+            <option key={vendur.id} value={vendur.id}>{vendur.nom}</option>
           ))}
         </select>
-
-
       </div>
       <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
         <label className='font-semibold'>رقم المنتج</label>
         <select
           defaultValue={listProduits[0]?.id}
-          onChange={handelChangeProduitId} // Use onChange instead of onSelect
+          onChange={handelChangeProduitId} 
           className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
-          id="produitID" // Unique ID for the select element
+          id="produitID" 
           name="produitID">
             <option disabled value="" selected>
               اختر المنتج
             </option>
           {listProduits.map((produit: any) => (
-            <option key={produit.id} value={produit.id}>{produit.nom}</option> // Ensure each option has a unique key
+            <option key={produit.id} value={produit.id}>{produit.nom}</option> 
           ))}
         </select>
       </div>

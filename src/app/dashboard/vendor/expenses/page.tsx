@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect } from 'react';
-import { prix_a_paye } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
 import { toast } from 'sonner';
 import { frais_de_prix } from '@/(db)/payment'; 

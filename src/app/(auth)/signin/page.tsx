@@ -9,38 +9,29 @@ import { useRouter } from "next/navigation";
 import { LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-
-
 const schema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
   password: z.string().min(8, { message: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل" }),
 });
-
-
-
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [data , setData] = useState({
     email: "",
     password: ""
   })
-
   const router = useRouter();
   const [resError, setResError] = useState("");
   const [error, setError] = useState({
     email: "",
     password: ""
   })
-
   const [loading, setLoading] = useState(false);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({
       ...data,
       [e.target.name]: e.target.value
     })
   }
-
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     
     try {
@@ -69,7 +60,6 @@ const Signin = () => {
         });
         setError(newErrors);
       } else {
-        // Handle other types of errors, e.g., network errors, server errors, etc.
         console.error("حدث خطأ:", error);
       }
     } finally {
@@ -85,7 +75,7 @@ const Signin = () => {
         height={400}
         placeholder="blur"
         blurDataURL="/cofee.jpg"
-        className=" h-full w-0 md:w-96 rounded-md aspect-auto object-cover"
+        className=" h-full w-0 md:w-auto   rounded-md aspect-auto object-cover"
          src="/cofee.jpg" alt="" />
       <form
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
@@ -181,7 +171,6 @@ const Signin = () => {
             >
               تسجيل الدخول
             </Button>
-
       </form>
       </div>
     </main>  

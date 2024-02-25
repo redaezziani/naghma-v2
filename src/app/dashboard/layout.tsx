@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import '../globals.css'
 import { Toaster } from "@/components/ui/sonner";
 import Sidemenu from '@/components/my-ui/sidemenu';
 import {
@@ -9,14 +8,10 @@ import {
 } from "@/components/ui/sheet"
 import { Menu } from "lucide-react";
 import { UserProfile } from '@/components/my-ui/user-profile';
-
-
-
 export const metadata: Metadata = {
   title: "شركة القهوة التي توصلها",
   description: "تم إنشاؤها بواسطة تطبيق القهوة التالي",
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{

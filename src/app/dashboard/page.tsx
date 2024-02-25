@@ -108,8 +108,6 @@ const Dashboard = () => {
             color='228, 100%, 66%' />
           </Card>
         </div>
-        <Card className="w-full grid grid-cols-3 h-96 shadow-none gap-6">
-        </Card>
       </div>
     </main>
   );

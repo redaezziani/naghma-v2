@@ -1,6 +1,4 @@
-import React from 'react'
 import { Input } from '@/components/ui/input'
-
 function Profil() {
   return (
     <div className='mt-20 px-6 py-3 '>
