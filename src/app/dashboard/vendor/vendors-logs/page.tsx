@@ -114,7 +114,7 @@ const VendorLogs = () => {
       <h1 className='text-2xl text-primary font-bold'>
         بيع المنتجات للبائع
       </h1>
-      <p  className=' text-slate-500'>
+      <p  className=' text-sm text-slate-500'>
         يمكنك من هنا اضافة المنتجات التي اشتراها البائع بإضافة الكمية المشتراة من المنتج المختار
       </p>
       

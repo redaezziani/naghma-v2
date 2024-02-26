@@ -79,7 +79,7 @@ const Payment = () => {
             <h1 className='text-2xl text-primary font-bold'>
                دفع مستحقات البائع
             </h1>
-            <p  className=' text-slate-500'>
+            <p  className=' text-sm text-slate-500'>
             في هده الصفحة يمكنك اضافت المبالغ او الدفعات المستلمة من طرف البائع
             </p>
 
