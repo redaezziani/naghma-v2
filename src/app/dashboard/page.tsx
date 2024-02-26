@@ -36,14 +36,19 @@ const Dashboard = () => {
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
       >
-          <div className="flex  w-full  mt-10 flex-row gap-3  items-center justify-between ">
-            <h1 className="text-2xl font-bold text-primary">
-              الرئيسية
-            </h1>
+        <div className="flex  w-full  mt-10 flex-row gap-3  items-center justify-between ">
+          <h1 className="text-2xl font-bold text-primary">
+            الرئيسية
+          </h1>
+          <div className='flex gap-4 '>
             <Button>
               <Link href="/dashboard/company-expense">نفقات الشركة</Link>
             </Button>
+            <Button>
+                <Link href="/dashboard/contributions"> المساهمات </Link>
+            </Button>
           </div>
+        </div>
         <div className="flex w-full flex-col gap-3 justify-start items-start">
           <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
 
@@ -60,10 +65,10 @@ const Dashboard = () => {
             <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
               <div
                 className=' '
-              > 
-                 <p className="text-xs text-bold">
-                   الخسائر مع الموردين (شهريًا) 
-                 </p>
+              >
+                <p className="text-xs text-bold">
+                  الخسائر مع الموردين (شهريًا)
+                </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
                   {losses} د.م
                 </p>
@@ -74,7 +79,7 @@ const Dashboard = () => {
                 className=' '
               >
                 <p className="text-xs text-bold">
-                مصاريف الشركة (شهريًا)
+                  مصاريف الشركة (شهريًا)
                 </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
                   {companyExpenses} د.م
