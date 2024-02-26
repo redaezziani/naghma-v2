@@ -17,9 +17,6 @@ const Dashboard = () => {
           getEarningsOfCurrentMonth(),
           getLossesByMonth()
         ]);
-        console.log(earningsResponse);
-        console.log(lossesResponse);
-
         setEarnings(earningsResponse?.data ?? 0);
         setLosses(lossesResponse?.data ?? 0);
       } catch (error) {
