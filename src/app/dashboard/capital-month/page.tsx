@@ -4,19 +4,26 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { getEarningsOfCurrentMonth } from '@/(db)/data';
 
 
-type external_expense = {
-    prix: number;
-    type: string;
-}
+
 const CapitalPerMonth = () => {
-    const [price, setPrice] = React.useState('0');
-    const [type, setType] = React.useState('');
+    const [initial_amount_price, setPrice] = React.useState(0);
     const [isLoading, setIsLoading] = React.useState(false);
 
     const handelSubmit = async () => {
-        try {
+     
+            try {
+                setIsLoading(true);
+                console.log(initial_amount_price);
+                const res = await getEarningsOfCurrentMonth({initial_amount_price});
+                if (res?.status === 'error') {
+                  return;
+                }
+                console.log(res);
+                toast.success('تمت العملية بنجاح');
+              
 
         } catch (error) {
             console.log("error in handelSubmit", error);
@@ -46,8 +53,8 @@ const CapitalPerMonth = () => {
                 <Input
                     name='price'
                     type='number'
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={initial_amount_price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
                     placeholder='التمن'
                 />
             </div>
