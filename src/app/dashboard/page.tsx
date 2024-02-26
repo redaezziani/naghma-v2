@@ -1,37 +1,37 @@
-'use client';
+'use server';
 import { Card } from '@/components/ui/card';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
-import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-const Dashboard = () => {
-  const [earnings, setEarnings] = useState('')
-  const [losses, setLosses] = useState('')
+const Dashboard = async () => {
+  var earnings= 0;
+  var losses= 0;
   const getEarnings = async () => {
     const res = await getEarningsOfCurrentMonth();
     //@ts-ignore
-    setEarnings(res?.data ?? 0)
+    return res?.data ?? 0
   }
 
   const getLoss = async () => {
     const res = await getLossesByMonth();
     //@ts-ignore
-    setLosses(res?.data ?? 0)
+    return res?.data ?? 0
   }
-  useEffect(() => {
-    getEarnings()
-    getLoss()
-  }
-    , [])
+  const [earningsResponse, lossesResponse] = await Promise.all([
+    getEarningsOfCurrentMonth(),
+    getLossesByMonth()
+  ]);
+  
+  earnings = earningsResponse?.data ?? 0;
+  losses = lossesResponse?.data ?? 0;
   return (
     <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
 
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
       >
-       
           <div className="flex  w-full  mt-10 flex-row gap-3  items-center justify-between ">
             <h1 className="text-2xl font-bold text-primary">
               الرئيسية
