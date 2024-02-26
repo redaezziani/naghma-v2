@@ -47,6 +47,9 @@ const Dashboard = () => {
             <Button>
                 <Link href="/dashboard/contributions"> المساهمات </Link>
             </Button>
+            <Button>
+                <Link href="/dashboard/capital-month"> حساب الارباح</Link>
+            </Button>
           </div>
         </div>
         <div className="flex w-full flex-col gap-3 justify-start items-start">
