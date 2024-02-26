@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
 import { useEffect, useState } from 'react';
-import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth } from '@/(db)/errning';
+import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth ,getTotalVendursFraisByMonth} from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getTotalExpensesByMonth } from '@/(db)/data';
@@ -11,18 +11,21 @@ const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
   const [companyExpenses, setCompanyExpenses] = useState(0);
+  const [Frais, setFrais] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [earningsResponse, lossesResponse, companyExpensesResponse] = await Promise.all([
+        const [earningsResponse, lossesResponse, companyExpensesResponse,FraisResponse] = await Promise.all([
           getEarningsOfCurrentMonth(),
           getLossesReturnOfCurrentMonth(),
-          getTotalExpensesByMonth()
+          getTotalExpensesByMonth(),
+          getTotalVendursFraisByMonth()
         ]);
         setEarnings(earningsResponse?.data ?? 0);
         setLosses(lossesResponse?.data ?? 0);
         setCompanyExpenses(companyExpensesResponse?.data ?? 0);
+        setFrais(FraisResponse?.data ?? 0);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -94,10 +97,10 @@ const Dashboard = () => {
                 className=' '
               >
                 <p className="text-xs text-bold">
-                  الخسائر (شهريًا)
+                مصاريف البائعين (شهريًا)
                 </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
-                  {losses} د.م
+                  {Frais} د.م
                 </p>
               </div>
             </Card>
