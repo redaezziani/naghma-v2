@@ -7,24 +7,28 @@ import { getEarningsOfCurrentMonth, getLossesByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 const Dashboard = () => {
-  const [earnings, setEarnings] = useState('')
-  const [losses, setLosses] = useState('')
-  const getEarnings = async () => {
-    const res = await getEarningsOfCurrentMonth();
-    //@ts-ignore
-    setEarnings(res?.data ?? 0)
-  }
+  const [earnings, setEarnings] = useState(0);
+  const [losses, setLosses] = useState(0);
 
-  const getLoss = async () => {
-    const res = await getLossesByMonth();
-    //@ts-ignore
-    setLosses(res?.data ?? 0)
-  }
   useEffect(() => {
-    getEarnings()
-    getLoss()
-  }
-    , [])
+    const fetchData = async () => {
+      try {
+        const [earningsResponse, lossesResponse] = await Promise.all([
+          getEarningsOfCurrentMonth(),
+          getLossesByMonth()
+        ]);
+        console.log(earningsResponse);
+        console.log(lossesResponse);
+
+        setEarnings(earningsResponse?.data ?? 0);
+        setLosses(lossesResponse?.data ?? 0);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
 
