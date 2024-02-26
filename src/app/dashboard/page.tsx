@@ -70,7 +70,7 @@ const Dashboard = () => {
                 className=' '
               >
                 <p className="text-xs text-bold">
-                  الخسائر (شهريًا)
+                مصاريف الشركة (شهريًا)
                 </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
                   {losses} د.م
