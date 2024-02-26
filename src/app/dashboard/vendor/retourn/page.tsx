@@ -102,7 +102,7 @@ const Payment = () => {
             <h1 className='text-2xl text-primary font-bold'>
                 تحديث المنتجات المرجعة
                 </h1>
-            <p className=' text-slate-500'>               
+            <p className=' text-sm text-slate-500'>               
             في هده الصفحة يمكنك اضافة المتجات المرجعة من طرف البائع عبر اضافة الكمية المتوقعة للارجاع و الكمية الحقيقية بعد الوزن
             </p>
 
