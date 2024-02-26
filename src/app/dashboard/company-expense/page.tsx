@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
-import { frais_de_prix } from '@/(db)/payment'; 
 import { Textarea } from "@/components/ui/textarea"
+import { createExternalExpense } from '@/(db)/data';
 
-interface frais_de_prix {
-    prix: number
-    type : string
+type external_expense = {
+    prix: number;
+    type: string;
 }
+export
 const CompanyExpense = () => {
 
     const [price, setPrice] = React.useState('0');
@@ -18,16 +19,7 @@ const CompanyExpense = () => {
     const [isLoading, setIsLoading] = React.useState(false);
 
 
-    const allVendurs = async () => {
-        try {
-            
-         
-          
 
-        } catch (error) {
-            console.error(error)
-        }
-    }
 
     const handelType = (event: string) => {
         setType(event)
@@ -35,11 +27,38 @@ const CompanyExpense = () => {
 
 
     const handelSubmit = async () => {
+        try {
+            if (!price || price === '0' || !type) {
+                toast.error('الرجاء ملء جميع الحقول')
+                return
+            }
+            if (isNaN(Number(price))) {
+                toast.error('الرجاء إدخال رقم')
+                return
+            }
+            const data: external_expense = {
+                prix: Number(price),
+                type: type
+            }
+            setIsLoading(true);
+            const res = await createExternalExpense(data);
+            if (res?.status === 'error') {
+                toast.error(res?.message);
+                return
+            }
+            toast.success('تمت العملية بنجاح');
+            console.log(data);
+        } catch (error) {
+            console.log("error in handelSubmit", error);
+        }
+        finally {
+            setIsLoading(false);
+        }
        
     }
 
     useEffect(() => {
-        allVendurs()
+        
     }, [])
 
     return (
