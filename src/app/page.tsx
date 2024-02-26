@@ -1,7 +1,5 @@
 "use server";
-
 import { redirect } from "next/navigation";
-
 const Home =async () => {
   redirect('/dashboard')
   return (
