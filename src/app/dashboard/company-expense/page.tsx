@@ -35,35 +35,7 @@ const CompanyExpense = () => {
 
 
     const handelSubmit = async () => {
-        try {
-            if (!price || price === '0' || !type) {
-                toast.error('الرجاء ملء جميع الحقول')
-                return
-            }
-            //check if the price is a number
-            if (isNaN(Number(price))) {
-                toast.error('الرجاء إدخال رقم')
-                return
-            }
-            const data: frais_de_prix = {
-               
-                prix: Number(price),
-                type: type
-            }
-            setIsLoading(true)
-            const res = await frais_de_prix(data) 
-            if (res?.status === 'error') {
-                toast.error(res.message)
-                return
-            }
-            toast.success(res?.message)
-            console.log(data);
-        } catch (error) {
-            console.error(error)
-        }
-        finally {
-            setIsLoading(false)
-        }
+       
     }
 
     useEffect(() => {
