@@ -210,9 +210,16 @@ model total_expenses {
 }
 
 */
-
-export const createExternalExpense = async (prix: number, type: string) => {
+type external_expense = {
+    prix: number;
+    type: string;
+}
+export const createExternalExpense = async (data : external_expense) => {
     try {
+         const {prix, type} = data;
+         if (!prix || !type) {
+             return {status :"error", message: "prix or type not found"};
+         }
         const  result =await prisma.external_expense.create({
             data: {
                 prix,
@@ -265,9 +272,7 @@ export const createContribution = async (prix: number, user_id: string) => {
 
 export const getTotalSelles = async () => {
     try {
-        // this is the total of all the selles for each vendur for this month 
         
-    // find all the vendurs and the price of the selles - the price frais_de_prix  for this month
     const vendurs = await prisma.vendur.findMany();
     if (!vendurs) {
         return {status :"error", message: "vendurs not found"};
