@@ -47,18 +47,74 @@ const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
             <th
             className='p-2'
             >
-              البداية
+            الربح الصافي
             </th>
-          
+            <th
+            className='p-2'
+            >
+              مبلغ المنتجات المتبقية
+            </th>
+            <th
+            className='p-2'
+            >
+              المبلغ الأولي
+            </th>
+            <th
+            className='p-2'
+            >
+              مبلغ المبيعات
+            </th>
+            <th
+            className='p-2'
+            >
+            مبلغ المصاريف الخارجية
+            </th>
+            <th
+            className='p-2'
+            >
+              مبلغ مصاريف البائعين
+            </th>
           </tr>
+
         </thead>
         <tbody
         className='text-center'
         >
+          
           <tr
           className='text-xs font-semibold text-slate-700'
           >
-          </tr>  
+            <td
+            className='p-2'
+            >
+              {final} د.م
+            </td>
+            <td
+            className='p-2'
+            >
+              {finalStock} د.م
+            </td>
+            <td
+            className='p-2'
+            >
+              {initial_amount_price} د.م
+            </td>
+            <td
+            className='p-2'
+            >
+              {total} د.م
+            </td>
+            <td
+            className='p-2'
+            >
+              {totalExpenses} د.م
+            </td>
+            <td
+            className='p-2'
+            >
+              {totalFrais} د.م
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
