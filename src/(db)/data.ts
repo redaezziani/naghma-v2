@@ -397,3 +397,106 @@ export const getTotalExpensesByMonth = async () => {
         await prisma.$disconnect();
     }
 }
+// 
+interface ITotalSelles {
+  initial_amount_price: number;
+}
+export const getEarningsOfCurrentMonth = async (data : ITotalSelles) => {
+  try {
+    const {initial_amount_price} = data;
+    // the final result is like = how much ths total selles - the initial amount price - the total expenses and the total frais
+    const date = new Date();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const allSells = await prisma.produit_sell.findMany({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            }
+        }
+    });
+    if (!allSells) {
+        return {status :"error", message: "allSells not found"};
+    }
+    let total = 0;
+    for (let i = 0; i < allSells.length; i++) {
+        const sell = allSells[i];
+        total += sell.prix * sell.quantite;
+    }
+    // get the frais
+    const allFrais = await prisma.frais_de_prix.findMany({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            }
+        }
+    });
+    if (!allFrais) {
+        return {status :"error", message: "allFrais not found"};
+    }
+    let totalFrais = 0;
+    for (let i = 0; i < allFrais.length; i++) {
+        const frais = allFrais[i];
+        totalFrais += frais.prix;
+    }
+    // get the expenses
+    const allExpenses = await prisma.external_expense.findMany({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            }
+        }
+    });
+    if (!allExpenses) {
+        return {status :"error", message: "allExpenses not found"};
+    }
+    let totalExpenses = 0;
+    for (let i = 0; i < allExpenses.length; i++) {
+        const expense = allExpenses[i];
+        totalExpenses += expense.prix;
+    }
+    // get the initial amount price
+    const initialAmountPrice = initial_amount_price;
+    // the final result
+    const finalResult = total - totalFrais - totalExpenses - initialAmountPrice;
+    // check if exist in db with this month
+    const  result =await prisma.total_Selles.findFirst({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            },
+        }
+    });
+    if (result) {
+        // update
+        const  data =await prisma.total_Selles.update({
+            where: {
+                id: result.id
+            },
+            data: {
+                prix: finalResult
+            }
+        });
+    } else {
+        // create
+        const  result =await prisma.total_Selles.create({
+            data: {
+                prix: finalResult
+            }
+        });
+    }
+    // return total
+    return {status :"success", message: "getEarningsOfCurrentMonth success", data: finalResult};
+    
+
+  } catch (error) {
+    
+  }
+  finally {
+    await prisma.$disconnect();
+  }
+}

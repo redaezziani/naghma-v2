@@ -112,3 +112,30 @@ export const getLossesReturnOfCurrentMonth = async () => {
         await prisma.$disconnect();
     }
 };
+
+export const getTotalVendursFraisByMonth = async () => {
+    try {
+        const vendurs = await prisma.vendur.findMany();
+
+        if (!vendurs || vendurs.length === 0) {
+            return { status: 'error', message: 'لم يتم العثور على البائعين' };
+        }
+
+        // Variable to store expenses data for the current month
+        let totalExpenses = 0;
+        let curent = new Date().getMonth() + 1;
+        vendurs.forEach(vendur => {
+            const date = new Date(vendur.created_at);
+            const month = date.getMonth() + 1;
+            if (month === curent) {
+                totalExpenses += vendur.frais_de_prix;
+            }
+        });
+        return { status: 'success', message: 'تم العثور على النفقات بنجاح', data: totalExpenses };
+    } catch (error) {
+        console.error(error);
+        return { status: 'error', message: 'حدث خطأ أثناء جلب البيانات' };
+    } finally {
+        await prisma.$disconnect();
+    }
+}
