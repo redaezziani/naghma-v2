@@ -32,7 +32,7 @@ export default function RootLayout({
           </SheetContent>
         </Sheet>
       </div>
-      <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-white fixed top-0 right-0 flex justify-end px-4 z-40 h-14">
+      <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-white fixed top-0 right-0 flex justify-end lg:px-10 z-40 h-14">
           <UserProfile />
         </nav>
       <aside className="w-full bg-primary-foreground z-50 h-screen hidden lg:block lg:col-span-1 border-r border sticky top-0 right-0">

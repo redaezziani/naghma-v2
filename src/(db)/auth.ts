@@ -28,19 +28,16 @@ export const SignIn = async (credentials: UserCredentials) => {
         if (!user) {
             return { error: 'لم يتم العثور على المستخدم. يرجى التسجيل.' };
         }
-
         const hashedPassword = createHash('sha256').update(credentials.password).digest('hex');
-
         if (hashedPassword !== user.password) {
             return { error: 'كلمة المرور غير صحيحة.' };
         }
-
         const token = await generateToken(user);
-        // جعل الرمز متاحًا للخادم في جميع طلبات URL
         cookies().set('token', token, {
             path: '*',
             maxAge: 60 * 60 * 24 * 7,
-            httpOnly:false
+            httpOnly:true,
+            sameSite: 'lax',
         });
         return { success: 'تم تسجيل الدخول بنجاح.' };
     } catch (error) {
@@ -51,8 +48,6 @@ export const SignIn = async (credentials: UserCredentials) => {
 
 export const ForgetPassword = async (email: string) => {
     try {
-        
-
         const user = await prisma.user.findUnique({
             where: {
                 email,
@@ -62,7 +57,6 @@ export const ForgetPassword = async (email: string) => {
         if (!user) {
             return { type: 'error', message: 'لم يتم العثور على المستخدم. يرجى التسجيل.' };
         }
-
         const token = await generateToken(user);
         const passwordreset = await prisma.resetPasswordRequest.create({
             data: {
@@ -158,8 +152,6 @@ export const userData= async () => {
         await prisma.$disconnect();
     }
 }  
-
-
 
 export const logOut = async () => {
     cookies().set('token', '', {
