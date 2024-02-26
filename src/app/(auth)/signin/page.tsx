@@ -75,7 +75,7 @@ const Signin = () => {
         height={400}
         placeholder="blur"
         blurDataURL="/cofee.jpg"
-        className=" h-full w-0 md:w-auto max-w-44   rounded-md aspect-auto object-cover"
+        className=" h-full w-0 md:w-auto max-w-60   rounded-md object-cover aspect-[9/16]"
          src="/cofee.jpg" alt="" />
       <form
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
