@@ -13,19 +13,9 @@ type external_expense = {
 }
 export
 const CompanyExpense = () => {
-
     const [price, setPrice] = React.useState('0');
     const [type, setType] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
-
-
-
-
-    const handelType = (event: string) => {
-        setType(event)
-    }
-
-
     const handelSubmit = async () => {
         try {
             if (!price || price === '0' || !type) {
@@ -69,9 +59,6 @@ const CompanyExpense = () => {
             <p>
                 يمكنك من هنا ان تضيف مصاريف الشركة 
             </p>
-
-
-
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
                 <label className='font-semibold'>
                     المبلغ
