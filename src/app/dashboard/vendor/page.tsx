@@ -80,10 +80,7 @@ const Vendors = () => {
   ];
   useEffect(() => {
     handelProducts();
-
   }, []);
-
-
   return (
     <div className=" mt-20
     flex

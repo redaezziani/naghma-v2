@@ -442,26 +442,21 @@ export const getEarningsOfCurrentMonth = async (data : ITotalSelles) => {
         totalFrais += frais.prix;
     }
     // get the expenses
-    const allExpenses = await prisma.external_expense.findMany({
+    const totalExpenses = await prisma.total_expenses.findFirst({
         where: {
             created_at: {
                 gte: new Date(year, month, 1),
                 lt: new Date(year, month + 1, 1)
-            }
+            },
         }
     });
-    if (!allExpenses) {
-        return {status :"error", message: "allExpenses not found"};
-    }
-    let totalExpenses = 0;
-    for (let i = 0; i < allExpenses.length; i++) {
-        const expense = allExpenses[i];
-        totalExpenses += expense.prix;
+    if (!totalExpenses) {
+        return {status :"error", message: "totalExpenses not found"};
     }
     // get the initial amount price
     const initialAmountPrice = initial_amount_price;
     // the final result
-    const finalResult = total - totalFrais - totalExpenses - initialAmountPrice;
+    const finalResult = total - totalFrais - totalExpenses.prix - Number(initialAmountPrice);
     // check if exist in db with this month
     const  result =await prisma.total_Selles.findFirst({
         where: {
@@ -489,10 +484,25 @@ export const getEarningsOfCurrentMonth = async (data : ITotalSelles) => {
             }
         });
     }
+    // get also all ths stock of the products
+    const poducts = await prisma.produit_Final.findMany();
+    if (!poducts) {
+        return {status :"error", message: "poducts not found"};
+    }
+    let finalResultStock = 0;
+    for (let i = 0; i < poducts.length; i++) {
+        const product = poducts[i];
+        finalResultStock += product.quantite * product.prix_vente;
+    }
     // return total
-    return {status :"success", message: "getEarningsOfCurrentMonth success", data: finalResult};
-    
-
+    return {status :"success", message: "getEarningsOfCurrentMonth success", data:{
+        initial_amount_price,
+        total,
+        totalFrais,
+        totalExpenses: totalExpenses.prix,
+        finalResult,
+        finalResultStock
+    }};
   } catch (error) {
     
   }
