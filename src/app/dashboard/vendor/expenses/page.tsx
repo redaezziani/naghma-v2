@@ -85,8 +85,8 @@ const Expenses = () => {
             <h1 className='text-2xl text-primary font-bold'>
                مصاريف البائع
             </h1>
-            <p>
-                يمكنك من هنا ان تضيف مصاريف البائع 
+            <p className=' text-slate-500'>
+            في هده الصفحة يمكنك اضافة المصاريف المترتة على البائع  وتحديد نوعها ( السبب او المقصد من اعطاء المصاريف  )
             </p>
 
             <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
