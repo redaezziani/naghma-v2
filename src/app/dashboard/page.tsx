@@ -39,7 +39,7 @@ const Dashboard = () => {
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
       >
-        <div className="flex  w-full  mt-10 flex-row gap-3  items-center justify-between ">
+        <div className="flex  w-full  mt-20 flex-row gap-3  items-center justify-between ">
           <h1 className="text-2xl font-bold text-primary">
             الرئيسية
           </h1>
