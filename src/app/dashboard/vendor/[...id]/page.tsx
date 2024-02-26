@@ -25,7 +25,6 @@ const VendorPage = ({ ...props }: any) => {
         content: () => componentRef.current,
     });
     const [data, setData] = useState<any>({})
-    const [sells, setSells] = useState<any>([])
     const handelData = async () => {
         try {
             const res = await getVendurById(id);

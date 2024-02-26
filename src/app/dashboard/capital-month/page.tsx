@@ -2,16 +2,37 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 import { getEarningsOfCurrentMonth } from '@/(db)/data';
-
+import { useReactToPrint } from 'react-to-print';
+import ComponentToPrint from '@/components/my-ui/anlys/last-invioce';
+/*
+data: Object { initial_amount_price: 220, total: 1900, totalFrais: 0, … }
+​​
+finalResult: 1480
+​​
+finalResultStock: 0
+​​
+initial_amount_price: 220
+​​
+total: 1900
+​​
+totalExpenses: 200
+​​
+totalFrais: 0
+*/
 
 
 const CapitalPerMonth = () => {
     const [initial_amount_price, setPrice] = React.useState(0);
     const [isLoading, setIsLoading] = React.useState(false);
-
+    const [data, setData] = React.useState<any>({});
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        //@ts-ignore
+        content: () => componentRef.current,
+    });
     const handelSubmit = async () => {
      
             try {
@@ -22,6 +43,7 @@ const CapitalPerMonth = () => {
                   return;
                 }
                 console.log(res);
+                setData(res?.data ?? {});
                 toast.success('تمت العملية بنجاح');
               
 
@@ -35,11 +57,26 @@ const CapitalPerMonth = () => {
     }
 
     useEffect(() => {
-
-    }, [])
+    if (data?.finalResult) {
+        handlePrint();
+    }
+    }, [data]);
 
     return (
         <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
+            <div className="hidden">
+            <ComponentToPrint
+            final = {data.finalResult}
+            finalStock = {data.finalResultStock}
+            total = {data.total}
+            totalExpenses = {data.totalExpenses}
+            totalFrais = {data.totalFrais}
+            initial_amount_price = {initial_amount_price}
+
+            //@ts-ignore
+            ref={componentRef} />
+           
+           </div>
             <h1 className='text-2xl text-primary font-bold'>
             حساب الارباح
             </h1>

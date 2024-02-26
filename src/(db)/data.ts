@@ -404,7 +404,6 @@ interface ITotalSelles {
 export const getEarningsOfCurrentMonth = async (data : ITotalSelles) => {
   try {
     const {initial_amount_price} = data;
-    // the final result is like = how much ths total selles - the initial amount price - the total expenses and the total frais
     const date = new Date();
     const month = date.getMonth();
     const year = date.getFullYear();
@@ -424,7 +423,6 @@ export const getEarningsOfCurrentMonth = async (data : ITotalSelles) => {
         const sell = allSells[i];
         total += sell.prix * sell.quantite;
     }
-    // get the frais
     const allFrais = await prisma.frais_de_prix.findMany({
         where: {
             created_at: {
