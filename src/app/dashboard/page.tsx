@@ -1,31 +1,30 @@
-'use server';
+'use client';
 import { Card } from '@/components/ui/card';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
+import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-const Dashboard = async () => {
-  var earnings= 0;
-  var losses= 0;
+const Dashboard = () => {
+  const [earnings, setEarnings] = useState('')
+  const [losses, setLosses] = useState('')
   const getEarnings = async () => {
     const res = await getEarningsOfCurrentMonth();
     //@ts-ignore
-    return res?.data ?? 0
+    setEarnings(res?.data ?? 0)
   }
 
   const getLoss = async () => {
     const res = await getLossesByMonth();
     //@ts-ignore
-    return res?.data ?? 0
+    setLosses(res?.data ?? 0)
   }
-  const [earningsResponse, lossesResponse] = await Promise.all([
-    getEarningsOfCurrentMonth(),
-    getLossesByMonth()
-  ]);
-  
-  earnings = earningsResponse?.data ?? 0;
-  losses = lossesResponse?.data ?? 0;
+  useEffect(() => {
+    getEarnings()
+    getLoss()
+  }
+    , [])
   return (
     <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
 
