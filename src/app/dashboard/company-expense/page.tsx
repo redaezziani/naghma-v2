@@ -11,7 +11,6 @@ type external_expense = {
     prix: number;
     type: string;
 }
-export
 const CompanyExpense = () => {
     const [price, setPrice] = React.useState('0');
     const [type, setType] = React.useState('');
