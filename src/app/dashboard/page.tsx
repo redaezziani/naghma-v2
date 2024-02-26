@@ -40,11 +40,7 @@ const Dashboard = () => {
               <Link href="/dashboard/company-expense">نفقات الشركة</Link>
             </Button>
           </div>
-          
-      
-
         <div className="flex w-full flex-col gap-3 justify-start items-start">
-
           <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
 
             <Card className="w-full col-span-1 relative  shadow-none overflow-hidden h-20 p-2   flex justify-between items-center border rounded-lg  ">

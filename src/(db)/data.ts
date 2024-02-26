@@ -333,3 +333,18 @@ export const getTotalSelles = async () => {
     }
 }
 
+
+export const createUser=  async()=>{
+    try {
+        const  result =await prisma.user.create({
+            data: {
+                email: "klausdev2@gmail.com",
+                name: "klaus",
+                password: "123456789",
+            }
+        }); 
+        console.log(result);
+    } catch (error) {
+        console.log("error in createUser", error);
+    }
+}
