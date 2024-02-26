@@ -81,7 +81,6 @@ const Signin = () => {
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
       action="">
         <div className="flex w-full flex-col gap-2 justify-start items-start">
-        {resError && <p className="text-xs text-[#ff5420] dark:text-[#ff5420]">{resError}</p>}
           <h1
           className="text-xl  font-bold text-primary  "
           >
