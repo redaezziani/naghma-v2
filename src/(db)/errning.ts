@@ -86,7 +86,7 @@ export const getEarningsOfCurrentMonth = async () => {
 
 // Function to get the losses by month for this company current month
 
-export const getLossesByMonth = async () => {
+export const getLossesReturnOfCurrentMonth = async () => {
     try {
         const losses = await prisma.loss.findMany();
         if (!losses || losses.length === 0) {
@@ -103,15 +103,6 @@ export const getLossesByMonth = async () => {
                 totalLosses += loss.prix;
             }
         });
-        // lets get the frais
-        const frais = await prisma.frais_de_prix.findMany();
-        if (!frais || frais.length === 0) {
-            return { status: 'error', message: 'لم يتم العثور على الفواتير' };
-        }
-        frais.forEach(frai => {
-            totalLosses += frai.prix;
-        }
-        );
         //@ts-ignore
         return { status: 'success', message: 'تم العثور على الخسائر بنجاح', data: totalLosses };
     } catch (error) {

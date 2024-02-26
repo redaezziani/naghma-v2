@@ -334,17 +334,66 @@ export const getTotalSelles = async () => {
 }
 
 
-export const createUser=  async()=>{
+export const getTotalExpensesByMonth = async () => {
     try {
-        const  result =await prisma.user.create({
+       // get this month expenses
+    const date = new Date();
+    const month = date.getMonth();
+    const year = date.getFullYear(); 
+    const expenses = await prisma.external_expense.findMany({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            },
+        },
+        select: {
+            prix: true
+        }
+    });
+    if (!expenses) {
+        return {status :"error", message: "expenses not found"};
+    }
+    let total = 0;
+    for (let i = 0; i < expenses.length; i++) {
+        const expense = expenses[i];
+        total += expense.prix;
+    }
+   // check if exist in db with this month
+    const  result =await prisma.total_expenses.findFirst({
+        where: {
+            created_at: {
+                gte: new Date(year, month, 1),
+                lt: new Date(year, month + 1, 1)
+            },
+        }
+    });
+    if (result) {
+        // update
+        const  data =await prisma.total_expenses.update({
+            where: {
+                id: result.id
+            },
             data: {
-                email: "klausdev2@gmail.com",
-                name: "klaus",
-                password: "123456789",
+                prix: total
             }
-        }); 
-        console.log(result);
-    } catch (error) {
-        console.log("error in createUser", error);
+        });
+    } else {
+        // create
+        const  result =await prisma.total_expenses.create({
+            data: {
+                prix: total
+            }
+        });
+    }
+    // return total
+    return {status :"success", message: "getTotalExpenses success", data: total};
+    }
+
+    catch (error) {
+        console.log("error in getTotalExpenses", error);
+    }
+    finally {
+        await prisma.$disconnect();
     }
 }
