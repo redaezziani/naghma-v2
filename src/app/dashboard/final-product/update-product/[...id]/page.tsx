@@ -45,8 +45,10 @@ const UpdateProduit = ({...props} : any) => {
       >
       تحديث المنتج
       </h1>
-      <p>
-        يمكنك تحديث المنتج من هنا
+      <p
+      className=' text-sm text-slate-500'
+      >
+      هده الصفحة تمكنك من تحديت اسم المنتج و كدا سعره
       </p>
       <div
       className='flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start'

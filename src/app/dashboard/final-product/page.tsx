@@ -46,6 +46,7 @@ const UpdateProduit = () => {
         return;
       }
       setProducts(products.filter((product) => product.id !== id));
+      toast.success('تم حذف المنتج بنجاح');
 
     } catch (error) {
       console.log(error);

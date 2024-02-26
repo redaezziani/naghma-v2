@@ -64,8 +64,8 @@ const AddfinalProduct = () => {
       >
         إضافة منتج جديد
       </h1>
-      <p>
-      هذه الصفحة مخصصة لإضافة المنتج النهائي
+      <p className='text-sm text-slate-500'>
+      قم باضافة اسم المنتج و سعره و كميته في الخانات المناسبة
       </p>
       <div className="flex w-full lg:w-1/2 gap-3 justify-start flex-col  items-start ">
         <Label

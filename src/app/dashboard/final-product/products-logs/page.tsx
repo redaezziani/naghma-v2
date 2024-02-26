@@ -90,8 +90,10 @@ const ProductLogs = () => {
       <h1 className='text-2xl text-primary font-bold'>
        تحديث كمية المنتج 
       </h1>
-      <p>
-        يمكنك تحديث كمية المنتج من هنا
+      <p
+      className=' text-sm text-slate-500'
+      >
+      يمكنك عبر هده الصفحة تحديد كمية المنتج عبر اختيار اسمه
       </p>
       
       
