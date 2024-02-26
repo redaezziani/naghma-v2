@@ -69,14 +69,14 @@ const Signin = () => {
     
   return (
     <main className="flex min-h-screen flex-col items-center justify-center relative ">
-      <div className=" lg:w-[54rem] gap-0 lg:gap-6 flex justify-start items-center">
+      <div className=" lg:w-[54rem] gap-0 lg:gap-12 flex justify-start items-center">
         <Image
         width={400}
         height={400}
         placeholder="blur"
         blurDataURL="/coffe.jpg"
-        className=" h-full w-0 md:w-auto max-w-80   rounded-md object-contain aspect-[9/16]"
-         src="/cofee.jpg" alt="" />
+        className=" h-full w-0 md:w-auto max-w-80   rounded-md object-cover aspect-[9/16]"
+         src="/coffe.jpg" alt="" />
       <form
       className=" w-full md:w-[28rem]  flex justify-start items-center flex-col gap-4"
       action="">
