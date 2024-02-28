@@ -103,28 +103,6 @@ export const getAllProduits = async () => {
                 productMap.set(product.nom, product);
             }
         });
-
-        // Iterate through the products
-        for (const [name, product] of Array.from(productMap)) {
-            // Check if the product has a quantity of 0
-            if (product.quantite === 0) {
-                // Delete the product with quantity 0
-                await prisma.produit_Final.delete({
-                    where: {
-                        id: product.id,
-                    },
-                });
-
-                // Remove the product from the map
-                productMap.delete(name);
-
-                const nextProduct = products.find(p => p.nom === name && p.quantite > 0);
-                if (nextProduct) {
-                    productMap.set(name, nextProduct);
-                }
-            }
-        }
-
         // Return the products
         return { status: 'success', data: Array.from(productMap.values()) };
     } catch (error: any) {
