@@ -44,10 +44,6 @@ const VendorPage = ({ ...props }: any) => {
             }, {});
 
             let groupedArray = Object.values(grouped);
-
-            console.log(groupedArray);
-            console.log(res?.data);
-
         } catch (error) {
             console.log(error);
         }
@@ -60,6 +56,9 @@ const VendorPage = ({ ...props }: any) => {
 
     const handleDeleteVendor = async () => {
         try {
+            if (!confirm('هل تريد حذف البائع؟')) {
+                return;
+            }
             setLoading(true);
             
             const res = await deleteVendur(id);

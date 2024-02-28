@@ -40,6 +40,10 @@ const UpdateProduit = () => {
 
   const handleDelete = async (id: string) => {
     try {
+      // delete the product but first confirm the action like alert
+      if (!confirm('هل تريد حذف المنتج؟')) {
+        return;
+      }
       const res = await deleteProduit(id);
       if (res?.status === 'error') {
         toast.error(res.message);
