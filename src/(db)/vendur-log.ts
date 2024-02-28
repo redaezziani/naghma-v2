@@ -12,6 +12,39 @@ interface IVendur_log {
 
 export const createVendur_log = async (data: IVendur_log) => {
     try {
+        const getVendure = await prisma.vendur.findUnique({
+            where: {
+                id: data.vendur_id
+            }
+        });
+        if (!getVendure) {
+            return { status: 'error', message: 'البائع غير موجود' };
+        }
+        // checck the last mofiication of the vendur le_prix_a_payer to check if the current mounth is the same if not reset the le_prix_a_payer to 0 and update the le_prix_a_paye to the old le_prix_a_payer and rest the frais 
+        let current_date = new Date();
+        let year = current_date.getFullYear();
+        let mounth = current_date.getMonth();
+        // extract the last mounth from the date of the vendur and check if the current mounth is the same
+        let vendur_date = new Date(getVendure.updated_at);
+        let vendur_year = vendur_date.getFullYear();
+        let vendur_mounth = vendur_date.getMonth();
+        // || : is mean or
+        if (year !== vendur_year || mounth !== vendur_mounth) { // this is mean the current mounth is not the same as the last mounth  
+            // reset the le_prix_a_payer to 0 and update the le_prix_a_paye to the old le_prix_a_payer and rest the frais
+            const vendur = await prisma.vendur.update({
+                where: {
+                    id: data.vendur_id
+                },
+                data: {
+                    le_prix_a_paye: getVendure.le_prix_a_paye - getVendure.le_prix_a_payer - getVendure.frais_de_prix,
+                    frais_de_prix: 0,
+                    le_prix_a_payer: 0
+                }
+            });
+            if (!vendur) {
+                return { status: 'error', message: 'لم يتم تحديث البائع' };
+            }
+        }
 
         const checkProduct = await prisma.produit_Final.findUnique({
             where: {
