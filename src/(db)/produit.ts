@@ -89,9 +89,15 @@ export const deleteProduit = async (id: string) => {
 export const getAllProduits = async () => {
     try {
         const products = await prisma.produit_Final.findMany({
+            where: {
+                quantite: {
+                    gt: 0
+                }
+            },
             orderBy: {
                 created_at: 'asc',
             },
+            
         });
 
         // Create a map to store products grouped by name
