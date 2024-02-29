@@ -84,7 +84,7 @@ export function DataTable({ data, columns, loading = false, total = 0 }: DataTab
     });
 
     return (
-        <div className="w-full">
+        <div className="w-full bg-white p-2 rounded">
             <div className="flex items-center gap-3 py-4 lowercase">
                 <Input
                     placeholder="تصفية..."

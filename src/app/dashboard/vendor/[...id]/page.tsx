@@ -22,6 +22,7 @@ const VendorPage = ({ ...props }: any) => {
     const handlePrint = useReactToPrint({
         //@ts-ignore
         content: () => componentRef.current,
+        documentTitle: 'فاتورة البائع'
     });
     const [data, setData] = useState<any>({})
     const handelData = async () => {
