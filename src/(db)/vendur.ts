@@ -153,6 +153,16 @@ export const getVendurById = async (id: string) => {
         if (!vendur) {
             return { status: 'error', message: 'لم يتم العثور على البائع' };
         }
+        const frais = await prisma.frais_de_prix.findMany({
+            where: {
+                vendur_id: id,
+                created_at: {
+                    gte: new Date(year, month - 1, 2),
+                    lt: new Date(year, month, 1)
+                }
+            }
+        });
+
         const total_sell_price = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.prix*product.quantite, 0);
         const total_sell_quantity = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.quantite, 0);
         const total_loss_price = vendur.loss.reduce((acc: number, loss: any) => acc + loss.prix, 0);
@@ -211,7 +221,8 @@ export const getVendurById = async (id: string) => {
                     price: loss.prix,
                     date :loss.created_at
                 };
-            }))
+            })),
+            frais: frais
         };
 
         return { status: 'success', message: 'تم العثور على البائع بنجاح', data };

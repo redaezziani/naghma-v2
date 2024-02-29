@@ -32,6 +32,7 @@ const VendorPage = ({ ...props }: any) => {
                 return;
             }
             setData(res?.data ?? {});
+            console.log(res?.data);
             let sells = res?.data?.sales ?? [];
            
             let grouped = sells.reduce((acc: any, curr: any) => {
@@ -89,7 +90,7 @@ const VendorPage = ({ ...props }: any) => {
     lg:w-2/3
     px-6 py-3  relative">
     
-            <div className="hidden">
+            <div className="hidden overflow-hidden">
             <ComponentToPrint
             vendur={data.vendur}
             payments={data.payments}
