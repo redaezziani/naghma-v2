@@ -162,3 +162,38 @@ export const logOut = async () => {
     return {status :"success", message: "تم تسجيل الخروج بنجاح."};
 }
 
+export const createThreeRoles = async () => {
+    try {
+        const superadminPassword = createHash('sha256').update('superadminnaghma').digest('hex');
+        const superadmin = await prisma.user.create({
+            data: {
+                email: 'superadmin@gmail.com',
+                name: 'superadmin',
+                password: superadminPassword,
+                role: 'superadmin',
+            }
+        });
+        
+        const adminPassword = createHash('sha256').update('adminnaghma').digest('hex');
+        const admin = await prisma.user.create({
+            data: {
+                email: 'admin@gmail.com',
+                name: 'admin',
+                password: adminPassword,
+                role: 'admin',
+            }
+        });
+        const userPassword = createHash('sha256').update('usernaghma').digest('hex');
+        const user = await prisma.user.create({
+            data: {
+                email: 'user@gmail.com',
+                name: 'user',
+                password: userPassword,
+                role: 'user',
+            }
+        });
+        return {status :"success", message: "تم إنشاء الأدوار بنجاح."};
+    } catch (error) {
+        console.error(error); 
+    }
+}

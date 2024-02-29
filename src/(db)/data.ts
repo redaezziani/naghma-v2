@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
+import { verifyToken } from "./resnd/core";
 
 type external_expense = {
     prix: number;
@@ -7,6 +8,10 @@ type external_expense = {
 }
 export const createExternalExpense = async (data: external_expense) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'superadmin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const { prix, type } = data;
         if (!prix || !type) {
             return { status: "error", message: "prix or type not found" };
@@ -33,6 +38,10 @@ export const createExternalExpense = async (data: external_expense) => {
 
 export const createContribution = async (prix: number, user_id: string) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'superadmin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const user = await prisma.user.findUnique({
             where: {
                 id: user_id

@@ -14,7 +14,7 @@ interface IVendur_log {
 export const createVendur_log = async (data: IVendur_log) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const getVendure = await prisma.vendur.findUnique({

@@ -2,103 +2,11 @@
 import { prisma } from "@/(secrets)/secrets";
 import { revalidatePath } from "next/cache";
 import { verifyToken } from "./resnd/core";
-/*
-model Produit_Final {
-    id        String   @id @default(uuid()) @db.VarChar(36)
-    nom       String
-    prix_vente Float
-    quantite  Int
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//الموزع
-model Vendur {
-    id String @id @default(uuid()) @db.VarChar(36)
-    nom String
-    le_prix_a_payer Float @default(0)//المستحقات
-    le_prix_a_paye Float @default(0) //المدفوعات
-    frais_de_prix Float @default(0) //المصاريف
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//المنتج الاولي المباع
-model Matiere_Premiere_logs {
-    id String @id @default(uuid()) @db.VarChar(36)
-    stock_initial Int
-    consomation Int
-    achat Int 
-    ventes Int 
-    offres Int
-    retours Int
-    stock_final Int
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//المنتج النهائي المباع
-model Produit_Final_logs {
-    id String @id @default(uuid()) @db.VarChar(36)
-    stock_initial Int
-    production Int
-    ventes Int 
-    retours Int
-    changes Int
-    stock_final Int
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//جدول المبيعات
-model Vente_logs {
-    id String @id @default(uuid()) @db.VarChar(36)
-    vendur_id String//الموزع
-    produit_id String//المنتج
-    quantite Int//الكمية
-    prix Float//السعر
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//المنتجات التي بيعت لكل موزع
-model produit_sell {
-    id String @id @default(uuid()) @db.VarChar(36)
-    produit_id String//المنتج
-    vendur_id String//الموزع
-    quantite Int//الكمية  
-    prix Float//السعر
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//جدول دفع المستحقات
-model prix_a_paye {
-    id String @id @default(uuid()) @db.VarChar(36)
-    vendur_id String//الموزع
-    type String//النوع
-    prix Float//المبلغ
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-//جدول المصاريف لكل موزع
-model frais_de_prix {
-    id String @id @default(uuid()) @db.VarChar(36)
-    vendur_id String//الموزع
-    prix Float//المبلغ
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
 
-//الخسائر المترتة عن ارجاع المنتوج ناقصا
-model loss {
-    id String @id @default(uuid()) @db.VarChar(36)
-    vendur_id String//الموزع
-    prix Float//المبلغ
-    produit_id String//المنتج
-    quantite Int//الكمية
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
-}
-*/
 export const createVendur = async (nom:string) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const vendur = await prisma.vendur.create({
@@ -145,7 +53,7 @@ export const deleteVendur = async (id: string) => {
     try {
         // delete the vendur and all the related data on cascade to avoid any conflicts
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const sells = await prisma.produit_sell.deleteMany({

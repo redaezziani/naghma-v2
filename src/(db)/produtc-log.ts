@@ -10,7 +10,7 @@ interface IProduitLog {
 export const createProduitLog = async (data: IProduitLog) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const { produit_id, production } = data;

@@ -11,7 +11,7 @@ interface IProduit {
 export const createProduit = async (data: IProduit) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const checkProduct = await prisma.produit_Final.findFirst({
@@ -76,7 +76,7 @@ export const getProduits = async () => {
 export const deleteProduit = async (id: string) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const produit = await prisma.produit_Final.delete({
@@ -149,7 +149,7 @@ interface IUpdateProduit {
 export const updateProduit = async (id: string, data: IUpdateProduit) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const produit = await prisma.produit_Final.update({

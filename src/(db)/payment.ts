@@ -102,7 +102,7 @@ interface payment {
 export const prix_a_paye = async (data: payment) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const { vendur_id, prix , type } = data;
@@ -153,7 +153,7 @@ interface frais_de_prix {
 export const frais_de_prix = async (data: frais_de_prix) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const { vendur_id, prix, type } = data;
@@ -206,7 +206,7 @@ interface return_fra {
 export const paid_by_return = async (data: return_fra) => {
     try {
         const payload = await verifyToken();
-        if (payload?.role !== 'admin') {
+        if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
         const { vendur_id, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
