@@ -82,13 +82,12 @@ const VendorPage = ({ ...props }: any) => {
         }
     }
     return (
-        <div className=" mt-20
+        <div className=" mt-28
     flex
     flex-col
      justify-start items-start gap-7
      w-full
-    lg:w-2/3
-    px-6 py-3  relative
+    px-10 py-3   relative
     ">
     
             <div className="hidden overflow-hidden">
@@ -100,7 +99,7 @@ const VendorPage = ({ ...props }: any) => {
             ref={componentRef} />
            
            </div>
-           <div className="w-full flex max-w-[1000px] justify-between items-center">
+           <div className=" flex w-full justify-between items-center">
            <h1
                 className='text-2xl text-primary font-bold'
             >
