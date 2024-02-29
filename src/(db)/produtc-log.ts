@@ -1,21 +1,7 @@
 'use server';
 
 import { prisma } from "@/(secrets)/secrets";
-
-/*
-  id            String   @id @default(uuid()) @db.VarChar(36)
-  stock_initial Int
-  produit    Produit_Final @relation(fields: [produit_id], references: [id])
-  produit_id String //المنتج
-  production    Int
-  ventes        Int
-  retours       Int
-  stock_final   Int
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
-}
-*/
-
+import { verifyToken } from "./resnd/core";
 
 interface IProduitLog {
     produit_id: string;
@@ -23,8 +9,11 @@ interface IProduitLog {
 }
 export const createProduitLog = async (data: IProduitLog) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const { produit_id, production } = data;
-        // get just the quantity of the product
         const stock_initial = await prisma.produit_Final.findUnique({
             where: {
                 id: produit_id
@@ -36,7 +25,6 @@ export const createProduitLog = async (data: IProduitLog) => {
         if (!stock_initial) {
             return { status: 'error', message: 'المنتج غير موجود' };
         }
-        // get the product return if exists
         const  retours = await prisma.retorn_logs.findFirst({
             where: {
                 produit_id
@@ -74,14 +62,13 @@ export const createProduitLog = async (data: IProduitLog) => {
         if (!produitLog) {
             return { status: 'error', message: 'لم يتم إنشاء سجل المنتج' };
         }
-        // lets update the product quantity by decrement the production
         const updatedProduct = await prisma.produit_Final.update({
             where: {
                 id: produit_id
             },
             data: {
                 quantite: {
-                    increment: production // is mean add the production to the quantity
+                    increment: production 
                 }
             }
         });

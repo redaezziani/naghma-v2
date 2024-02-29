@@ -1,19 +1,24 @@
 'use server';
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { verifyToken } from './(db)/resnd/core';
 
 
-export const middleware= (request: NextRequest) => {
+export const middleware= async (request: NextRequest) => {
     const token = request.cookies.has('token');
     const { pathname }: { pathname: string } = request.nextUrl;
-    // lets make a regix to match the dashboard routes dashboard/.* 
     if (!token &&  !['/signin', '/signup', '/forget-password'].includes(pathname)) {
-        console.log('redirecting to signin');
         return NextResponse.redirect(new URL('/signin', request.nextUrl.origin).toString());
     }
-    
+    const payload = await verifyToken();
+    if (token && !payload && !['/signin', '/signup', '/forget-password'].includes(pathname)) {
+        return NextResponse.redirect(new URL('/signin', request.nextUrl.origin).toString());
+    }
     if (token &&  ['/signin', '/signup', '/forget-password'].includes(pathname)) {
         return NextResponse.redirect(new URL('/dashboard', request.nextUrl.origin).toString());
+    }
+    if (token && payload && payload.role === 'user' && ['/dashboard/vendor', '/dashboard'].includes(pathname)) {
+        return NextResponse.redirect(new URL(`/dashboard/vendor/${payload.vendur_id}`, request.nextUrl.origin).toString());
     }
     return NextResponse.next();    
 }

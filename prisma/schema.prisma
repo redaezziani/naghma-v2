@@ -15,6 +15,8 @@ model User {
   name      String?
   password  String
   role      String    @default("user")
+  // if he is a user he will have a vendur_id
+  vendur_id String?
   image     String?   @default("")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

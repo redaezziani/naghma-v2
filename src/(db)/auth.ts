@@ -32,6 +32,7 @@ export const SignIn = async (credentials: UserCredentials) => {
         if (hashedPassword !== user.password) {
             return { error: 'كلمة المرور غير صحيحة.' };
         }
+        console.log(user);
         const token = await generateToken(user);
         cookies().set('token', token, {
             path: '*',

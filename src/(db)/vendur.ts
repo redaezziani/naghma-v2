@@ -1,6 +1,7 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
 import { revalidatePath } from "next/cache";
+import { verifyToken } from "./resnd/core";
 /*
 model Produit_Final {
     id        String   @id @default(uuid()) @db.VarChar(36)
@@ -96,6 +97,10 @@ model loss {
 */
 export const createVendur = async (nom:string) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const vendur = await prisma.vendur.create({
             data: {
                 nom
@@ -139,6 +144,10 @@ export const getVendurs = async () => {
 export const deleteVendur = async (id: string) => {
     try {
         // delete the vendur and all the related data on cascade to avoid any conflicts
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const sells = await prisma.produit_sell.deleteMany({
             where: {
                 vendur_id: id

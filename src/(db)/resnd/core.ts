@@ -44,6 +44,7 @@ export const generateToken = async (user: any) => {
         username: user.name,
         profile: user.image??'',
         role: user.role,
+        vendur_id: user.vendur_id
     };
 
     const token = await new SignJWT(payload)

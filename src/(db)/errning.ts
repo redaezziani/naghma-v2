@@ -1,7 +1,6 @@
 "use server";
 import { prisma } from "@/(secrets)/secrets";
 
-// Function to get the earnings by month for the company
 export const getEarningsByMonth = async () => {
     try {
         const vendurs = await prisma.vendur.findMany({
@@ -14,7 +13,7 @@ export const getEarningsByMonth = async () => {
             return { status: 'error', message: 'لم يتم العثور على البائعين' };
         }
         //@ts-ignore
-        let earningsByMonth = []; // Array to store earnings data for all months
+        let earningsByMonth = []; 
 
         vendurs.forEach(vendur => {
             vendur.produit_sell.forEach(product => {
@@ -22,7 +21,6 @@ export const getEarningsByMonth = async () => {
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
 
-                // Check if there's an entry for the month in earningsByMonth
                 //@ts-ignore
                 const existingEntry = earningsByMonth.find(entry => entry.month === month && entry.year === year);
 
@@ -47,7 +45,6 @@ export const getEarningsByMonth = async () => {
     }
 };
 
-// of the current month for the company but menus the frais_
 
 export const getEarningsOfCurrentMonth = async () => {
     try {
@@ -61,7 +58,7 @@ export const getEarningsOfCurrentMonth = async () => {
             return { status: 'error', message: 'لم يتم العثور على البائعين' };
         }
         //@ts-ignore
-        let earnings = 0; // Variable to store earnings data for the current month
+        let earnings = 0; 
 
         vendurs.forEach(vendur => {
             vendur.produit_sell.forEach(product => {
@@ -84,7 +81,6 @@ export const getEarningsOfCurrentMonth = async () => {
     }
 };
 
-// Function to get the losses by month for this company current month
 
 export const getLossesReturnOfCurrentMonth = async () => {
     try {
@@ -93,7 +89,6 @@ export const getLossesReturnOfCurrentMonth = async () => {
             return { status: 'error', message: 'لم يتم العثور على الخسائر' };
         }
 
-        // Variable to store losses data for the current month
         let totalLosses = 0;
         let curent = new Date().getMonth() + 1;
         losses.forEach(loss => {
@@ -121,7 +116,6 @@ export const getTotalVendursFraisByMonth = async () => {
             return { status: 'error', message: 'لم يتم العثور على البائعين' };
         }
 
-        // Variable to store expenses data for the current month
         let totalExpenses = 0;
         let curent = new Date().getMonth() + 1;
         vendurs.forEach(vendur => {

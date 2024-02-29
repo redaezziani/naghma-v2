@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
+import { verifyToken } from "./resnd/core";
 
 
 interface IVendur_log {
@@ -12,6 +13,10 @@ interface IVendur_log {
 
 export const createVendur_log = async (data: IVendur_log) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const getVendure = await prisma.vendur.findUnique({
             where: {
                 id: data.vendur_id
@@ -20,17 +25,13 @@ export const createVendur_log = async (data: IVendur_log) => {
         if (!getVendure) {
             return { status: 'error', message: 'البائع غير موجود' };
         }
-        // checck the last mofiication of the vendur le_prix_a_payer to check if the current mounth is the same if not reset the le_prix_a_payer to 0 and update the le_prix_a_paye to the old le_prix_a_payer and rest the frais 
         let current_date = new Date();
         let year = current_date.getFullYear();
         let mounth = current_date.getMonth();
-        // extract the last mounth from the date of the vendur and check if the current mounth is the same
         let vendur_date = new Date(getVendure.updated_at);
         let vendur_year = vendur_date.getFullYear();
         let vendur_mounth = vendur_date.getMonth();
-        // || : is mean or
-        if (year !== vendur_year || mounth !== vendur_mounth) { // this is mean the current mounth is not the same as the last mounth  
-            // reset the le_prix_a_payer to 0 and update the le_prix_a_paye to the old le_prix_a_payer and rest the frais
+        if (year !== vendur_year || mounth !== vendur_mounth) { 
             const vendur = await prisma.vendur.update({
                 where: {
                     id: data.vendur_id
@@ -70,7 +71,6 @@ export const createVendur_log = async (data: IVendur_log) => {
             return { status: 'error', message: 'لم يتم إنشاء سجل البيع' };
         }
 
-        // lets update the vendur
         const vendur = await prisma.vendur.update({
             where: {
                 id: data.vendur_id
@@ -88,7 +88,7 @@ export const createVendur_log = async (data: IVendur_log) => {
             },
             data: {
                 quantite: {
-                    decrement: data.quantite // this is mean quantite = quantite - data.quantite
+                    decrement: data.quantite 
                 }
             }
         });
@@ -96,7 +96,6 @@ export const createVendur_log = async (data: IVendur_log) => {
         if (!produit) {
             return { status: 'error', message: 'لم يتم تحديث المنتج' };
         }
-        // check if is already sold to the vendur
         const checkIfAlreadySold = await prisma.produit_sell.findFirst({
             where: {
                 produit_id: data.produit_id,
@@ -104,7 +103,6 @@ export const createVendur_log = async (data: IVendur_log) => {
             }
         });
         if (checkIfAlreadySold) {
-            // lets update the product
             const produit_sell = await prisma.produit_sell.update({
                 where: {
                     id: checkIfAlreadySold.id
@@ -120,7 +118,6 @@ export const createVendur_log = async (data: IVendur_log) => {
             }
             return { status: 'success', message: 'تم تحديث سجل البيع بنجاح', data: vendur_log };
         }
-        // if the is already sold to the vendur update the product quantity
         
         const produit_sell = await prisma.produit_sell.create({
             data: {

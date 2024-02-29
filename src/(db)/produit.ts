@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
+import { verifyToken } from "./resnd/core";
 
 interface IProduit {
     nom: string;
@@ -9,6 +10,10 @@ interface IProduit {
 
 export const createProduit = async (data: IProduit) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const checkProduct = await prisma.produit_Final.findFirst({
             where: {
                 nom: data.nom.toLowerCase()
@@ -70,6 +75,10 @@ export const getProduits = async () => {
 
 export const deleteProduit = async (id: string) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const produit = await prisma.produit_Final.delete({
             where: {
                 id: id
@@ -85,7 +94,6 @@ export const deleteProduit = async (id: string) => {
         await prisma.$disconnect();
     }
 }
-// return just the name and id of the produit
 export const getAllProduits = async () => {
     try {
         const products = await prisma.produit_Final.findMany({
@@ -100,16 +108,12 @@ export const getAllProduits = async () => {
             
         });
 
-        // Create a map to store products grouped by name
         const productMap = new Map<string, any>();
-
-        // Group products by name
         products.forEach(product => {
             if (!productMap.has(product.nom)) {
                 productMap.set(product.nom, product);
             }
         });
-        // Return the products
         return { status: 'success', data: Array.from(productMap.values()) };
     } catch (error: any) {
         console.error(error);
@@ -144,7 +148,10 @@ interface IUpdateProduit {
 
 export const updateProduit = async (id: string, data: IUpdateProduit) => {
     try {
-        console.log(data);
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const produit = await prisma.produit_Final.update({
             where: {
                 id: id

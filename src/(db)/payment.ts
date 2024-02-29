@@ -1,5 +1,6 @@
 'use server';
 import { prisma } from "@/(secrets)/secrets";
+import { verifyToken } from "./resnd/core";
 /*
 model Produit_Final {
     id        String   @id @default(uuid()) @db.VarChar(36)
@@ -100,6 +101,10 @@ interface payment {
 }
 export const prix_a_paye = async (data: payment) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const { vendur_id, prix , type } = data;
         const vendur = await prisma.vendur.findUnique({
             where: {
@@ -147,6 +152,10 @@ interface frais_de_prix {
 }
 export const frais_de_prix = async (data: frais_de_prix) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const { vendur_id, prix, type } = data;
         const vendur = await prisma.vendur.findUnique({
             where: {
@@ -196,6 +205,10 @@ interface return_fra {
 }
 export const paid_by_return = async (data: return_fra) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'admin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const { vendur_id, produit_id,quantite_attendue_retourner,quantite_reel_retourner } = data;
         if (quantite_reel_retourner > quantite_attendue_retourner) {
             return { status: 'error', message: 'الكمية المدفوعة أكبر من الكمية المطلوبة' };
