@@ -3,6 +3,9 @@ import React, { forwardRef, ForwardedRef, HTMLAttributes } from 'react';
 
 const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   (props, ref) => {
+    // curen date 
+    const date = new Date();
+
     //@ts-ignore
     const vendur = props.vendur ?? {};
     //@ts-ignore
@@ -50,6 +53,16 @@ const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
           className=' text-slate-500 mr-2 font-medium'
           >
             المغرب - القنيطرة - بئر الرامي
+          </span>
+        </p>
+        <p
+        className=' text-xs font-semibold  text-slate-600'
+        >
+          التاريخ:
+          <span
+          className=' text-slate-500 mr-2 font-medium'
+          >
+            {date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
           </span>
         </p>
        </div>

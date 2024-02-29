@@ -11,7 +11,7 @@ export interface ColumnDef {
 
 const SelledProducts = ({...props}) => {
     const selles = props.payments ?? [];
-    const total = selles.reduce((acc: number, curr: any) => acc + curr.price, 0);
+    const total = selles.reduce((acc: number, curr: any) => acc + curr.price * curr.quantity, 0);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',
@@ -26,12 +26,12 @@ const SelledProducts = ({...props}) => {
         {
             accessorKey: 'price',
             header: 'السعر',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('price')}</div>,
+            cell: ({ row }: { row: any }) => <div>{row.getValue('price')} د.م</div>,
         },
         {
             accessorKey: 'quantity',
             header: 'الكمية',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('quantity')}</div>,
+            cell: ({ row }: { row: any }) => <div>{row.getValue('quantity')} كلغ </div>,
         },
         
     ];
@@ -43,7 +43,7 @@ const SelledProducts = ({...props}) => {
         flex
         flex-col
          w-full
-         
+         gap-4
          overflow-hidden
          justify-start items-start
          ">
