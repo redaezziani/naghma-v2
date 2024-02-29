@@ -25,13 +25,16 @@ export const createVendur_log = async (data: IVendur_log) => {
         if (!getVendure) {
             return { status: 'error', message: 'البائع غير موجود' };
         }
+        
         let current_date = new Date();
         let year = current_date.getFullYear();
         let mounth = current_date.getMonth();
+        // we nade to rest the vendur balance every mounth when the day is 2 of the mounth
+        let day = current_date.getDate();
         let vendur_date = new Date(getVendure.updated_at);
         let vendur_year = vendur_date.getFullYear();
         let vendur_mounth = vendur_date.getMonth();
-        if (year !== vendur_year || mounth !== vendur_mounth) { 
+        if (year !== vendur_year || mounth !== vendur_mounth   && day === 2) {
             const vendur = await prisma.vendur.update({
                 where: {
                     id: data.vendur_id
@@ -46,7 +49,6 @@ export const createVendur_log = async (data: IVendur_log) => {
                 return { status: 'error', message: 'لم يتم تحديث البائع' };
             }
         }
-
         const checkProduct = await prisma.produit_Final.findUnique({
             where: {
                 id: data.produit_id

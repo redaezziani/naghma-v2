@@ -2,9 +2,8 @@
 import { createHash } from 'crypto';
 import { prisma } from '@/(secrets)/secrets';
 import { signinSchema } from './shema/signin';
-import { forgetPassoword, generateToken, verifyToken } from './resnd/core';
+import {  generateToken, verifyToken } from './resnd/core';
 import { cookies } from "next/headers"
-import { revalidatePath } from 'next/cache';
 interface UserCredentials {
     email: string;
     password: string;
@@ -12,7 +11,6 @@ interface UserCredentials {
 
 
 export const SignIn = async (credentials: UserCredentials) => {
-    revalidatePath('/');
     try {
         const valid = signinSchema.safeParse(credentials);
         if (!valid.success) {
@@ -32,7 +30,6 @@ export const SignIn = async (credentials: UserCredentials) => {
         if (hashedPassword !== user.password) {
             return { error: 'كلمة المرور غير صحيحة.' };
         }
-        console.log(user);
         const token = await generateToken(user);
         cookies().set('token', token, {
             path: '*',
@@ -46,35 +43,6 @@ export const SignIn = async (credentials: UserCredentials) => {
         return { error: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
     }
 };
-
-export const ForgetPassword = async (email: string) => {
-    try {
-        const user = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        });
-
-        if (!user) {
-            return { type: 'error', message: 'لم يتم العثور على المستخدم. يرجى التسجيل.' };
-        }
-        const token = await generateToken(user);
-        const passwordreset = await prisma.resetPasswordRequest.create({
-            data: {
-                token,
-                userId: user.id,
-                expires: new Date(Date.now() + 3600000),
-            },
-        });
-        await forgetPassoword(token, user.name ?? '');
-
-        return { type: 'success', message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.' };
-    } catch (error) {
-        console.error('خطأ أثناء إعادة تعيين كلمة المرور:', error);
-        return { type: 'error', message: 'حدث خطأ. يرجى المحاولة مرة أخرى في وقت لاحق.' };
-    }
-}
-
 
 export const ResetPassword = async (token: string, password: string) => {
     try {

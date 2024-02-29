@@ -17,10 +17,11 @@ export const middleware= async (request: NextRequest) => {
     if (token &&  ['/signin', '/signup', '/forget-password'].includes(pathname)) {
         return NextResponse.redirect(new URL('/dashboard', request.nextUrl.origin).toString());
     }
-    // or /dashboard/final-product/*
-    // the or sampole 
-    if (token && payload && payload.role === 'user' && ['/dashboard/vendor', '/dashboard' , '/dashboard/vendor/add-vendor','/dashboard/vendor/vendors-logs' ,'/dashboard/vendor/payments', '/dashboard/vendor/retourn', '/dashboard/vendor/expenses'].includes(pathname)  && pathname.startsWith('/dashboard/final-product')) {
+    if (token && payload && payload.role === 'user' && ['/dashboard/vendor', '/dashboard' , '/dashboard/vendor/add-vendor','/dashboard/vendor/vendors-logs' ,'/dashboard/vendor/payment', '/dashboard/vendor/retourn', '/dashboard/vendor/expenses'].includes(pathname)  || token && payload && payload.role === 'user' && pathname.startsWith('/dashboard/final-product')) {
         return NextResponse.redirect(new URL(`/dashboard/vendor/${payload?.vendur_id}`, request.nextUrl.origin).toString());
+    }
+    if (token && payload && payload.role === 'admin' && ['/dashboard/vendor/add-vendor','/dashboard/vendor/vendors-logs' ,'/dashboard/vendor/payment', '/dashboard/vendor/retourn', '/dashboard/vendor/expenses'].includes(pathname)  || token && payload && payload.role === 'admin' && pathname.includes('/dashboard/final-product')) {
+        return NextResponse.redirect(new URL(`/dashboard/`, request.nextUrl.origin).toString());
     }
     return NextResponse.next();    
 }

@@ -125,13 +125,26 @@ export const getAllVendurs = async () => {
 
 export const getVendurById = async (id: string) => {
     try {
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear(); 
+        const day = date.getDate();
+        // get the produit sell for the current month and prix_a_paye and vente_logs and loss
+        // i want to get the data from the the previous month from day 2 to the current month day 1
         const vendur = await prisma.vendur.findUnique({
             where: {
                 id
             },
             include: {
                 produit_sell: true,
-                prix_a_paye: true,
+                prix_a_paye: {
+                    where: {
+                        created_at: {
+                            gte: new Date(year, month - 1, 2),
+                            lt: new Date(year, month, 1)
+                        }
+                    }
+                },
                 Vente_logs: true,
                 loss: true
             }
@@ -156,9 +169,6 @@ export const getVendurById = async (id: string) => {
 
         };
        
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set hours to 0 for start of the day
-
         const data = {
             vendur: vendur_info,
             payments: vendur.prix_a_paye.map(payment => ({

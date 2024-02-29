@@ -292,7 +292,6 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
             const product = poducts[i];
             finalResultStock += product.quantite * product.prix_vente;
         }
-        // return total
         return {
             status: "success", message: "getEarningsOfCurrentMonth success", data: {
                 initial_amount_price,
@@ -323,7 +322,6 @@ export const getHowmuchrRest = async () => {
             const vendur = vendurs[i];
             total_prix_a_payer += vendur.le_prix_a_payer;
         }
-        // and how much the total of the rest : le_prix_a_payer total - le_prix_a_paye total
         let total_prix_a_paye = 0;
         for (let i = 0; i < vendurs.length; i++) {
             const vendur = vendurs[i];
