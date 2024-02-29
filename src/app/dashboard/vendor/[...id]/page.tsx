@@ -14,6 +14,7 @@ import { deleteVendur } from "@/(db)/vendur";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation"
 import SelledProducts from "@/components/my-ui/selled-products";
+import FraisVendor from "@/components/my-ui/frai-vendor";
 
 const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
@@ -163,6 +164,11 @@ const VendorPage = ({ ...props }: any) => {
                 className='w-full'
             >
                 {data.losses && <CompantLoss losses={data.losses} />}
+            </div>
+            <div
+                className='w-full'
+            >
+                {data.frais && <FraisVendor payments={data.frais} />}
             </div>
            
         </div>
