@@ -62,6 +62,7 @@ const VendorPage = ({ ...props }: any) => {
             setLoading(true);
             
             const res = await deleteVendur(id);
+            console.log(res);
             if (res?.status === 'error') {
                 return;
             }
