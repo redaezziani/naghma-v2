@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
 import { useEffect, useState } from 'react';
-import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth ,getTotalVendursFraisByMonth} from '@/(db)/errning';
+import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendursFraisByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
@@ -18,7 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [earningsResponse, lossesResponse, companyExpensesResponse,FraisResponse ,totalPaidResponse] = await Promise.all([
+        const [earningsResponse, lossesResponse, companyExpensesResponse, FraisResponse, totalPaidResponse] = await Promise.all([
           getEarningsOfCurrentMonth(),
           getLossesReturnOfCurrentMonth(),
           getTotalExpensesByMonth(),
@@ -53,10 +53,10 @@ const Dashboard = () => {
               <Link href="/dashboard/company-expense">نفقات الشركة</Link>
             </Button>
             <Button>
-                <Link href="/dashboard/contributions"> المساهمات </Link>
+              <Link href="/dashboard/contributions"> المساهمات </Link>
             </Button>
             <Button>
-                <Link href="/dashboard/capital-month"> حساب الارباح</Link>
+              <Link href="/dashboard/capital-month"> حساب الارباح</Link>
             </Button>
           </div>
         </div>
@@ -102,38 +102,44 @@ const Dashboard = () => {
                 className=' '
               >
                 <p className="text-xs text-bold">
-                مصاريف البائعين (شهريًا)
+                  مصاريف البائعين (شهريًا)
                 </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
                   {Frais} د.م
                 </p>
               </div>
             </Card>
-            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
-              <div
-                className=' '
-              >
-                <p className="text-xs text-bold">
-                  المبلغ المدفوع للبائعين (شهريًا)
-                </p>
-                <p className="font-semibold text-xl text-[#15ef70]  mt-1">
-                  {totalPaid} د.م
-                </p>
-              </div>
-            </Card>
-            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
-              <div
-                className=' '
-              >
-                <p className="text-xs text-bold">
-                  المبلغ المتبقي للبائعين (شهريًا)
-                </p>
-                <p className="font-semibold text-xl text-destructive mt-1">
-                  {totalUnpaid} د.م
-                </p>
-              </div>
-            </Card>
+
           </div>
+          
+          <div 
+            className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2  w-full'
+            >
+              <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
+                <div
+                  className=' '
+                >
+                  <p className="text-xs text-bold">
+                    المبلغ المدفوع للبائعين (شهريًا)
+                  </p>
+                  <p className="font-semibold text-xl text-[#15ef70]  mt-1">
+                    {totalPaid} د.م
+                  </p>
+                </div>
+              </Card>
+              <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
+                <div
+                  className=' '
+                >
+                  <p className="text-xs text-bold">
+                    المبلغ المتبقي للبائعين (شهريًا)
+                  </p>
+                  <p className="font-semibold text-xl text-destructive mt-1">
+                    {totalUnpaid} د.م
+                  </p>
+                </div>
+              </Card>
+            </div>
         </div>
         <div className="w-full grid grid-cols-4 gap-6">
           <Card className="w-full h-fit flex justify-center lg:py-6 flex-col items-center col-span-4  lg:col-span-2 lg:h-96 p-2 shadow-none">
