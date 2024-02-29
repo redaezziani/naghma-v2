@@ -11,7 +11,7 @@ export interface ColumnDef {
 
 const SelledProducts = ({...props}) => {
     const selles = props.payments ?? [];
-    const total = selles.reduce((acc: number, curr: any) => acc + curr.price, 0);
+    const total = selles.reduce((acc: number, curr: any) => acc + curr.price * curr.quantity, 0);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',

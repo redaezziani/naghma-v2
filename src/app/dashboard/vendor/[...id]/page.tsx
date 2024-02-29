@@ -19,7 +19,6 @@ const VendorPage = ({ ...props }: any) => {
     let id = props.params.id[0]
     const componentRef = useRef();
     const [loading, setLoading] = useState(false);
-    const [trash , setTrash] = useState(false);
     const handlePrint = useReactToPrint({
         //@ts-ignore
         content: () => componentRef.current,
