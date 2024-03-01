@@ -203,7 +203,7 @@ export const getVendurById = async (id: string) => {
                         nom: true
                     }
                 });
-
+                console.log(loss);
                 return {
                     productName: productName?.nom,
                     quantity: loss.quantite,

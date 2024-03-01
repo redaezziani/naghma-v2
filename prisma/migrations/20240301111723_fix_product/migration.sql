@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "loss" ALTER COLUMN "quantite" SET DATA TYPE DOUBLE PRECISION;
