@@ -33,6 +33,7 @@ const VendorPage = ({ ...props }: any) => {
                 return;
             }
             setData(res?.data ?? {});
+            console.log(res?.data);
             let sells = res?.data?.sales ?? [];
            
             let grouped = sells.reduce((acc: any, curr: any) => {

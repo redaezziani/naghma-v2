@@ -11,7 +11,7 @@ export interface ColumnDef {
 
 const CompanyLoss = ({...props}) => {
     const loss = props.losses ?? [];
-    const total = loss.reduce((acc: number, curr: any) => acc + curr.price, 0);
+    const total = loss.reduce((acc: number, curr: any) => acc + curr.price , 0).toFixed(2);
     const columns: ColumnDef[] = [
         {
             accessorKey: 'date',

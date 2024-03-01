@@ -27,7 +27,7 @@ const Dashboard = () => {
         ]);
         setEarnings(earningsResponse?.data ?? 0);
         setLosses(lossesResponse?.data ?? 0);
-        setCompanyExpenses(companyExpensesResponse?.data ?? 0);
+        setCompanyExpenses(companyExpensesResponse?.data ?? 0) ;
         setFrais(FraisResponse?.data ?? 0);
         setTotalPaid(totalPaidResponse?.data?.total_prix_a_payer ?? 0);
         setTotalUnpaid(totalPaidResponse?.data?.result ?? 0);
@@ -78,7 +78,7 @@ const Dashboard = () => {
                 className=' '
               >
                 <p className="text-xs text-bold">
-                  الخسائر مع الموردين (شهريًا)
+                الخسائر ( للمنتجات التي ارجعت)
                 </p>
                 <p className="font-semibold text-xl text-destructive mt-1">
                   {losses} د.م
@@ -120,7 +120,7 @@ const Dashboard = () => {
                   className=' '
                 >
                   <p className="text-xs text-bold">
-                    المبلغ المدفوع للبائعين (شهريًا)
+                    المبلغ المدفوع للبائعين  (شهريًا)
                   </p>
                   <p className="font-semibold text-xl text-[#15ef70]  mt-1">
                     {totalPaid} د.م
@@ -132,7 +132,7 @@ const Dashboard = () => {
                   className=' '
                 >
                   <p className="text-xs text-bold">
-                    المبلغ المتبقي للبائعين (شهريًا)
+                     المبلغ المتبقي للبائعين دفعه (شهريًا)
                   </p>
                   <p className="font-semibold text-xl text-destructive mt-1">
                     {totalUnpaid} د.م
