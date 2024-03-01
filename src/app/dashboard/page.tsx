@@ -34,7 +34,8 @@ const Dashboard = () => {
         setFrais(FraisResponse?.data ?? 0);
         setTotalPaid(totalPaidResponse?.data?.total_prix_a_payer ?? 0);
         setTotalUnpaid(totalPaidResponse?.data?.result ?? 0);
-        console.log(totalQuantiteResponse)
+        setTotalQuantite(totalQuantiteResponse?.data?.quantite ?? 0);
+        console.log( totalQuantiteResponse);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -113,11 +114,11 @@ const Dashboard = () => {
                 </p>
               </div>
             </Card>
-
+           
           </div>
           
           <div 
-            className='grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2  w-full'
+            className='grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-3  w-full'
             >
               <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
                 <div
@@ -143,6 +144,19 @@ const Dashboard = () => {
                   </p>
                 </div>
               </Card>
+              <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
+              <div
+                className=' '
+              >
+                <p className="text-xs text-bold">
+                 الكمية المباعة (شهريًا)
+                </p>
+                <p className="font-semibold text-xl text-destructive mt-1">
+                  {totalQuantite} كلغ
+                </p>
+              </div>
+            </Card>
+
             </div>
         </div>
         <div className="w-full grid grid-cols-4 gap-6">
