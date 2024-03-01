@@ -314,7 +314,7 @@ export const createTotalSelles = async () => {
                     quantite: total_quantite
                 }
             });
-            return { status: "success", message: data };
+            return { status: "success", data: data };
         }
         else {
             // create
