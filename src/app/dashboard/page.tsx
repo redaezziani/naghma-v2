@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendursFraisByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
+import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -14,23 +14,27 @@ const Dashboard = () => {
   const [Frais, setFrais] = useState(0);
   const [totalPaid, setTotalPaid] = useState(0);
   const [totalUnpaid, setTotalUnpaid] = useState(0);
+  const [totalQuantite, setTotalQuantite] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [earningsResponse, lossesResponse, companyExpensesResponse, FraisResponse, totalPaidResponse] = await Promise.all([
+        const [earningsResponse, lossesResponse, companyExpensesResponse, FraisResponse, totalPaidResponse , totalQuantiteResponse] = await Promise.all([
           getEarningsOfCurrentMonth(),
           getLossesReturnOfCurrentMonth(),
           getTotalExpensesByMonth(),
           getTotalVendursFraisByMonth(),
-          getHowmuchrRest()
+          getHowmuchrRest(),
+          createTotalSelles()
         ]);
         setEarnings(earningsResponse?.data ?? 0);
-        setLosses(lossesResponse?.data ?? 0);
+        //@ts-ignore
+        setLosses(lossesResponse?.data);
         setCompanyExpenses(companyExpensesResponse?.data ?? 0) ;
         setFrais(FraisResponse?.data ?? 0);
         setTotalPaid(totalPaidResponse?.data?.total_prix_a_payer ?? 0);
         setTotalUnpaid(totalPaidResponse?.data?.result ?? 0);
+        console.log(totalQuantiteResponse)
       } catch (error) {
         console.error('Error fetching data:', error);
       }

@@ -195,6 +195,7 @@ model contribution {
 model total_Selles {
   id         String   @id @default(uuid()) @db.VarChar(36)
   prix       Float //المبلغ
+  quantite   Int //الكمية
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

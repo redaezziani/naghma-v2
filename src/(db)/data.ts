@@ -70,69 +70,6 @@ export const createContribution = async (prix: number, user_id: string) => {
     }
 }
 
-export const getTotalSelles = async () => {
-    try {
-
-        const vendurs = await prisma.vendur.findMany();
-        if (!vendurs) {
-            return { status: "error", message: "vendurs not found" };
-        }
-        let total = 0;
-        const date = new Date();
-        const month = date.getMonth();
-        const year = date.getFullYear();
-        for (let i = 0; i < vendurs.length; i++) {
-            const vendur = vendurs[i];
-            const selles = await prisma.produit_sell.findMany({
-                where: {
-                    vendur_id: vendur.id,
-                    created_at: {
-                        gte: new Date(year, month, 1),
-                        lt: new Date(year, month + 1, 1)
-                    }
-                }
-            });
-            if (!selles) {
-                return { status: "error", message: "selles not found" };
-            }
-            for (let j = 0; j < selles.length; j++) {
-                const sell = selles[j];
-                total += sell.prix;
-            }
-            // find the frais_de_prix for this month
-            const frais = await prisma.frais_de_prix.findMany({
-                where: {
-                    vendur_id: vendur.id,
-                    created_at: {
-                        gte: new Date(year, month, 1),
-                        lt: new Date(year, month + 1, 1)
-                    }
-                }
-            });
-            if (!frais) {
-                return { status: "error", message: "frais not found" };
-            }
-            for (let j = 0; j < frais.length; j++) {
-                const frai = frais[j];
-                total -= frai.prix;
-            }
-
-        }
-        const result = await prisma.total_Selles.create({
-            data: {
-                prix: total
-            }
-        });
-
-
-    } catch (error) {
-        console.log("error in getTotalSelles", error);
-    }
-    finally {
-        await prisma.$disconnect();
-    }
-}
-
 
 export const getTotalExpensesByMonth = async () => {
     try {
@@ -207,30 +144,18 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
         const date = new Date();
         const month = date.getMonth();
         const year = date.getFullYear();
-        const allSells = await prisma.produit_sell.findMany({
-            where: {
-                created_at: {
-                    gte: new Date(year, month, 1),
-                    lt: new Date(year, month + 1, 1)
-                }
-            }
-        });
+        const allSells = await prisma.produit_sell.findMany();
         if (!allSells) {
             return { status: "error", message: "allSells not found" };
         }
         let total = 0;
+        let total_quantite = 0;
         for (let i = 0; i < allSells.length; i++) {
             const sell = allSells[i];
             total += sell.prix * sell.quantite;
+            total_quantite += sell.quantite;
         }
-        const allFrais = await prisma.frais_de_prix.findMany({
-            where: {
-                created_at: {
-                    gte: new Date(year, month, 1),
-                    lt: new Date(year, month + 1, 1)
-                }
-            }
-        });
+        const allFrais = await prisma.frais_de_prix.findMany();
         if (!allFrais) {
             return { status: "error", message: "allFrais not found" };
         }
@@ -240,21 +165,14 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
             totalFrais += frais.prix;
         }
         // get the expenses
-        const totalExpenses = await prisma.total_expenses.findFirst({
-            where: {
-                created_at: {
-                    gte: new Date(year, month, 1),
-                    lt: new Date(year, month + 1, 1)
-                },
-            }
-        });
+        const totalExpenses = await prisma.total_expenses.findFirst();
         if (!totalExpenses) {
             return { status: "error", message: "totalExpenses not found" };
         }
         // get the initial amount price
         const initialAmountPrice = initial_amount_price;
         // the final result
-        const finalResult = total - totalFrais - totalExpenses.prix - Number(initialAmountPrice);
+        const finalResultPrice = total - totalFrais - totalExpenses.prix - Number(initialAmountPrice);
         // check if exist in db with this month
         const result = await prisma.total_Selles.findFirst({
             where: {
@@ -271,14 +189,16 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
                     id: result.id
                 },
                 data: {
-                    prix: finalResult
+                    prix: finalResultPrice,
+                    quantite: total_quantite
                 }
             });
         } else {
             // create
             const result = await prisma.total_Selles.create({
                 data: {
-                    prix: finalResult
+                    prix: finalResultPrice,
+                    quantite: total_quantite
                 }
             });
         }
@@ -287,10 +207,10 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
         if (!poducts) {
             return { status: "error", message: "poducts not found" };
         }
-        let finalResultStock = 0;
+        let finalResultPriceStock = 0;
         for (let i = 0; i < poducts.length; i++) {
             const product = poducts[i];
-            finalResultStock += product.quantite * product.prix_vente;
+            finalResultPriceStock += product.quantite * product.prix_vente;
         }
         return {
             status: "success", message: "getEarningsOfCurrentMonth success", data: {
@@ -298,8 +218,8 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
                 total,
                 totalFrais,
                 totalExpenses: totalExpenses.prix,
-                finalResult,
-                finalResultStock
+                finalResultPrice,
+                finalResultPriceStock
             }
         };
     } catch (error) {
@@ -331,6 +251,83 @@ export const getHowmuchrRest = async () => {
         return { status: "success", message: "getTotalOfLePrixAPayer success", data: { total_prix_a_payer, result } };
     } catch (error) {
         console.log("error in getTotalOfLePrixAPayer", error);
+    }
+    finally {
+        await prisma.$disconnect();
+    }
+}
+/*
+model total_Selles {
+  id         String   @id @default(uuid()) @db.VarChar(36)
+  prix       Float //المبلغ
+  quantite   Int //الكمية
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+*/
+export const createTotalSelles = async () => {
+    try {
+        // get the total of the sells quantity and price= prix*quantite
+        const vendurs = await prisma.vendur.findMany();
+        if (!vendurs) {
+            return { status: "error", message: "vendurs not found" };
+        }
+        let total_prix = 0;
+        let total_quantite = 0;
+        for (let i = 0; i < vendurs.length; i++) {
+            const vendur = vendurs[i];
+            const selles = await prisma.produit_sell.findMany({
+                where: {
+                    vendur_id: vendur.id
+                }
+            });
+            if (!selles) {
+                return { status: "error", message: "selles not found" };
+            }
+            for (let j = 0; j < selles.length; j++) {
+                const sell = selles[j];
+                total_prix += sell.prix * sell.quantite;
+                total_quantite += sell.quantite;
+            }
+        }
+        let date    = new Date();
+        let month   = date.getMonth();
+        let year    = date.getFullYear();
+
+        const result = await prisma.total_Selles.findFirst({
+            where: {
+                created_at: {
+                    gte: new Date(year, month, 1),
+                    lt: new Date(year, month + 1, 1)
+                },
+            }
+        });
+
+        if (result) {
+            // update
+            const data = await prisma.total_Selles.update({
+                where: {
+                    id: result.id
+                },
+                data: {
+                    prix: total_prix,
+                    quantite: total_quantite
+                }
+            });
+            return { status: "success", message: data };
+        }
+        else {
+            // create
+            const result = await prisma.total_Selles.create({
+                data: {
+                    prix: total_prix,
+                    quantite: total_quantite
+                }
+            });
+            return { status: "success", data: result };
+        }
+    } catch (error) {
+        console.log("error in createTotalSelles", error);
     }
     finally {
         await prisma.$disconnect();
