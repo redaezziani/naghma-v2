@@ -31,7 +31,7 @@ const CompanyLoss = ({...props}) => {
         {
             accessorKey: 'price',
             header: 'السعر',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('price')} د.م</div>,
+            cell: ({ row }: { row: any }) => <div>{row.getValue('price').toFixed(2)} دج</div>,
         },
         
     ];
