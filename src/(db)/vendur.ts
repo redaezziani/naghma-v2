@@ -137,14 +137,7 @@ export const getVendurById = async (id: string) => {
             },
             include: {
                 produit_sell: true,
-                prix_a_paye: {
-                    where: {
-                        created_at: {
-                            gte: new Date(year, month - 1, 2),
-                            lt: new Date(year, month, 1)
-                        }
-                    }
-                },
+                prix_a_paye: true,
                 Vente_logs: true,
                 loss: true
             }
@@ -156,11 +149,7 @@ export const getVendurById = async (id: string) => {
         const frais = await prisma.frais_de_prix.findMany({
             where: {
                 vendur_id: id,
-                created_at: {
-                    gte: new Date(year, month - 1, 2),
-                    lt: new Date(year, month, 1)
-                }
-            }
+            },
         });
 
         const total_sell_price = vendur.produit_sell.reduce((acc: number, product: any) => acc + product.prix*product.quantite, 0);

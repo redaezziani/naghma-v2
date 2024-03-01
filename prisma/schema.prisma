@@ -169,7 +169,7 @@ model retorn_logs {
   vendur_id  String //الموزع
   produit    Produit_Final @relation(fields: [produit_id], references: [id])
   produit_id String //المنتج
-  quantite   Int //الكمية
+  quantite   Float //الكمية 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
