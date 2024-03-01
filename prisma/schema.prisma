@@ -156,7 +156,7 @@ model loss {
   vendur_id  String //الموزع
   prix       Float //المبلغ
   produit_id String //المنتج
-  quantite   Int //الكمية
+  quantite   Float //الكمية
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
