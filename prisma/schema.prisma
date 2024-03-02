@@ -8,24 +8,20 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-//جدول المستخدم
 model User {
-  id        String    @id @default(uuid()) @db.VarChar(36)
-  email     String    @unique
-  name      String?
-  password  String
-  role      String    @default("user")
-  // if he is a user he will have a vendur_id
-  vendur_id String?
-  image     String?   @default("")
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime?
-  //المنتجات التي تم بيعها
+  id           String         @id @default(uuid()) @db.VarChar(36)
+  email        String         @unique
+  name         String?
+  password     String
+  role         String         @default("user")
+  image        String?        @default("")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  deletedAt    DateTime?
+  vendur_id    String?
   contribution contribution[]
 }
 
-//طلب نسيت كلمة السر
 model ResetPasswordRequest {
   id        String    @id @default(uuid()) @db.VarChar(36)
   token     String    @unique
@@ -36,7 +32,6 @@ model ResetPasswordRequest {
   deletedAt DateTime?
 }
 
-//طلب التاكد من المستخدم
 model UserVerificationRequest {
   id        String    @id @default(uuid()) @db.VarChar(36)
   token     String    @unique
@@ -47,7 +42,6 @@ model UserVerificationRequest {
   deletedAt DateTime?
 }
 
-// المنتج الاولي
 model Matiere_Premiere {
   id         String   @id @default(uuid()) @db.VarChar(36)
   nom        String
@@ -57,152 +51,141 @@ model Matiere_Premiere {
   updated_at DateTime @updatedAt
 }
 
-//المنتج النهائي
 model Produit_Final {
-  id         String       @id @default(uuid()) @db.VarChar(36)
-  nom        String
-  prix_vente Float
-  quantite   Int
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
-  Vente_logs Vente_logs[]
+  id           String               @id @default(uuid()) @db.VarChar(36)
+  nom          String
+  prix_vente   Float
+  quantite     Float                @db.Real
+  created_at   DateTime             @default(now())
+  updated_at   DateTime             @updatedAt
+  logs         Produit_Final_logs[]
+  Vente_logs   Vente_logs[]
   produit_sell produit_sell[]
-  logs Produit_Final_logs[]
-  retorn_logs retorn_logs[]
+  retorn_logs  retorn_logs[]
 }
 
-//الموزع
 model Vendur {
-  id              String   @id @default(uuid()) @db.VarChar(36)
+  id              String         @id @default(uuid()) @db.VarChar(36)
   nom             String
-  le_prix_a_payer Float    @default(0) //المستحقات
-  le_prix_a_paye  Float    @default(0) //المدفوعات
-  frais_de_prix   Float    @default(0) //المصاريف
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-
-  Vente_logs Vente_logs[]
-  produit_sell produit_sell[]
-  prix_a_paye prix_a_paye[]
-  loss loss[]
-  retorn_logs retorn_logs[]
+  le_prix_a_payer Float          @default(0)
+  le_prix_a_paye  Float          @default(0)
+  frais_de_prix   Float          @default(0)
+  created_at      DateTime       @default(now())
+  updated_at      DateTime       @updatedAt
+  Vente_logs      Vente_logs[]
+  loss            loss[]
+  prix_a_paye     prix_a_paye[]
+  produit_sell    produit_sell[]
+  retorn_logs     retorn_logs[]
 }
 
-//المنتج النهائي المباع
 model Produit_Final_logs {
-  id            String   @id @default(uuid()) @db.VarChar(36)
+  id            String        @id @default(uuid()) @db.VarChar(36)
   stock_initial Int
-  produit    Produit_Final @relation(fields: [produit_id], references: [id])
-  produit_id String //المنتج
   production    Int
   ventes        Int
   retours       Int
   stock_final   Int
-  created_at    DateTime @default(now())
-  updated_at    DateTime @updatedAt
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  produit_id    String
+  produit       Produit_Final @relation(fields: [produit_id], references: [id])
 }
 
-//جدول المبيعات
 model Vente_logs {
   id         String        @id @default(uuid()) @db.VarChar(36)
-  vendur     Vendur        @relation(fields: [vendur_id], references: [id])
-  vendur_id  String // This field references the id of the Vendur model
-  produit    Produit_Final @relation(fields: [produit_id], references: [id])
-  produit_id String // This field references the id of the Produit_Final model
-  quantite   Int //الكمية
-  prix       Float //السعر
+  vendur_id  String
+  produit_id String
+  quantite   Int
+  prix       Float
   created_at DateTime      @default(now())
   updated_at DateTime      @updatedAt
-}
-
-//المنتجات التي بيعت لكل موزع
-model produit_sell {
-  id         String   @id @default(uuid()) @db.VarChar(36)
   produit    Produit_Final @relation(fields: [produit_id], references: [id])
-  produit_id String //المنتج
-  vendur     Vendur @relation(fields: [vendur_id], references: [id])
-  vendur_id  String //الموزع
-  quantite   Int //الكمية  
-  prix       Float //السعر
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  vendur     Vendur        @relation(fields: [vendur_id], references: [id])
 }
 
-//جدول دفع المستحقات
+model produit_sell {
+  id         String        @id @default(uuid()) @db.VarChar(36)
+  produit_id String
+  vendur_id  String
+  quantite   Int
+  prix       Float
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
+  produit    Produit_Final @relation(fields: [produit_id], references: [id])
+  vendur     Vendur        @relation(fields: [vendur_id], references: [id])
+}
+
 model prix_a_paye {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  vendur     Vendur @relation(fields: [vendur_id], references: [id])
-  vendur_id  String //الموزع
-  type       String //النوع
-  prix       Float //المبلغ
+  vendur_id  String
+  type       String
+  prix       Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  vendur     Vendur   @relation(fields: [vendur_id], references: [id])
 }
 
-//جدول المصاريف لكل موزع
 model frais_de_prix {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  vendur_id  String //الموزع
-  prix       Float //المبلغ
-  type       String //النوع
+  vendur_id  String
+  prix       Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  type       String
 }
 
-//الخسائر المترتة عن ارجاع المنتوج ناقصا
 model loss {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  vendur     Vendur @relation(fields: [vendur_id], references: [id])
-  vendur_id  String //الموزع
-  prix       Float //المبلغ
-  produit_id String //المنتج
-  quantite   Float //الكمية
+  vendur_id  String
+  prix       Float
+  produit_id String
+  quantite   Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  vendur     Vendur   @relation(fields: [vendur_id], references: [id])
 }
 
-// 
-
 model retorn_logs {
-  id         String   @id @default(uuid()) @db.VarChar(36)
-  vendur     Vendur @relation(fields: [vendur_id], references: [id])
-  vendur_id  String //الموزع
+  id         String        @id @default(uuid()) @db.VarChar(36)
+  vendur_id  String
+  produit_id String
+  quantite   Float
+  created_at DateTime      @default(now())
+  updated_at DateTime      @updatedAt
   produit    Produit_Final @relation(fields: [produit_id], references: [id])
-  produit_id String //المنتج
-  quantite   Float //الكمية 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  vendur     Vendur        @relation(fields: [vendur_id], references: [id])
 }
 
 model external_expense {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  prix       Float //المبلغ
-  type       String //النوع
+  prix       Float
+  type       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
 
 model contribution {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  prix       Float //المبلغ
-  type       String  @default("contribution")
-  user      User @relation(fields: [user_id], references: [id])
-  user_id  String //المستخدم
+  prix       Float
+  type       String   @default("contribution")
+  user_id    String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  user       User     @relation(fields: [user_id], references: [id])
 }
 
 model total_Selles {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  prix       Float //المبلغ
-  quantite   Int //الكمية
+  prix       Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  quantite   Int
 }
 
 model total_expenses {
   id         String   @id @default(uuid()) @db.VarChar(36)
-  prix       Float //المبلغ
+  prix       Float
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
