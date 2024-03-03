@@ -128,6 +128,7 @@ const VendorPage = ({ ...props }: any) => {
                     vendur={data.vendur}
                     payments={data.payments}
                     sales={data.sales}
+                    frais={data.frais}
                     //@ts-ignore
                     ref={componentRef} />
 
