@@ -65,8 +65,11 @@ export const getEarningsOfCurrentMonth = async () => {
                 const date = new Date(product.created_at);
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
-
+                const currentMonth = new Date().getMonth() + 1;
+                const currentYear = new Date().getFullYear();
+                if (month === currentMonth && year === currentYear) {
                     earnings += product.prix * product.quantite;
+                }
             });
         });
         //@ts-ignore
@@ -92,7 +95,13 @@ export const getLossesReturnOfCurrentMonth = async () => {
         losses.forEach(loss => {
             const date = new Date(loss.created_at);
             const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            if (month === currentMonth && year === currentYear) {
+
                 totalLosses += loss.prix;
+            }
         });
         //@ts-ignore
         return { status: 'success', message: 'تم العثور على الخسائر بنجاح', data: totalLosses.toFixed(2) };
@@ -115,8 +124,14 @@ export const getTotalVendursFraisByMonth = async () => {
         let totalExpenses = 0;
         let curent = new Date().getMonth() + 1;
         vendurs.forEach(vendur => {
-           
+            const date = new Date(vendur.updated_at);
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            const currentYear = new Date().getFullYear();
+            if (month === currentMonth && year === currentYear) {
                 totalExpenses += vendur.frais_de_prix;
+            }
         });
         return { status: 'success', message: 'تم العثور على النفقات بنجاح', data: totalExpenses };
     } catch (error) {

@@ -287,7 +287,6 @@ export const getVendursWithTotalSellPrice = async () => {
                 total_sell_price
             };
         });
-        console.log(vendursWithTotalSellPrice);
         return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendursWithTotalSellPrice };
 
     } catch (error: any) {
@@ -300,6 +299,10 @@ export const getVendursWithTotalSellPrice = async () => {
 
 export const menusPayments = async (id: string) => {
     try {
+        const payload = await verifyToken();
+        if (payload?.role !== 'superadmin') {
+            return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
+        }
         const payment = await prisma.prix_a_paye.delete({
             where: {
                 id:id

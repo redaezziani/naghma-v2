@@ -151,6 +151,10 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
         let total = 0;
         let total_quantite = 0;
         for (let i = 0; i < allSells.length; i++) {
+            let date = new Date(allSells[i].created_at);
+            if (date.getMonth() !== month) {
+                continue;
+            }
             const sell = allSells[i];
             total += sell.prix * sell.quantite;
             total_quantite += sell.quantite;
@@ -161,11 +165,22 @@ export const getEarningsOfCurrentMonth = async (data: ITotalSelles) => {
         }
         let totalFrais = 0;
         for (let i = 0; i < allFrais.length; i++) {
+            let date = new Date(allFrais[i].created_at);
+            if (date.getMonth() !== month) {
+                continue;
+            }
             const frais = allFrais[i];
             totalFrais += frais.prix;
         }
         // get the expenses
-        const totalExpenses = await prisma.total_expenses.findFirst();
+        const totalExpenses = await prisma.total_expenses.findFirst({
+            where: {
+                created_at: {
+                    gte: new Date(year, month, 1),
+                    lt: new Date(year, month + 1, 1)
+                },
+            }
+        });
         if (!totalExpenses) {
             return { status: "error", message: "totalExpenses not found" };
         }
@@ -272,13 +287,21 @@ export const createTotalSelles = async () => {
         if (!vendurs) {
             return { status: "error", message: "vendurs not found" };
         }
+        let date    = new Date();
+        let month   = date.getMonth();
+        let year    = date.getFullYear();
         let total_prix = 0;
         let total_quantite = 0;
         for (let i = 0; i < vendurs.length; i++) {
+
             const vendur = vendurs[i];
             const selles = await prisma.produit_sell.findMany({
                 where: {
-                    vendur_id: vendur.id
+                    vendur_id: vendur.id,
+                    created_at: {
+                        gte: new Date(year, month, 1),
+                        lt: new Date(year, month + 1, 1)
+                    }
                 }
             });
             if (!selles) {
@@ -290,9 +313,7 @@ export const createTotalSelles = async () => {
                 total_quantite += sell.quantite;
             }
         }
-        let date    = new Date();
-        let month   = date.getMonth();
-        let year    = date.getFullYear();
+        
 
         const result = await prisma.total_Selles.findFirst({
             where: {
