@@ -12,6 +12,8 @@ const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
     const payments = props.payments ?? [];
     //@ts-ignore
     const sales = props.sales ?? [];
+    //@ts-ignore
+    const frais = props.frais ?? [];
     // lets group the payments by  type and sum the price in array of objects
     let grouped: any[] = [];
     payments.forEach((curr: any) => {
@@ -33,6 +35,7 @@ const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
       }
     });
      let total_sells = sells_grouped.reduce((acc: number, curr: any) => acc + curr.totalPrice, 0);
+     let total_frais = frais.reduce((acc: number, curr: any) => acc + curr.prix, 0);
     const total = payments.reduce((acc: number, curr: any) => acc + curr.price, 0);
     return (
     <div
@@ -243,6 +246,86 @@ const ComponentToPrint = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElemen
             className='p-2'
             >
               {total_sells} د.م
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+      <h4
+      className=' mt-3 font-semibold text-slate-600'
+      >
+      جدول المصاريف :
+      </h4>
+      <table
+      className='w-full border-2 border-slate-200'
+      >
+        <thead
+        className='bg-slate-100 text-center'
+        >
+          <tr
+          className='text-xs font-semibold text-slate-700'
+          >
+            <th
+            className='p-2'
+            >
+              التاريخ
+            </th>
+            <th
+            className='p-2'
+            >
+              النوع
+            </th>
+            <th
+            className='p-2'
+            >
+              السعر
+            </th>
+          </tr>
+        </thead>
+        <tbody
+        className='text-xs text-slate-700'
+        >
+          {
+            frais.map((f: any, index: number) => {
+              return (
+                <tr
+                key={index}
+                className='text-center'
+                >
+                  <td
+                  className='p-2'
+                  >
+                    {new Date(f.created_at).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}
+                  </td>
+                  <td
+                  className='p-2'
+                  >
+                    {f.type}
+                  </td>
+                  <td
+                  className='p-2'
+                  >
+                    {f.prix} د.م
+                  </td>
+                </tr>
+              )
+            })
+          }
+        </tbody>
+        <tfoot
+        className='text-xs font-semibold text-slate-900'
+        >
+          <tr
+          className='text-center'
+          >
+            <td
+            className='p-2'
+            >
+              الإجمالي
+            </td>
+            <td
+            className='p-2'
+            >
+              {total_frais} د.م
             </td>
           </tr>
         </tfoot>
