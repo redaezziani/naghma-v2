@@ -333,3 +333,28 @@ export const createTotalSelles = async () => {
         await prisma.$disconnect();
     }
 }
+
+export const getPayments = async (vendur_id: string, date: string = new Date().toISOString()) => {
+    try {
+        const vendur = await prisma.vendur.findUnique({
+            where: {
+                id: vendur_id
+            }
+        });
+        if (!vendur) {
+            return { status: "error", message: "vendur not found" };
+        }
+        const prixs = await prisma.prix_a_paye.findMany({
+            where: {
+                vendur_id: vendur_id,
+                created_at: new Date(date)
+            }
+        });
+        if (!prixs) {
+            return { status: "error", message: "prixs not found" };
+        }
+         return { status: "success", message: "getPrix_a_payerByVendurIdDate success", data: prixs };
+    } catch (error) {
+        console.log("error in getPrix_a_payerByVendurIdDate", error);
+    }
+}
