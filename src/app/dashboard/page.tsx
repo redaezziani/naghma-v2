@@ -72,7 +72,7 @@ const Dashboard = () => {
               <div
                 className=''
               >
-                <p className=" text-xs">الأرباح (شهريًا)</p>
+                <p className=" text-xs">المبيعات (شهريًا)</p>
                 <p className="font-semibold text-xl text-[#15ef70] mt-1">
                   {earnings} د.م
                 </p>
