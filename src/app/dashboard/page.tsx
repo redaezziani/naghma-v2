@@ -7,7 +7,7 @@ import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendu
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
-import { toast } from 'sonner';
+import DataCard from '@/components/my-ui/anlys/data-card';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -71,56 +71,11 @@ const Dashboard = () => {
         </div>
         <div className="flex mt-8 w-full flex-col gap-3 justify-start items-start">
           <div className="w-full grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 ">
-
-            <Card className="w-full col-span-1 relative  shadow-none overflow-hidden h-20 p-2   flex justify-between items-center border rounded-lg  ">
-              <div
-                className=''
-              >
-                <p className=" text-xs">المبيعات (شهريًا)</p>
-                <p className="font-semibold text-xl text-[#15ef70] mt-1">
-                  {earnings} د.م
-                </p>
-              </div>
-            </Card>
-            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
-              <div
-                className=' '
-              >
-                <p className="text-xs text-bold">
-                الخسائر ( للمنتجات التي ارجعت)
-                </p>
-                <p className="font-semibold text-xl text-destructive mt-1">
-                  {losses} د.م
-                </p>
-              </div>
-            </Card>
-            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
-              <div
-                className=' '
-              >
-                <p className="text-xs text-bold">
-                  مصاريف الشركة (شهريًا)
-                </p>
-                <p className="font-semibold text-xl text-destructive mt-1">
-                  {companyExpenses} د.م
-                </p>
-              </div>
-            </Card>
-            <Card className="w-full col-span-1 relative  shadow-none  overflow-hidden h-20 p-2 flex justify-between items-center border rounded-lg">
-              <div
-                className=' '
-              >
-                <p className="text-xs text-bold">
-                  مصاريف البائعين (شهريًا)
-                </p>
-                <p className="font-semibold text-xl text-destructive mt-1">
-                  {Frais} د.م
-                </p>
-              </div>
-            </Card>
-           
+            <DataCard value={earnings} title='المبيعات (شهريًا)' />
+            <DataCard value={losses} title='الخسائر للمنتجات التي ارجعت' />
+            <DataCard value={companyExpenses} title=' مصاريف الشركة (شهريًا)' />
+            <DataCard value={Frais} title=' مصاريف البائعين (شهريًا)' />
           </div>
-          
           <div 
             className='grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-3  w-full'
             >

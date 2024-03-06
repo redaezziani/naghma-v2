@@ -115,6 +115,7 @@ const Vendors = () => {
         {
           links.map((link, index) => (
             <Button
+            key={index}
             variant={'outline'}
             >
               <Link href={link.path}>
