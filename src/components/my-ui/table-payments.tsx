@@ -65,8 +65,9 @@ const TablePayments = ({...props}) => {
             </div>,
         },
     ];
-    
-    
+    useEffect(() => {
+        setPayments(props.payments)
+    }, [props.payments])
     return (
         <div className=" 
         flex

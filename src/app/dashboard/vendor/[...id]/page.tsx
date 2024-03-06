@@ -64,7 +64,7 @@ const VendorPage = ({ ...props }: any) => {
         try {
             const res = await getVendurById(id);
             if (res?.status === 'error') {
-                return;
+                toast.error(res?.message);
             }
             setData(res?.data ?? {});
         } catch (error) {
@@ -92,6 +92,7 @@ const VendorPage = ({ ...props }: any) => {
     }
     useEffect(() => {
         handelData();
+        console.log(data.payments)
     }, [])
     const router = useRouter()
 
@@ -113,7 +114,6 @@ const VendorPage = ({ ...props }: any) => {
                 },
             })
             router.push('/dashboard/vendor')
-
         } catch (error) {
             console.log(error);
         }
