@@ -37,10 +37,7 @@ const Vendors = () => {
     }
   }
   const links = [
-    {
-      name: 'سجلات الموزعين',
-      path: '/dashboard/vendor'
-    },
+    
     {
       name: 'سجلات المبيعات',
       path: '/dashboard/vendor/vendors-logs'
