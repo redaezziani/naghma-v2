@@ -7,6 +7,7 @@ import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendu
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
+import { toast } from 'sonner';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -15,32 +16,29 @@ const Dashboard = () => {
   const [totalPaid, setTotalPaid] = useState(0);
   const [totalUnpaid, setTotalUnpaid] = useState(0);
   const [totalQuantite, setTotalQuantite] = useState(0);
-
+  const fetchData = async () => {
+    try {
+      const [earningsResponse, lossesResponse, companyExpensesResponse, FraisResponse, totalPaidResponse , totalQuantiteResponse] = await Promise.all([
+        getEarningsOfCurrentMonth(),
+        getLossesReturnOfCurrentMonth(),
+        getTotalExpensesByMonth(),
+        getTotalVendursFraisByMonth(),
+        getHowmuchrRest(),
+        createTotalSelles()
+      ]);
+      setEarnings(earningsResponse?.data ?? 0);
+      //@ts-ignore
+      setLosses(lossesResponse?.data);
+      setCompanyExpenses(companyExpensesResponse?.data ?? 0) ;
+      setFrais(FraisResponse?.data ?? 0);
+      setTotalPaid(totalPaidResponse?.data?.total_prix_a_payer ?? 0);
+      setTotalUnpaid(totalPaidResponse?.data?.result ?? 0);
+      setTotalQuantite(totalQuantiteResponse?.data?.quantite ?? 0);
+    } catch (error) {
+      throw new Error('error');
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [earningsResponse, lossesResponse, companyExpensesResponse, FraisResponse, totalPaidResponse , totalQuantiteResponse] = await Promise.all([
-          getEarningsOfCurrentMonth(),
-          getLossesReturnOfCurrentMonth(),
-          getTotalExpensesByMonth(),
-          getTotalVendursFraisByMonth(),
-          getHowmuchrRest(),
-          createTotalSelles()
-        ]);
-        setEarnings(earningsResponse?.data ?? 0);
-        //@ts-ignore
-        setLosses(lossesResponse?.data);
-        setCompanyExpenses(companyExpensesResponse?.data ?? 0) ;
-        setFrais(FraisResponse?.data ?? 0);
-        setTotalPaid(totalPaidResponse?.data?.total_prix_a_payer ?? 0);
-        setTotalUnpaid(totalPaidResponse?.data?.result ?? 0);
-        setTotalQuantite(totalQuantiteResponse?.data?.quantite ?? 0);
-        console.log( totalQuantiteResponse);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
   return (
