@@ -13,10 +13,7 @@ function Sidemenu() {
             name: 'سجلات الموزعين',
             path: '/dashboard/vendor'
         },
-        {
-            name: 'اضافة موزع',
-            path: '/dashboard/vendor/add-vendor'
-        },
+        
         {
             name: 'سجلات المبيعات',
             path: '/dashboard/vendor/vendors-logs'
@@ -32,10 +29,6 @@ function Sidemenu() {
             path: '/dashboard/final-product'
         },
         {
-            name: 'اضافة منتج نهائي',
-            path: '/dashboard/final-product/add-final-product'
-        },
-        {
             name: 'سجلات المبيعات',
             path: '/dashboard/final-product/final-product-logs'
         },
@@ -45,12 +38,11 @@ function Sidemenu() {
         }
     ]
     return (
-        <div className='  flex  h-full z-50'>
-            <div className=" w-full bg-white text-primary  flex flex-col h-[100%]  ">
-                <div className=" uppercase flex gap-2 justify-start px-4 items-center text-xl  mt-5  font-semibold">
+        <div className='  flex  h-full bg-white flex-col justify-start items-start z-50'>
+             <div className=" uppercase flex gap-2 justify-start px-4 items-center text-xl    font-semibold">
                     <Image
-                    width={30}
-                    height={30}
+                    width={25}
+                    height={25}
                     src="/logo.svg" alt="logo" className="w-10 h-10" />
                     <h1>
                         <Link href="/dashboard">
@@ -59,6 +51,8 @@ function Sidemenu() {
                     </h1>
                 </div>
                 <hr className="w-[80%] flex mx-auto my-4 " />
+            
+            <div className=" w-full  text-primary  flex flex-col h-[100%] mt-16  ">
                 <div className="flex flex-col gap-2  mr-5 text-md gap-y-5 mt-4 ">
                     <Link
 

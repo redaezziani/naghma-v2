@@ -37,21 +37,23 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { Card } from "@/components/ui/card";
 
-  const FormSchema = z.object({
+const FormSchema = z.object({
     dob: z.date({
         required_error: "A date of birth is required.",
     }),
-  })
+})
 const VendorPage = ({ ...props }: any) => {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     })
 
-    
+
     let id = props.params.id[0]
     const componentRef = useRef();
     const [loading, setLoading] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false);
     const handlePrint = useReactToPrint({
         //@ts-ignore
         content: () => componentRef.current,
@@ -65,23 +67,28 @@ const VendorPage = ({ ...props }: any) => {
                 return;
             }
             setData(res?.data ?? {});
-            console.log(res?.data);
-            let sells = res?.data?.sales ?? [];
         } catch (error) {
             console.log(error);
         }
     }
     async function onSubmit(data: z.infer<typeof FormSchema>) {
-        const date = new Date(data.dob)
-        const month = date.getMonth() + 1
-        const year = date.getUTCFullYear().toString().slice(-2)
-        console.log(month, year,id)
-        const res = await getVendurById(id,date)
+        try {
+            setSearchLoading(true);
+            const date = new Date(data.dob)
+            const month = date.getMonth() + 1
+            const year = date.getUTCFullYear().toString().slice(-2)
+            console.log(month, year, id)
+            const res = await getVendurById(id, date)
             if (res?.status === 'error') {
                 toast.error('jjjj')
             }
             setData(res?.data ?? {});
-            console.log(res?.data);        
+        } catch (error) {
+            throw error
+        }
+        finally {
+            setSearchLoading(false);
+        }
     }
     useEffect(() => {
         handelData();
@@ -142,7 +149,10 @@ const VendorPage = ({ ...props }: any) => {
                             render={({ field }) => (
                                 <FormItem className="flex  justify-start items-end gap-2">
                                     <FormLabel>
-                                        <Button type="submit">
+                                        <Button
+                                        isloading={searchLoading}
+                                        disabled={searchLoading}
+                                        type="submit">
                                             بحث
                                         </Button>
                                     </FormLabel>
@@ -211,11 +221,13 @@ const VendorPage = ({ ...props }: any) => {
                 </div>
             </div>
 
-            <div>
+            <Card
+                className=" w-full bg-white px-3 py-6 shadow-none rounded-none"
+            >
                 <VendorInfo vendur={data.vendur} />
-            </div>
-            <div
-                className='w-full'
+            </Card>
+            <Card
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.payments ? '' : 'hidden'}`}
             >
                 {data.payments ? (<TablePayments payments={data.payments} id={id} />) :
                     (
@@ -225,8 +237,10 @@ const VendorPage = ({ ...props }: any) => {
                             </div>
                         </div>
                     )}
-            </div>
-            <div className="w-full">
+            </Card>
+            <Card
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.sales ? '' : 'hidden'}`}
+            >
                 {data.sales ? (<SelledProducts payments={data.sales} />) :
                     (
                         <div className="flex flex-col space-y-3">
@@ -235,17 +249,17 @@ const VendorPage = ({ ...props }: any) => {
                             </div>
                         </div>
                     )}
-            </div>
-            <div
-                className='w-full'
+            </Card>
+            <Card
+                className=" w-full bg-white px-3 py-6 shadow-none rounded-none"
             >
                 {data.losses && <CompantLoss losses={data.losses} />}
-            </div>
-            <div
-                className='w-full'
+            </Card>
+            <Card
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.frais ? '' : 'hidden'}`}
             >
                 {data.frais && <FraisVendor payments={data.frais} />}
-            </div>
+            </Card>
 
         </div>
     )

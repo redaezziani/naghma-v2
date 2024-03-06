@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import CreateProduct from '@/components/my-ui/forms/create-product';
 
 const UpdateProduit = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -116,9 +117,7 @@ const UpdateProduit = () => {
      w-full
     px-6 py-3 relative">
      <div className='flex gap-4 justify-start items-center bg-white w-full py-6 px-3'>
-     <Button>
-        <Link href='/dashboard/final-product/add-final-product'>إضافة منتج</Link>
-      </Button>
+     <CreateProduct/>
       <Button
       variant={'outline'}
       >

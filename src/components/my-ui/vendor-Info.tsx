@@ -22,10 +22,10 @@ function VendorInfo(props: any) {
       </div>): (
          <div className="flex flex-col space-y-3">
          <div className="space-y-2">
-           <Skeleton className="h-2 w-[150px] lg:w-[250px]" />
-           <Skeleton className="h-2 w-[130px] lg:w-[290px]" />
-           <Skeleton className="h-2 w-[160px] lg:w-[350px]" />
-           <Skeleton className="h-2 w-[190px] lg:w-[270px]" />
+           <Skeleton className="h-2 w-[150px] lg:w-[750px]" />
+           <Skeleton className="h-2 w-[130px] lg:w-[540px]" />
+           <Skeleton className="h-2 w-[160px] lg:w-[540px]" />
+           <Skeleton className="h-2 w-[190px] lg:w-[430px]" />
            <Skeleton className="h-2 w-[180px] lg:w-[400px]" />
          </div>
        </div>

@@ -7,6 +7,7 @@ import { getAllVendurs } from '@/(db)/vendur';
 import { toast } from 'sonner';
 import { frais_de_prix } from '@/(db)/payment'; 
 import { Textarea } from "@/components/ui/textarea"
+import { Card } from '@/components/ui/card';
 
 interface frais_de_prix {
     vendur_id: string,
@@ -81,7 +82,8 @@ const Expenses = () => {
     }, [])
 
     return (
-        <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
+        <div className="w-full py-6 px-3">
+        <Card className='flex  shadow-none rounded-none flex-col gap-4  px-3   py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                مصاريف البائع
             </h1>
@@ -130,7 +132,7 @@ const Expenses = () => {
                     name='type'
                     value={type}
                     onChange={(e) => setType(e.target.value)}
-                    placeholder='ملاحظة'
+                    placeholder='ملاحظة عن المصاريف'
                 />
             </div>
             
@@ -140,6 +142,7 @@ const Expenses = () => {
             className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
+        </Card>
         </div>
     );
 };

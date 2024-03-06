@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs} from '@/(db)/vendur';
 import { toast } from 'sonner';
+import CreateVendur from '@/components/my-ui/forms/create-vendur';
 export interface ColumnDef {
   accessorKey: string;
   header: string;
@@ -110,17 +111,7 @@ const Vendors = () => {
      w-full
     px-6 py-3 relative">
       <div className='flex gap-3 flex-wrap mt-7 bg-white py-8 w-full px-2'>
-        <Button 
-        variant={'default'}
-        
-        >
-          <Plus
-          className=' h-5 w-5'
-          />
-          <Link
-          className='mr-2'
-          href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
-        </Button >
+        <CreateVendur />
         {
           links.map((link, index) => (
             <Button

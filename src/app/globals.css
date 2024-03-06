@@ -12,6 +12,7 @@ html,body{
   font-family: "Noto Sans Arabic", sans-serif;
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -33,7 +34,7 @@ html,body{
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-    --radius: 0rem;
+    --radius: 0.3rem;
   }
 
   .dark {
@@ -62,13 +63,16 @@ html,body{
 
 
 
+
  
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground ;
   }
 }
+
+
 
