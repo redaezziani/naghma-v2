@@ -53,12 +53,12 @@ function Sidemenu() {
                 <hr className="w-full flex mx-auto my-3 " />
             
             <div className=" w-full  text-primary  flex flex-col h-[100%] mt-16  ">
-                <div className="flex flex-col gap-2  mr-5 text-md gap-y-5 mt-4 ">
+                <div className="flex flex-col   mr-5 text-md  ">
                     <Link
 
-                        href="/dashboard" className={` flex items-center gap-2 ${pathName === '/dashboard' ? 'text-primary' : 'text-gray-500'}`}>
+                        href="/dashboard" className={` flex items-center gap-2 mb-3 ${pathName === '/dashboard' ? 'text-primary' : 'text-gray-500'}`}>
                         <Gauge
-                        className='w-6 stroke-1 h-6'
+                        className='w-6 stroke-1 h-6 '
                         />
                         لوحة القيادة
                     </Link>
@@ -66,7 +66,7 @@ function Sidemenu() {
                         <Accordion
                             color='primary'
                             type="single"
-                            collapsible className="w-full mb-2 border-none">
+                            collapsible className="w-full  border-none">
                             <AccordionItem
                                 className='border-none'
                                 value="item-1">
@@ -118,7 +118,7 @@ function Sidemenu() {
                     <Accordion
                         color='primary'
                         type="single"
-                        collapsible className="w-full mb-2 border-none">
+                        collapsible className="w-full  border-none">
                         <AccordionItem
                             className='border-none'
                             value="item-1">
