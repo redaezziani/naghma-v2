@@ -50,7 +50,7 @@ function Sidemenu() {
                         </Link>
                     </h1>
                 </div>
-                <hr className="w-[80%] flex mx-auto my-4 " />
+                <hr className="w-full flex mx-auto my-3 " />
             
             <div className=" w-full  text-primary  flex flex-col h-[100%] mt-16  ">
                 <div className="flex flex-col gap-2  mr-5 text-md gap-y-5 mt-4 ">
