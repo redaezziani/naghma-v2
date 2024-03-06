@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/sheet"
 import { Menu } from "lucide-react";
 import { UserProfile } from '@/components/my-ui/user-profile';
+import { SearchCommand } from "@/components/my-ui/search-command";
 export const metadata: Metadata = {
   title: "شركة القهوة التي توصلها",
   description: "تم إنشاؤها بواسطة تطبيق القهوة التالي",
@@ -33,6 +34,7 @@ export default function RootLayout({
         </Sheet>
       </div>
       <nav className=" w-full border-slate-300/30 border backdrop-blur-sm bg-white fixed top-0 right-0 flex justify-end lg:px-10 z-40 h-14">
+          <SearchCommand />
           <UserProfile />
         </nav>
       <aside className="w-full bg-primary-foreground z-50 h-screen hidden lg:block lg:col-span-1 border-r border sticky top-0 right-0">

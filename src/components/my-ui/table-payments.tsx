@@ -17,6 +17,11 @@ const TablePayments = ({...props}) => {
     const total = payments.reduce((acc: number, curr: any) => acc + curr.price, 0);
     const handelPayments = async (id:string) => {
         try {
+          if (!id) toast.error('حدث خطأ ما')
+          if (!confirm('هل أنت متأكد من حذف هذا السجل؟')) {
+                toast.error('تم إلغاء العملية')
+                return
+          }
           const res = await menusPayments(id)
           if (res?.status=='error') {
               toast.error(res.message)
