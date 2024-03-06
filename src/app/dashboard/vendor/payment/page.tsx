@@ -76,9 +76,8 @@ const Payment = () => {
     }, [])
 
     return (
-        <Card
-        
-        className='flex  flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
+        <div className="flex w-full px-3 mt-12">
+        <Card className='flex shadow-none rounded-none   flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                دفع مستحقات البائع
             </h1>
@@ -146,6 +145,7 @@ const Payment = () => {
                 نحديث البيانات
             </Button>
         </Card>
+    </div>
     );
 };
 

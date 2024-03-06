@@ -8,6 +8,7 @@ import { paid_by_return } from '@/(db)/payment';
 import { getAllVendurs } from '@/(db)/vendur';
 import { getSellsByVendur } from '@/(db)/sell-produit';
 import { toast } from 'sonner';
+import { Card } from '@/components/ui/card';
 interface return_fra {
     vendur_id: string,
     produit_id: string,
@@ -93,7 +94,8 @@ const Payment = () => {
     }, [])
 
     return (
-        <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
+        <div className="flex w-full px-3 mt-12">
+      <Card className='flex shadow-none rounded-none flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
             <h1 className='text-2xl text-primary font-bold'>
                 تحديث المنتجات المرجعة
                 </h1>
@@ -180,7 +182,9 @@ const Payment = () => {
                 className='bg-primary text-white' onClick={handelSubmit}>
                 نحديث البيانات
             </Button>
+         </Card>
         </div>
+
     );
 };
 
