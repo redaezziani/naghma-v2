@@ -1,32 +1,41 @@
 "use client"
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { createVendur_log } from '@/(db)/vendur-log';
 import { getAllProduits } from '@/(db)/produit';
 import { getAllVendurs } from '@/(db)/vendur';
-
+import { Card } from '@/components/ui/card';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 interface IVendur {
-    id: string;
-    nom: string;
-    le_prix_a_paye: number;
-    le_prix_a_payer: number;
+  id: string;
+  nom: string;
+  le_prix_a_paye: number;
+  le_prix_a_payer: number;
 }
 
 interface IProduit {
-    id: string;
-    nom: string;
-    prix: number;
-    quantite: number;
+  id: string;
+  nom: string;
+  prix: number;
+  quantite: number;
 }
 const VendorLogs = () => {
-  const [listProduits, setListProduits] =useState<IProduit[]>([])
-  const [listVendurs, setListVendurs] =useState<IVendur[]>([])
-  const [vendurId, setVendurId] =useState('');
-  const [produitId, setProduitId] =useState('');
-  const [quantite, setQuantite] =useState(0);
-  const [Loading, setLoading] =useState(false)
+  const [listProduits, setListProduits] = useState<IProduit[]>([])
+  const [listVendurs, setListVendurs] = useState<IVendur[]>([])
+  const [vendurId, setVendurId] = useState('');
+  const [produitId, setProduitId] = useState('');
+  const [quantite, setQuantite] = useState(0);
+  const [Loading, setLoading] = useState(false)
 
   const handelChangeVendurId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setVendurId(e.target.value)
@@ -50,7 +59,7 @@ const VendorLogs = () => {
         toast.error(res.message)
         return
       }
-    
+
       setQuantite(0)
 
       toast.success('تمت العملية بنجاح')
@@ -61,7 +70,6 @@ const VendorLogs = () => {
       setLoading(false)
     }
   }
-  // lets use the promise.all
   const handelGetProduits = async () => {
     try {
       const res = await getAllProduits();
@@ -96,7 +104,7 @@ const VendorLogs = () => {
         le_prix_a_payer: 0
       })) ?? [];
       setListVendurs(vendurs);
-      
+
     } catch (error) {
       console.log(error);
     }
@@ -108,63 +116,71 @@ const VendorLogs = () => {
     
   }
     , [])
-
   return (
-    <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
-      <h1 className='text-2xl text-primary font-bold'>
-        بيع المنتجات للبائع
-      </h1>
-      <p  className=' text-sm text-slate-500'>
-        يمكنك من هنا اضافة المنتجات التي اشتراها البائع بإضافة الكمية المشتراة من المنتج المختار
-      </p>
-      
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>اسم البائع</label>
-        <select
-          defaultValue={listVendurs[0]?.id}
-          onChange={handelChangeVendurId}
-          className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
-          id="vendurID" 
-          name="vendurID">
-            <option disabled value="" selected>
-              اختر البائع
-            </option>
-          {listVendurs.map((vendur: any) => (
-            <option key={vendur.id} value={vendur.id}>{vendur.nom}</option>
-          ))}
-        </select>
-      </div>
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>رقم المنتج</label>
-        <select
-          defaultValue={listProduits[0]?.id}
-          onChange={handelChangeProduitId} 
-          className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
-          id="produitID" 
-          name="produitID">
-            <option disabled value="" selected>
-              اختر المنتج
-            </option>
-          {listProduits.map((produit: any) => (
-            <option key={produit.id} value={produit.id}>{produit.nom}</option> 
-          ))}
-        </select>
-      </div>
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>الكمية</label>
-        <Input
+    <div className="flex w-full px-3 mt-12">
+      <Card className='flex shadow-none rounded-none flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
+        <h1 className='text-2xl text-primary font-bold'>
+          بيع المنتجات للبائع
+        </h1>
+        <p className=' text-sm text-slate-500'>
+          يمكنك من هنا اضافة المنتجات التي اشتراها البائع بإضافة الكمية المشتراة من المنتج المختار
+        </p>
+        <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+          <label className='font-semibold'>اسم البائع</label>
+          <Select
+          onValueChange={(value) => setVendurId(value)}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="اختر البائع" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>
+                اختر البائع
+                </SelectLabel>
+                {listVendurs.map((vendur: any) => (
+                  <SelectItem key={vendur.id} value={vendur.id}>{vendur.nom}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+          <label className='font-semibold'>رقم المنتج</label>
+          <Select
+          onValueChange={(value) => setProduitId(value)}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="اختر المنتج" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>
+                اختر المنتج
+                </SelectLabel>
+                {listProduits?.map((produit: any) => (
+                  <SelectItem key={produit.id} value={produit.id}>{produit.nom}</SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+          <label className='font-semibold'>الكمية</label>
+          <Input
 
-          name='quantite'
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantite(Number(e.target.value))}
-          type='number'
-          value={quantite}
-          placeholder='الكمية'
-        />
-      </div>
-      <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
-        نحديث البيانات
+            name='quantite'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantite(Number(e.target.value))}
+            type='number'
+            value={quantite}
+            placeholder='الكمية'
+          />
+        </div>
+        <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
+          نحديث البيانات
 
-      </Button>
+        </Button>
+      </Card>
     </div>
   );
 };
