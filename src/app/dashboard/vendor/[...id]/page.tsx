@@ -140,7 +140,7 @@ const VendorPage = ({ ...props }: any) => {
                     ref={componentRef} />
 
             </div>
-            <div className=" flex w-full justify-between items-start">
+            <div className=" flex w-full justify-between items-center flex-wrap gap-4 ">
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
