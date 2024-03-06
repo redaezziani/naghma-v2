@@ -184,10 +184,11 @@ export function DataTable({ data, columns, loading = false, total = 0 }: DataTab
                         )}
                     </TableBody>
                     <TableFooter
-                        className="w-full"
+                        className="w-full bg-muted"
+
                     >
                         <TableRow
-                            className="w-full"
+                            className="w-full bg-muted/50"
                         >
                             <TableCell
                                 className="text-right font-semibold"

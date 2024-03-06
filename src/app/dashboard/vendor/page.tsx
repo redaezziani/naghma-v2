@@ -5,6 +5,7 @@ import { Plus, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs} from '@/(db)/vendur';
+import { toast } from 'sonner';
 export interface ColumnDef {
   accessorKey: string;
   header: string;
@@ -26,7 +27,7 @@ const Vendors = () => {
       const res = await getVendurs();
       if (res?.status === 'error') {
         setProducts([]);
-        return;
+        toast.error(res?.message);
       }
       setProducts(res?.data ?? []);
       setTotal(res?.total_price ?? 0);
@@ -34,7 +35,24 @@ const Vendors = () => {
       console.log(error);
     }
   }
-
+  const links = [
+    {
+      name: 'سجلات الموزعين',
+      path: '/dashboard/vendor'
+    },
+    {
+      name: 'سجلات المبيعات',
+      path: '/dashboard/vendor/vendors-logs'
+    },
+    {
+      name: 'سجلات الارجاع',
+      path: '/dashboard/vendor/retourn'
+    },
+    {
+      name: 'المصاريف',
+      path: '/dashboard/vendor/expenses'
+    }    
+  ]
   const columns: ColumnDef[] = [
     {
       accessorKey: 'id',
@@ -64,7 +82,9 @@ const Vendors = () => {
     {
       accessorKey: 'balance',
       header: 'الأرباح',
-      cell: ({ row }: { row: any }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') === 0 ? ' text-emerald-600 font-semibold' : 'text-destructive font-semibold'}>{row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') === 0 ? ' text-emerald-600 font-semibold' : 'text-destructive/80 font-semibold'}>
+          {Math.abs(row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix'))} د.م
+      </div>,
     },
     {
       accessorKey: 'action',
@@ -78,6 +98,7 @@ const Vendors = () => {
       </div>
     },
   ];
+
   useEffect(() => {
     handelProducts();
   }, []);
@@ -87,13 +108,11 @@ const Vendors = () => {
     flex-col
      justify-start items-start gap-7
      w-full
-    
-    lg:w-2/3
     px-6 py-3 relative">
       <div className='flex gap-3 flex-wrap'>
         <Button 
-        variant={'ghost'}
-        className='text-primary bg-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all duration-300 ease-in-out border-primary/45 border'
+        variant={'default'}
+        
         >
           <Plus
           className=' h-5 w-5'
@@ -102,39 +121,22 @@ const Vendors = () => {
           className='mr-2'
           href="/dashboard/vendor/add-vendor">إضافة بائع</Link>
         </Button >
-        <Button
-        variant={'outline'}
-        >
-          <Link href="/dashboard/vendor/vendors-logs">
-            بيع المنتج للبائع
-          </Link>
-        </Button >
-        <Button
-        variant={'outline'}
-        >
-          <Link href="/dashboard/vendor/payment">
-            دفع مستحقات البائع
-          </Link>
-        </Button >
-        <Button
-        variant={'outline'}
-        >
-          <Link href="/dashboard/vendor/retourn">
-            المنتجات التي ارجعت
-          </Link>
-        </Button >
-        <Button
-        variant={'outline'}
-        >
-          <Link href="/dashboard/vendor/expenses">
-            المصاريف
-
-          </Link>
-        </Button >
+        {
+          links.map((link, index) => (
+            <Button
+            variant={'outline'}
+            >
+              <Link href={link.path}>
+                {link.name}
+              </Link>
+            </Button >
+          ))
+        }
       </div>
       <DataTable
         total={total}
-        columns={columns} data={products} />
+        columns={columns}
+        data={products} />
     </div>
   );
 };
