@@ -6,9 +6,10 @@ import Link from "next/link";
 import { SignIn } from "@/(db)/auth";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
-import { LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
+import { ArrowLeft, LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 const schema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
   password: z.string().min(8, { message: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل" }),
@@ -99,7 +100,7 @@ const Signin = () => {
           >
             البريد الإلكتروني
           </label>
-          <div className="w-full bg-muted px-3 py-1 rounded-md  flex gap-3 justify-between items-center">
+          <div className="w-full bg-muted px-3  rounded-md  flex gap-3 justify-between items-center">
           <input
           type="email"
           name="email"
@@ -122,7 +123,7 @@ const Signin = () => {
           >
             كلمة المرور
           </label>
-          <div className="w-full bg-muted px-3 py-1 rounded-md  flex gap-3 justify-between items-center">
+          <div className="w-full bg-muted  px-3  rounded-md  flex gap-3 justify-between items-center">
           <input
           type={showPassword ? "text" : "password"}
           name="password"
@@ -165,10 +166,11 @@ const Signin = () => {
             type="submit"
             onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleSubmit(e)}
             isloading={loading}
-            className="w-full mt-4 py-3"
+            className="w-full mt-4 py-3 group/item"
            size={'lg'}
             >
               تسجيل الدخول
+              <ArrowLeftIcon className="w-5 group/edit  mr-3 h-5" />
             </Button>
       </form>
       </div>
