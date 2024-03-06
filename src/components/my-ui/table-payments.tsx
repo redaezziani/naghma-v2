@@ -21,7 +21,6 @@ const TablePayments = ({...props}) => {
           if (res?.status=='error') {
               toast.error(res.message)
           }
-          console.log(res)
           toast.success(res?.message)
         } catch (error) {
             console.log('handelPayments',error)
@@ -41,7 +40,9 @@ const TablePayments = ({...props}) => {
         {
             accessorKey: 'type',
             header: 'النوع',
-            cell: ({ row }: { row: any }) => <div>{row.getValue('type')}</div>,
+            cell: ({ row }: { row: any }) => <div
+            className={`px-2 py-1 rounded-md text-xs font-semibold ${row.getValue('type')=='cash'?'bg-green-100 w-fit text-green-500':row.getValue('type')=='bank-check'?'bg-[#fa9b2637] w-fit text-[#fa9b26]':row.getValue('type')=='return'?'bg-red-100 w-fit text-red-500':'bg-slate-100 w-fit text-slate-500'}`}
+            >{row.getValue('type')=='cash'?'نقدا':row.getValue('type')=='bank-check'?'شيك':row.getValue('type')=='return'?'إرجاع':'غير معروف'}</div>,
         },
         {
             accessorKey: 'price',
