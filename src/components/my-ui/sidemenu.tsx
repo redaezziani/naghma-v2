@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
 import { Boxes, Gauge, Truck } from 'lucide-react';
-import { Coffee } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { usePathname } from 'next/navigation';
@@ -47,11 +47,14 @@ function Sidemenu() {
     return (
         <div className='  flex  h-full z-50'>
             <div className=" w-full bg-white text-primary  flex flex-col h-[100%]  ">
-                <div className=" uppercase flex gap-2 justify-center items-center text-xl  mt-5  font-semibold">
-                    <span> <Coffee /></span>
+                <div className=" uppercase flex gap-2 justify-start px-4 items-center text-xl  mt-5  font-semibold">
+                    <Image
+                    width={30}
+                    height={30}
+                    src="/logo.svg" alt="logo" className="w-10 h-10" />
                     <h1>
                         <Link href="/dashboard">
-                            لوحة القيادة
+                            لوحة القيادة 
                         </Link>
                     </h1>
                 </div>

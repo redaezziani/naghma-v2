@@ -109,7 +109,7 @@ const Vendors = () => {
      justify-start items-start gap-7
      w-full
     px-6 py-3 relative">
-      <div className='flex gap-3 flex-wrap'>
+      <div className='flex gap-3 flex-wrap mt-7 bg-white py-8 w-full px-2'>
         <Button 
         variant={'default'}
         

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { DataTable, ColumnDef, DataItem } from '@/components/my-ui/data-table';
 import { Cog, Trash } from 'lucide-react';
 import Link from 'next/link';
-import { getProduits,deleteProduit, updateProduit } from '@/(db)/produit';
+import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
@@ -40,7 +40,6 @@ const UpdateProduit = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      // delete the product but first confirm the action like alert
       if (!confirm('هل تريد حذف المنتج؟')) {
         return;
       }
@@ -81,7 +80,9 @@ const UpdateProduit = () => {
     {
       accessorKey: 'total',
       header: 'المجموع',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('quantite') * row.getValue('prix_vente')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-emerald-600/80' 
+      >{(row.getValue('quantite') * row.getValue('prix_vente')).toFixed(2)} د.م</div>,
     },
     {
 
@@ -113,13 +114,14 @@ const UpdateProduit = () => {
     flex-col
      justify-start items-start gap-7
      w-full
-    lg:w-2/3
     px-6 py-3 relative">
-     <div className='flex gap-4 justify-start items-center'>
+     <div className='flex gap-4 justify-start items-center bg-white w-full py-6 px-3'>
      <Button>
         <Link href='/dashboard/final-product/add-final-product'>إضافة منتج</Link>
       </Button>
-      <Button>
+      <Button
+      variant={'outline'}
+      >
         <Link href='/dashboard/final-product/products-logs'>
           تحديث كمية المنتج
         </Link>
