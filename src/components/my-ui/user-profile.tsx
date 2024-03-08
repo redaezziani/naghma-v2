@@ -6,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
 import {
@@ -20,8 +19,7 @@ interface User {
   image: string,
 }
 
-import { ExitIcon, } from "@radix-ui/react-icons"
-import { HomeIcon, UserRound, Cog, ChevronDown, ChevronUp } from "lucide-react";
+import {  Cog, ChevronDown, LogOut, User2, LucideHome } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -115,7 +113,7 @@ export function UserProfile() {
             
             >
              
-                <HomeIcon
+                <LucideHome
                   className="w-4 h-4"
                 />
              
@@ -129,7 +127,7 @@ export function UserProfile() {
             
             >
              
-                <UserRound
+                <User2
                   className="w-4 h-4"
                 />
              
@@ -156,8 +154,9 @@ export function UserProfile() {
             onClick={logout}
             className=" bg-slate-300/15  text-destructive-500 justify-between w-full flex gap-2 items-center"
           >
-            <ExitIcon
-              className=" tex-red-600"
+            <LogOut
+             size={16}
+              className="  tex-red-600"
             />
             <p
               className="text-destructive-500"

@@ -6,10 +6,9 @@ import Link from "next/link";
 import { SignIn } from "@/(db)/auth";
 import { toast } from "sonner"
 import { useRouter } from "next/navigation";
-import { ArrowLeft, LockIcon, MailCheckIcon, UnlockIcon } from "lucide-react";
+import { ArrowLeft, LockIcon, LogIn, MailCheckIcon, UnlockIcon } from "lucide-react";
 import React from "react";
 import Image from "next/image";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
 const schema = z.object({
   email: z.string().email({ message: "الرجاء إدخال بريد إلكتروني صالح" }),
   password: z.string().min(8, { message: "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل" }),
@@ -167,10 +166,11 @@ const Signin = () => {
             onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleSubmit(e)}
             isloading={loading}
             className="w-full mt-4 py-3 group/item"
-           size={'lg'}
+            size={'lg'}
+            disabled={loading}
             >
               تسجيل الدخول
-              <ArrowLeftIcon className="w-5 group/edit  mr-3 h-5" />
+              <LogIn className="w-5 group/edit  mr-3 h-5" />
             </Button>
       </form>
       </div>
