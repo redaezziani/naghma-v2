@@ -5,15 +5,17 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { getAllProduits } from '@/(db)/produit';
 import { createProduitLog } from '@/(db)/produtc-log';
+import { Card } from '@/components/ui/card';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 
 
 interface IProduit {
-    id: string;
-    nom: string;
-    prix: number;
-    quantite: number;
+  id: string;
+  nom: string;
+  prix: number;
+  quantite: number;
 }
 
 interface IProduitLog {
@@ -26,7 +28,7 @@ const ProductLogs = () => {
   const [quantite, setQuantite] = React.useState(0);
   const [Loading, setLoading] = React.useState(false)
 
- 
+
   const handelChangeProduitId = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setProduitId(e.target.value)
   }
@@ -45,7 +47,7 @@ const ProductLogs = () => {
         return;
       }
       setProduitId(listProduits[0]?.id)
-      
+
       setQuantite(0)
 
       toast.success('تم إضافة البائع بنجاح')
@@ -81,54 +83,70 @@ const ProductLogs = () => {
 
   useEffect(() => {
     handelGetProduits()
-    
+
   }
     , [])
 
   return (
-    <div className='flex flex-col gap-4 px-6 py-3 w-full justify-start items-start mt-20'>
-      <h1 className='text-2xl text-primary font-bold'>
-       تحديث كمية المنتج 
-      </h1>
-      <p
-      className=' text-sm text-slate-500'
-      >
-      يمكنك عبر هده الصفحة تحديد كمية المنتج عبر اختيار اسمه
-      </p>
-      
-      
+    <div className="w-full py-6 px-3">
+      <Card className='flex  shadow-none rounded-none flex-col gap-4  px-3   py-3 w-full justify-start items-start mt-20'>
+        <h1 className='text-2xl text-primary font-bold'>
+          تحديث كمية المنتج
+        </h1>
+        <p
+          className=' text-sm text-slate-500'
+        >
+          يمكنك عبر هده الصفحة تحديد كمية المنتج عبر اختيار اسمه
+        </p>
 
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>رقم المنتج</label>
-        <select
-          defaultValue={listProduits[0]?.id}
-          onChange={handelChangeProduitId} // Use onChange instead of onSelect
-          className='w-1/2 p-2 cursor-pointer rounded-md border bg-white text-primary focus:outline-none focus:border-primary'
-          id="produitID" // Unique ID for the select element
-          name="produitID">
-            <option disabled value="" selected>
-              اختر المنتج
-            </option>
-          {listProduits.map((produit: any) => (
-            <option key={produit.id} value={produit.id}>{produit.nom}</option> // Ensure each option has a unique key
-          ))}
-        </select>
-      </div>
-      <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
-        <label className='font-semibold'>الكمية</label>
-        <Input
 
-          name='quantite'
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantite(Number(e.target.value))}
-          type='number'
-          value={quantite}
-          placeholder='الكمية'
-        />
-      </div>
-      <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
-        نحديث البيانات
 
-      </Button>
+        <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+          <label className='font-semibold'>رقم المنتج</label>
+          <Select
+            onValueChange={(value) => setProduitId(value)}
+            defaultValue={listProduits[0]?.id}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="اختر المنتج" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>
+                  اختر المنتج
+                </SelectLabel>
+                {
+                  listProduits ?
+                    listProduits.map((item, i) => (
+                      <SelectItem key={i} value={item.id}>
+                        {item.nom}
+                      </SelectItem>
+                    ))
+
+                    : <span>
+                      لا يوجد منتجات
+                    </span>
+                }
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className='flex w-full lg:w-1/2 gap-3 justify-start flex-col items-start'>
+          <label className='font-semibold'>الكمية</label>
+          <Input
+
+            name='quantite'
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuantite(Number(e.target.value))}
+            type='number'
+            value={quantite}
+            placeholder='الكمية'
+          />
+        </div>
+        <Button className='bg-primary text-white' onClick={handelSubmit} isloading={Loading}>
+          نحديث البيانات
+
+        </Button>
+      </Card>
     </div>
   );
 };

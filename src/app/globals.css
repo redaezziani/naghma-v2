@@ -63,16 +63,21 @@ html,body{
 
 
 
-
- 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground ;
-  }
+html,body{
+  width: 100%;
+  min-height: 100%;
+  text-align: right;
+  direction: rtl;
+  font-family: "Noto Sans Arabic", sans-serif;
 }
+
+
+*::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+
 
 
 

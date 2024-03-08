@@ -24,6 +24,7 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { logOut, userData } from "@/(db)/auth";
+import { Mode } from "./mode";
 export function UserProfile() {
   const [data, setData] = React.useState<User | null>(null);
   const [open, setOpen] = React.useState(false);
@@ -121,6 +122,7 @@ export function UserProfile() {
 
             </DropdownMenuItem>
           </Link>
+         
           <Link href="/dashboard/profile">
             <DropdownMenuItem
             className="  cursor-pointer text-destructive-500 justify-between w-full flex gap-2 items-center"

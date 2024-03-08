@@ -172,3 +172,64 @@ export const updateProduit = async (id: string, data: IUpdateProduit) => {
     }
 }
 
+
+export const productDetails = async (id: string, month= new Date().getMonth() + 1, year= new Date().getFullYear()) => {
+    try {
+        const currentYear = year;
+        const currentMonth = month;
+        const produit = await prisma.produit_Final.findFirst({
+            where: {
+                id: id
+            },
+            include: {
+                retorn_logs: {
+                    
+                    where: {
+                        created_at: {
+                            gte: new Date(`${currentYear}-${currentMonth}-01`),
+                            lt: new Date(`${currentYear}-${currentMonth + 1}-01`)
+                        }
+                    },
+                },
+                Vente_logs: true
+            }
+        });
+        if (!produit) {
+            return { status: 'error', message: 'لم يتم العثور على المنتج' };
+        }
+
+        const totalRetorn = produit.retorn_logs.reduce((acc: number, log: any) => {
+            return acc + log.quantite;
+        }
+            , 0);
+        
+        const listVendur =[] as any;
+        produit.Vente_logs.forEach(async (log: any) => {
+            const vendur = await prisma.vendur.findFirst({
+                where: {
+                id: log.vendur_id
+                },
+                select: {
+                nom: true
+                }
+            }) as any;
+            const index = listVendur.findIndex((vendur: any) => vendur.id === log.vendur_id);
+            if (index !== -1) {
+                listVendur[index].quantite += log.quantite;
+                return;
+            }
+            listVendur.push({
+                id: log.vendur_id,
+                nom: vendur.nom,
+                quantite: log.quantite
+            });
+
+        });
+        return { status: 'success', data: { produit, totalRetorn, listVendur } };
+    } catch (error) {
+        
+    }
+    finally{
+        await prisma.$disconnect();
+    }
+}

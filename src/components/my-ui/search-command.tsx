@@ -13,7 +13,7 @@ import Link from "next/link"
 
 export function SearchCommand() {
     const [open, setOpen] = React.useState(false)
-    const list = [
+    const listSugg = [
         {
             name: 'سجلات الموزعين',
             path: '/dashboard/vendor',
@@ -26,6 +26,36 @@ export function SearchCommand() {
         {
             name: 'سجلات الارجاع',
             path: '/dashboard/vendor/retourn',
+        },
+        {
+            name:'الملف الشخصي',
+            path: '/dashboard/profile', 
+        }
+    ]
+
+    const listVend = [
+        {
+            name: 'إضافة مصروف',
+            path: '/dashboard/vendor/expenses',
+        },
+        {
+            name: 'إضافة مبيعات',
+            path: '/dashboard/vendor/vendors-logs',
+        },
+        {
+            name: 'إضافة ارجاع',
+            path: '/dashboard/vendor/retourn',
+        },
+    ]
+
+    const listProd = [
+        {
+            name: 'إضافة منتج',
+            path: '/dashboard/final-product/products-logs',
+        },
+        {
+            name: 'سجلات المنتجات',
+            path: '/dashboard/final-product',
         },
     ]
 
@@ -49,7 +79,7 @@ export function SearchCommand() {
                 <CommandList>
                     <CommandEmpty>لم يتم العثور على نتائج.</CommandEmpty>
                     <CommandGroup heading="اقتراحات">
-                        {list.map((item, i) => (
+                        {listSugg.map((item, i) => (
                             <CommandItem key={i}>
                                 <Link href={item.path}>
                                     <span>{item.name}</span>
@@ -57,7 +87,28 @@ export function SearchCommand() {
                             </CommandItem>
                         ))}
                     </CommandGroup>
+                    <CommandGroup heading="البائع">
+                        {listVend.map((item, i) => (
+                            <CommandItem key={i}>
+                                <Link href={item.path}
+                                >
+                                    <span>{item.name}</span>
+                                </Link>
+                            </CommandItem>
+                        ))}
+                    </CommandGroup>
+                    <CommandGroup heading="المنتج">
+                        {listProd.map((item, i) => (
+                            <CommandItem key={i}>
+                                <Link href={item.path}>
+                                    <span>{item.name}</span>
+                                </Link>
+                            </CommandItem>
+                        ))}
+                    </CommandGroup>
+                    
                 </CommandList>
+
             </CommandDialog>
         </>
     )

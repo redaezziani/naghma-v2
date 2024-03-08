@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
 import DataCard from '@/components/my-ui/anlys/data-card';
+import CompanyExpense from '@/components/my-ui/forms/create-company-expense';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -52,11 +53,7 @@ const Dashboard = () => {
             الرئيسية
           </h1>
           <div className='flex gap-4 flex-wrap'>
-            <Button
-            variant={'default'}
-            >
-              <Link href="/dashboard/company-expense">نفقات الشركة</Link>
-            </Button>
+            <CompanyExpense />
             <Button
             variant={'outline'}
             >

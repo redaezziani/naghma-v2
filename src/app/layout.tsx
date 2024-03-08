@@ -16,18 +16,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      className="w-full min-h-screen flex justify-center items-center gap-2 relative" 
+        className="w-full min-h-screen flex justify-center items-center gap-2 relative"
       >
-       <ThemeProvider
-       
-       >
-       {children}
-       <SpeedInsights />
-        <Toaster
-        position="top-right"
-        />
-       </ThemeProvider>
-        </body>
+        
+          {children}
+          <SpeedInsights />
+          <Toaster
+            position="top-right"
+          />
+      </body>
     </html>
   );
 }
