@@ -126,7 +126,8 @@ const VendorPage = ({ ...props }: any) => {
     flex-col
      justify-start items-start gap-7
      w-full
-    px-10 py-3   relative
+     px-4
+    lg:px-10 py-3   relative
     ">
 
             <div className="hidden overflow-hidden">
