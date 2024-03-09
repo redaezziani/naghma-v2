@@ -224,36 +224,22 @@ const VendorPage = ({ ...props }: any) => {
                 <VendorInfo vendur={data.vendur} />
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.payments ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.payments.length > 0 ? '' : 'hidden'}`}
             >
-                {data.payments ? (<TablePayments payments={data.payments} id={id} />) :
-                    (
-                        <div className="flex flex-col space-y-3">
-                            <div className="space-y-2">
-                                <Skeleton className=" h-44 lg:h-96 w-full lg:w-[550px]" />
-                            </div>
-                        </div>
-                    )}
+                {data.payments && <TablePayments payments={data.payments} id={id} />}
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.sales ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.sales.length > 0 ? '' : 'hidden'}`}
             >
-                {data.sales ? (<SelledProducts payments={data.sales} />) :
-                    (
-                        <div className="flex flex-col space-y-3">
-                            <div className="space-y-2">
-                                <Skeleton className=" h-44 lg:h-96 w-full lg:w-[550px]" />
-                            </div>
-                        </div>
-                    )}
+              {data.sales&&<SelledProducts payments={data.sales} />}
             </Card>
             <Card
-                className=" w-full bg-white px-3 py-6 shadow-none rounded-none"
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.losses.length > 0 ? '' : 'hidden'}`}
             >
                 {data.losses && <CompantLoss losses={data.losses} />}
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.frais ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.frais.length > 0 ? '' : 'hidden'}`}
             >
                 {data.frais && <FraisVendor payments={data.frais} />}
             </Card>

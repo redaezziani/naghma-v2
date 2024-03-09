@@ -39,7 +39,6 @@ const CompanyLoss = ({...props}) => {
 
     useEffect(() => {
         setLoss(props.losses);
-        console.log('losses', props.losses);
     }
     , [props.losses]);
 
