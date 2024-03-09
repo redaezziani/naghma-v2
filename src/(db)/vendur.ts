@@ -177,14 +177,10 @@ export const getVendurById = async (id: string, date = new Date()) => {
         const frais = await prisma.frais_de_prix.findMany({
             where: {
                 vendur_id: id,
-
-
                 created_at: {
                     gte: startDate,
                     lt: endDate
                 }
-
-
             },
         });
 
@@ -226,8 +222,6 @@ export const getVendurById = async (id: string, date = new Date()) => {
                     quantity: sale.quantite,
                     price: sale.prix,
                     date: sale.created_at
-
-
                 };
             }
             )),

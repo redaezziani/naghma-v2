@@ -1,6 +1,7 @@
 'use client';
 
 import { DataTable } from '@/components/my-ui/data-table';
+import { useEffect, useState } from 'react';
 
 
 export interface ColumnDef {
@@ -10,7 +11,7 @@ export interface ColumnDef {
 }
 
 const CompanyLoss = ({...props}) => {
-    const loss = props.losses ?? [];
+    const [loss, setLoss] = useState(props.losses ?? [])
     const total = loss.reduce((acc: number, curr: any) => acc + curr.price , 0).toFixed(2);
     const columns: ColumnDef[] = [
         {
@@ -36,7 +37,11 @@ const CompanyLoss = ({...props}) => {
         
     ];
 
-   
+    useEffect(() => {
+        setLoss(props.losses);
+        console.log('losses', props.losses);
+    }
+    , [props.losses]);
 
     return (
         <div className={`

@@ -19,14 +19,13 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import { useForm } from "react-hook-form"
-import { date, z } from "zod"
+import { z } from "zod"
 
 import { cn } from "@/lib/utils"
 import { Calendar } from "@/components/ui/calendar"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -77,7 +76,6 @@ const VendorPage = ({ ...props }: any) => {
             const date = new Date(data.dob)
             const month = date.getMonth() + 1
             const year = date.getUTCFullYear().toString().slice(-2)
-            console.log(month, year, id)
             const res = await getVendurById(id, date)
             if (res?.status === 'error') {
                 toast.error('jjjj')
@@ -92,21 +90,20 @@ const VendorPage = ({ ...props }: any) => {
     }
     useEffect(() => {
         handelData();
-        console.log(data.payments)
     }, [])
     const router = useRouter()
 
     const handleDeleteVendor = async () => {
         try {
             if (!confirm('هل تريد حذف البائع؟')) {
-                return;
+                toast.error('تم الغاء الحذف');
             }
             setLoading(true);
 
             const res = await deleteVendur(id);
             console.log(res);
             if (res?.status === 'error') {
-                return;
+                toast.error(res?.message);
             }
             toast.success('تم حذف البائع بنجاح', {
                 style: {
