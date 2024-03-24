@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { DataTable, ColumnDef, DataItem } from '@/components/my-ui/data-table';
-import { Cog, Trash } from 'lucide-react';
+import { Settings2, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { getProduits,deleteProduit } from '@/(db)/produit';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,6 @@ const UpdateProduit = () => {
       const res = await getProduits();
       setProducts(res?.data??[]);
       setTotal(res?.total_price??0);
-      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -42,6 +41,7 @@ const UpdateProduit = () => {
   const handleDelete = async (id: string) => {
     try {
       if (!confirm('هل تريد حذف المنتج؟')) {
+        toast.error('تم إلغاء العملية');
         return;
       }
       const res = await deleteProduit(id);
@@ -98,8 +98,8 @@ const UpdateProduit = () => {
           />
 
         <Link href={`/dashboard/final-product/update-product/${row.getValue('id')}`}>
-          <Cog
-            className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105 hover:rotate-180 transition-all duration-300 ease-in-out'
+          <Settings2
+            className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105  transition-all duration-300 ease-in-out'
             size={16} />
         </Link>
       </div>

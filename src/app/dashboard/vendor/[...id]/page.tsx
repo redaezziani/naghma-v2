@@ -76,6 +76,8 @@ const VendorPage = ({ ...props }: any) => {
             const date = new Date(data.dob)
             const month = date.getMonth() + 1
             const year = date.getUTCFullYear().toString().slice(-2)
+            let currentMonth = new Date().getMonth() + 1
+            
             const res = await getVendurById(id, date)
             if (res?.status === 'error') {
                 toast.error('jjjj')
@@ -124,7 +126,8 @@ const VendorPage = ({ ...props }: any) => {
     flex-col
      justify-start items-start gap-7
      w-full
-    px-10 py-3   relative
+     px-4
+    lg:px-10 py-3   relative
     ">
 
             <div className="hidden overflow-hidden">
@@ -224,22 +227,22 @@ const VendorPage = ({ ...props }: any) => {
                 <VendorInfo vendur={data.vendur} />
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.payments.length > 0 ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.payments?.length > 0 ? '' : 'hidden'}`}
             >
                 {data.payments && <TablePayments payments={data.payments} id={id} />}
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.sales.length > 0 ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.sales?.length > 0 ? '' : 'hidden'}`}
             >
               {data.sales&&<SelledProducts payments={data.sales} />}
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.losses.length > 0 ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.losses?.length > 0 ? '' : 'hidden'}`}
             >
                 {data.losses && <CompantLoss losses={data.losses} />}
             </Card>
             <Card
-                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.frais.length > 0 ? '' : 'hidden'}`}
+                className={` w-full bg-white px-3 py-6 shadow-none rounded-none ${data.frais?.length > 0 ? '' : 'hidden'}`}
             >
                 {data.frais && <FraisVendor payments={data.frais} />}
             </Card>
