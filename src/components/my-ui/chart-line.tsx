@@ -19,6 +19,7 @@ export function EarningsLineChart() {
     try {
       const response = await getEarningsByMonth();
       console.log(response.data);
+      //@ts-ignore
       setData(response.data);
     } catch (error) {
       throw new Error("error");
