@@ -5,9 +5,10 @@ import { DataTable, ColumnDef, DataItem } from '@/components/my-ui/data-table';
 import { Settings2, Trash } from 'lucide-react';
 import Link from 'next/link';
 import { getProduits,deleteProduit } from '@/(db)/produit';
-import { Button } from '@/components/ui/button';
+import { Toaster } from "@/components/ui/toaster"
 import { toast } from 'sonner';
 import CreateProduct from '@/components/my-ui/forms/create-product';
+import UpdateProduct from '@/components/my-ui/forms/update-product';
 
 const UpdateProduit = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -61,29 +62,37 @@ const UpdateProduit = () => {
     {
       accessorKey: 'id',
       header: 'معرف',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('id')}</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('id')}</div>,
     },
     {
       accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('nom')}</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('nom')}</div>,
     },
     {
       accessorKey: 'prix_vente',
       header: 'السعر (د.م)',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('prix_vente')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('prix_vente')}</div>,
     },
     {
       accessorKey: 'quantite',
-      header: 'الكمية',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('quantite')} كجم </div>,
+      header: 'الكمية (كجم)',
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('quantite')} </div>,
     },
     {
       accessorKey: 'total',
       header: 'المجموع',
       cell: ({ row }: { row: any }) => <div
-      className='text-emerald-600/80' 
-      >{(row.getValue('quantite') * row.getValue('prix_vente')).toFixed(2)} د.م</div>,
+      className=' text-primary' 
+      >{(row.getValue('quantite') * row.getValue('prix_vente')).toFixed(2)}</div>,
     },
     {
 
@@ -94,14 +103,7 @@ const UpdateProduit = () => {
             onClick={() => handleDelete(row.getValue('id'))}
             className='cursor-pointer text-muted-foreground hover:text-secondary-foreground hover:scale-110 hover:rotate-6 transition-all duration-300 ease-in-out'
             size={16}
-
           />
-
-        <Link href={`/dashboard/final-product/update-product/${row.getValue('id')}`}>
-          <Settings2
-            className='cursor-pointer  text-muted-foreground hover:text-secondary-foreground hover:scale-105  transition-all duration-300 ease-in-out'
-            size={16} />
-        </Link>
       </div>
     },
   ];
@@ -118,19 +120,13 @@ const UpdateProduit = () => {
     px-6 py-3 relative">
      <div className='flex gap-4 justify-start items-center bg-white w-full py-6 px-3'>
      <CreateProduct/>
-      <Button
-      variant={'outline'}
-      >
-        <Link href='/dashboard/final-product/products-logs'>
-          تحديث كمية المنتج
-        </Link>
-      </Button>
+      <UpdateProduct/>
      </div>
+    <Toaster />
       <DataTable
       total={total}
       columns={columns as ColumnDef<DataItem>[]}
       data={products} />
-       
     </div>
   );
 };

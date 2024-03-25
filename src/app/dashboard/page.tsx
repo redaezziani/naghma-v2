@@ -1,6 +1,5 @@
 'use client';
 import { Card } from '@/components/ui/card';
-import LineChart from '@/components/my-ui/chart-line';
 import BarChart from '@/components/my-ui/chart-bar';
 import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendursFraisByMonth } from '@/(db)/errning';
@@ -9,6 +8,7 @@ import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
 import DataCard from '@/components/my-ui/anlys/data-card';
 import CompanyExpense from '@/components/my-ui/forms/create-company-expense';
+import { EarningsLineChart } from '@/components/my-ui/chart-line';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -122,9 +122,7 @@ const Dashboard = () => {
             >
               الأرباح الشهرية
             </p>
-            <LineChart
-              color='33, 95%, 56%'
-              tension={0}
+            <EarningsLineChart
             />
           </Card>
           <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">

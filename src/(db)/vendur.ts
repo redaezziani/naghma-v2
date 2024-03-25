@@ -25,29 +25,56 @@ export const createVendur = async (nom: string) => {
         await prisma.$disconnect();
     }
 }
-
 export const getVendurs = async () => {
     try {
         const vendurs = await prisma.vendur.findMany();
         if (!vendurs || vendurs.length === 0) {
             return { status: 'error', message: 'لم يتم العثور على البائعين' };
         }
-        const vendursWithBalance = vendurs.map((vendur: any) => {
-            return {
-                ...vendur,
-                balance: vendur.le_prix_a_paye - vendur.le_prix_a_payer - vendur.frais_de_prix
+
+        const product_sell = await prisma.produit_sell.findMany();
+
+        // Create a map to store the total quantity sold for each vendor
+        const vendurTotalQuantitySoldMap = new Map();
+
+        // Calculate the total quantity sold for each vendor
+        for (const product of product_sell) {
+            const vendurId = product.vendur_id;
+            const quantitySold = product.quantite;
+
+            if (vendurTotalQuantitySoldMap.has(vendurId)) {
+                vendurTotalQuantitySoldMap.set(vendurId, vendurTotalQuantitySoldMap.get(vendurId) + quantitySold);
+            } else {
+                vendurTotalQuantitySoldMap.set(vendurId, quantitySold);
             }
+        }
+
+        // Sort vendurs by total quantity sold using the vendurTotalQuantitySoldMap
+        vendurs.sort((a, b) => {
+            const totalQuantitySoldA = vendurTotalQuantitySoldMap.get(a.id) || 0;
+            const totalQuantitySoldB = vendurTotalQuantitySoldMap.get(b.id) || 0;
+            return totalQuantitySoldB - totalQuantitySoldA;
+        });
+
+        // Add rank to each vendor
+        vendurs.forEach((vendur, index) => {
+            //@ts-ignore
+            vendur.rank = index + 1;
         });
 
         // total price for all vendurs
-        const total_price = vendurs.reduce((acc: number, vendur: any) => acc + vendur.le_prix_a_payer, 0);
-        return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendursWithBalance, total_price };
-    } catch (error: any) {
+        const total_price = vendurs.reduce((acc, vendur) => acc + vendur.le_prix_a_payer, 0);
+
+        return { status: 'success', message: 'تم العثور على البائعين بنجاح', data: vendurs, total_price };
+    } catch (error) {
         console.error(error);
+        return { status: 'error', message: 'حدث خطأ أثناء جلب البائعين' };
     } finally {
         await prisma.$disconnect();
     }
-}
+};
+
+
 
 export const deleteVendur = async (id: string) => {
     try {

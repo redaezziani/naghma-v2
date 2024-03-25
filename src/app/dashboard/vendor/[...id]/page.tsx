@@ -9,7 +9,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRef } from 'react';
 import ComponentToPrint from '@/components/my-ui/anlys/invoice';
 import { Button } from '@/components/ui/button';
-import { PrinterIcon, Trash } from "lucide-react";
+import { PrinterIcon, Timer, Trash } from "lucide-react";
 import { deleteVendur } from "@/(db)/vendur";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation"
@@ -153,7 +153,7 @@ const VendorPage = ({ ...props }: any) => {
                                         isloading={searchLoading}
                                         disabled={searchLoading}
                                         type="submit">
-                                            بحث
+                                            بحث <Timer  className="w-5 mr-2 h-5" />
                                         </Button>
                                     </FormLabel>
                                     <Popover>
@@ -162,7 +162,7 @@ const VendorPage = ({ ...props }: any) => {
                                                 <Button
                                                     variant={"outline"}
                                                     className={cn(
-                                                        "w-[240px]  text-left font-normal",
+                                                        "w-[240px] items-center justify-between flex font-normal",
                                                         !field.value && "text-muted-foreground"
                                                     )}
                                                 >
@@ -171,7 +171,7 @@ const VendorPage = ({ ...props }: any) => {
                                                     ) : (
                                                         <span>اختر تاريخًا</span>
                                                     )}
-                                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                    <CalendarIcon className="mr-auto h-4 w-4 opacity-50" />
                                                 </Button>
                                             </FormControl>
                                         </PopoverTrigger>

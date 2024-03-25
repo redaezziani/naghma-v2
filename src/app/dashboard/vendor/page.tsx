@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { DataTable } from '@/components/my-ui/data-table';
-import { Plus, UserRound } from 'lucide-react';
+import { Crown, Plus, UserRound } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getVendurs} from '@/(db)/vendur';
@@ -18,7 +18,8 @@ interface IVendur {
   le_prix_a_paye: number;
   le_prix_a_payer: number;
   frais_de_prix: number;
-  balance: number;
+  rank: number;
+  
 }
 const Vendors = () => {
   const [products, setProducts] = useState<IVendur[]>([]);
@@ -30,6 +31,7 @@ const Vendors = () => {
         setProducts([]);
         toast.error(res?.message);
       }
+      //@ts-ignore
       setProducts(res?.data ?? []);
       setTotal(res?.total_price ?? 0);
     } catch (error) {
@@ -60,29 +62,46 @@ const Vendors = () => {
     {
       accessorKey: 'nom',
       header: 'اسم',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('nom')}</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('nom')}</div>,
     },
     {
       accessorKey: 'le_prix_a_paye',
       header: 'المبلغ المطلوب',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('le_prix_a_paye')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('le_prix_a_paye')} د.م</div>,
     },
     {
       accessorKey: 'le_prix_a_payer',
       header: 'المبلغ المدفوع',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('le_prix_a_payer')} د.م </div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('le_prix_a_payer')} د.م </div>,
     },
     {
       accessorKey: 'frais_de_prix',
       header: 'المصاريف',
-      cell: ({ row }: { row: any }) => <div>{row.getValue('frais_de_prix')} د.م</div>,
+      cell: ({ row }: { row: any }) => <div
+      className='text-muted-foreground'
+      >{row.getValue('frais_de_prix')} د.م</div>,
     },
     {
-      accessorKey: 'balance',
-      header: 'الأرباح',
-      cell: ({ row }: { row: any }) => <div className={row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix') === 0 ? ' text-emerald-600 font-semibold' : 'text-destructive/80 font-semibold'}>
-          {Math.abs(row.getValue('le_prix_a_payer') - row.getValue('le_prix_a_paye') + row.getValue('frais_de_prix'))} د.م
-      </div>,
+      accessorKey: 'index',
+      header: 'الترتيب',
+      cell: ({ row }: { row: any }) => (
+        <div
+          className={`${
+            row.index < 3 && row.getValue('rank')  !== 0 ? 'text-yellow-500' : 'text-slate-500'
+          } font-semibold relative flex  flex-col  justify-start items-start`}
+        >
+         { row.index < 3 && row.getValue('rank')  !== 0 &&  <Crown size={16} />}
+          <div className="span mr-1">
+          {row.index + 1}
+          </div>
+        </div>
+      ),
     },
     {
       accessorKey: 'action',

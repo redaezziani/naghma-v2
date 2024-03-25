@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Boxes, Gauge, Truck } from 'lucide-react';
+import { BarChart2, Boxes, UsersRound } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -57,7 +57,7 @@ function Sidemenu() {
                     <Link
 
                         href="/dashboard" className={` flex items-center gap-2 mb-3 ${pathName === '/dashboard' ? 'text-primary' : 'text-gray-500'}`}>
-                        <Gauge
+                        <BarChart2
                         className='w-6 stroke-1 h-6 '
                         />
                         لوحة القيادة
@@ -96,14 +96,13 @@ function Sidemenu() {
                                         animate={{opacity: 1}}
                                         exit={{opacity: 0}}
                                         transition={{duration: 0.3}}
-
                                        className="div">
                                          <AccordionContent
                                         className=' px-4'
                                         key={index}
                                         >
                                             <Link
-                                            className={`flex items-center px-3 py-1 gap-2 ${pathName === item.path ? ' text-primary-foreground bg-primary' : 'text-gray-500'}`}
+                                            className={`flex items-center h-10 rounded  px-3 py-1 gap-2 ${pathName === item.path ? ' bg-primary/10 text-primary' : 'bg-gray-300/25 text-slate-600'}`}
                                             href={item.path}>
                                                 {item.name}
                                             </Link>
@@ -128,7 +127,7 @@ function Sidemenu() {
                                 <div
                                     className={`flex w-full items-center font-semibold gap-2 ${pathName.includes('/dashboard/vendor') ? 'text-primary' : 'text-gray-500'}`}
                                 >
-                                    <Truck
+                                    <UsersRound
                                     className='w-6 stroke-1 h-6'
                                     />
                                     <p
@@ -155,7 +154,7 @@ function Sidemenu() {
                                     key={index}
                                     >
                                         <Link
-                                        className={`flex items-center px-3 py-1 gap-2 ${pathName === item.path ? ' text-primary-foreground bg-primary' : 'text-gray-500'}`}
+                                        className={`flex items-center h-10 rounded  px-3 py-1 gap-2 ${pathName === item.path ? '  bg-primary/10 text-primary' : 'bg-gray-300/25 text-slate-600'}`}
                                         href={item.path}>
                                             {item.name}
                                         </Link>

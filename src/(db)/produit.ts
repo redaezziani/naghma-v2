@@ -143,6 +143,7 @@ export const getProduit = async (id: string) => {
 interface IUpdateProduit {
     prix_vente: number;
     nom: string;
+    quantite: number;
 }
 
 
@@ -152,14 +153,30 @@ export const updateProduit = async (id: string, data: IUpdateProduit) => {
         if (payload?.role !== 'superadmin') {
             return { status: 'error', message: 'غير مصرح لك بالقيام بهذا الإجراء' };
         }
-        const produit = await prisma.produit_Final.update({
+        const updatedFields: any = {};
+        if (data.prix_vente) {
+            updatedFields.prix_vente = Number(data.prix_vente);
+        }
+        if (data.nom) {
+            updatedFields.nom = data.nom.toLowerCase();
+        }
+        if (data.quantite) {
+            const existingProduit = await prisma.produit_Final.findFirst({
             where: {
                 id: id
-            },
-            data: {
-                prix_vente: Number(data.prix_vente),
-                nom: data.nom.toLowerCase()
             }
+            });
+            if (existingProduit) {
+            updatedFields.quantite = existingProduit.quantite + Number(data.quantite);
+            } else {
+            updatedFields.quantite = Number(data.quantite);
+            }
+        }
+        const produit = await prisma.produit_Final.update({
+            where: {
+            id: id
+            },
+            data: updatedFields
         });
         if (!produit) {
             return { status: 'error', message: 'لم يتم تحديث السعر' };
