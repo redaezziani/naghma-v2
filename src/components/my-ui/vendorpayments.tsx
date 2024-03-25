@@ -27,6 +27,7 @@ const VendorPayments = () => {
                 setProducts([]);
                 return;
             }
+            // @ts-ignore
             setProducts(res?.data ?? []);
             console.log(res);
             setTotal(res?.total_price ?? 0);
