@@ -8,7 +8,6 @@ import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
 import DataCard from '@/components/my-ui/anlys/data-card';
 import CompanyExpense from '@/components/my-ui/forms/create-company-expense';
-import { EarningsLineChart } from '@/components/my-ui/chart-line';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -116,15 +115,7 @@ const Dashboard = () => {
             </div>
         </div>
         <div className="w-full grid grid-cols-4 gap-6">
-          <Card className="w-full h-fit flex justify-center lg:py-6 flex-col items-center col-span-4  lg:col-span-2 lg:h-96 p-2 shadow-none">
-            <p
-              className='text-lg font-bold text-primary mb-4'
-            >
-              الأرباح الشهرية
-            </p>
-            <EarningsLineChart
-            />
-          </Card>
+          
           <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
             <p
               className='text-lg font-bold text-primary mb-4'
