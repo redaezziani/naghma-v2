@@ -1,6 +1,5 @@
 "use client"
-
-import { Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import {
   Card,
@@ -9,36 +8,37 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { getEarningsByMonth } from "@/(db)/errning";
-import { useEffect, useState } from "react";
-
+import useSWR from 'swr';
+import { Skeleton } from "@/components/ui/skeleton";
+//@ts-ignore
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export function EreaChart() {
-    const [errningData , setErrningData] = useState([]);
-    const handelData = async () => {
-        try {
-            const res = await getEarningsByMonth();
-            if (res?.status === 'success') {
-                // @ts-ignore
-                setErrningData(res.data);
-            }
-            console.log(res);
-
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(() => {
-        handelData();
-    }
-    , []);
-
+  const { data:errningData, error } = useSWR('/api/data/line', fetcher);
+  if (error){
+    return(
+      <img src="/err.png"
+      className=" w-44 aspect-square hue-rotate-180"
+      alt=""
+      />
+    )
+   }
   return (
     <Card
-    className="w-full  h-full border-none shadow-none  overflow-hidden"
+    className="w-full p-0 rounded-none  h-full border-none shadow-none  overflow-hidden"
     >
-      <CardHeader>
+      {!errningData?.data ?(
+         <CardHeader
+         className="p-0"
+         >
+        <Skeleton className="w-44 p-1"/>
+        <Skeleton className="w-60 p-1"/>
+         
+       </CardHeader>
+      ):(
+        <CardHeader
+        className="p-0"
+        >
         <CardTitle
         className=" text-slate-950 dark:text-slate-50"
         >
@@ -48,18 +48,18 @@ export function EreaChart() {
             البيانات الشهرية للأرباح الشهرية
         </CardDescription>
       </CardHeader>
-      <CardContent className="pb-4 w-full">
-        <div className="h-[270px]">
-          <ResponsiveContainer width="100%" height="100%">
+      )}
+      
+      <CardContent className="w-full  p-0">
+        <div className="h-[270px]  py-4 ">
+          <ResponsiveContainer
+          width="100%" height="100%">
             <AreaChart
 
-              data={errningData}
-              margin={{
-                top: 5,
-                right: 10,
-                left: 0,
-                bottom: 0,
-              }}
+              data={errningData?.data }
+             
+              
+            
               
              
             >
@@ -94,21 +94,28 @@ export function EreaChart() {
                   return null
                 }}
               />
-              <CartesianGrid
+              {
+              errningData?.data&&(
+                  <CartesianGrid
               opacity={0.4}
                 vertical={false}
               />
+                )
+              }
               <YAxis
                 dataKey="totalEarnings"
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: 'currentColor', fontSize: 10 }}
+                tickMargin={5}
+
                 />
                 <XAxis
                 dataKey="month"
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: 'currentColor', fontSize: 10 }}
+                tickMargin={5}
                 />
             </AreaChart>  
           </ResponsiveContainer>

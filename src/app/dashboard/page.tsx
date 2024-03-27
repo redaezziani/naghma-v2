@@ -43,7 +43,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
   return (
-    <main className="flex min-h-screen  flex-col items-center relative justify-center px-5">
+    <main className="flex min-h-screen  flex-col items-center relative justify-center px-1 lg:px-5">
 
       <div
         className='flex flex-col w-full relative z-0 px-4 py-3 overflow-auto gap-6 justify-start items-start'
@@ -117,11 +117,10 @@ const Dashboard = () => {
         </div>
         <div className="w-full grid grid-cols-4 gap-6">
           
-          <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
+          <Card className="w-full p-3 col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2  shadow-none">
             <EreaChart />
           </Card>
-          <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
-            
+          <Card className="w-full p-3 col-span-4 flex-col  lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2  shadow-none">
             <BarChartExample />
           </Card>
         </div>

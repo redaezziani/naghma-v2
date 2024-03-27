@@ -13,34 +13,21 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../ui/avatar"
-interface User {
-  name: string,
-  email: string,
-  image: string,
-}
+
 
 import {  Cog, ChevronDown, LogOut, User2, LucideHome } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { logOut, userData } from "@/(db)/auth";
-import { Mode } from "./mode";
+import { logOut } from "@/(db)/auth";
+import useSWR from 'swr';
+//@ts-ignore
+const fetcher = (url) => fetch(url).then((res) => res.json());
 export function UserProfile() {
-  const [data, setData] = React.useState<User | null>(null);
+  const { data, error } = useSWR('/api/user', fetcher);
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
-  const fetchUser = async () => {
-    try {
-      const res = await userData();
-      if (res?.status === "error") {
-        router.push("/signin");
-      }
-      //@ts-ignore
-      setData(res.user);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  
   const toggle = () => {
     setOpen(!open);
   }
@@ -54,9 +41,7 @@ export function UserProfile() {
       console.error(error);
     }
   }
-  React.useEffect(() => {
-    fetchUser();
-  }, []);
+  
 
 
   return (
@@ -75,11 +60,11 @@ export function UserProfile() {
             >
               <AvatarImage
                 className=""
-                src={data.image}
+                src={data.user.image}
                 alt="صورة الملف الشخصي للمستخدم"
               />
               <AvatarFallback>
-                {data.name.charAt(0).toUpperCase()}
+                {data.user.name.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div
@@ -88,12 +73,12 @@ export function UserProfile() {
               <p
                 className="text-sm font-semibold"
               >
-                {data.name}
+                {data.user.name}
               </p>
               <p
                 className="text-xs"
               >
-                {data.email}
+                {data.user.email}
               </p>
             </div>
 
@@ -171,3 +156,5 @@ export function UserProfile() {
     </DropdownMenu>
   )
 }
+
+

@@ -288,9 +288,11 @@ export const getVendursWithTotalSellPrice = async () => {
         let currentMonth = new Date().getMonth() + 1;
         let currentYear = new Date().getFullYear();
         const vendurs = await prisma.vendur.findMany({
+            
             include: {
                 produit_sell: true
-            }
+            },
+            
         });
         if (!vendurs || vendurs.length === 0) {
             return { status: 'error', message: 'لم يتم العثور على البائعين' };

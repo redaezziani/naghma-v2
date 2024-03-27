@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, Line, LineChart, ResponsiveContainer, Tooltip, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis } from "recharts"
 
 import {
   Card,
@@ -11,31 +11,37 @@ import {
 } from "@/components/ui/card"
 import { getVendursWithTotalSellPrice } from "@/(db)/vendur";
 import { useEffect, useState } from "react";
-
+import useSWR from 'swr';
+import { Skeleton } from "@/components/ui/skeleton";
+//@ts-ignore
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export function BarChartExample() {
-    const [vendursData , setVendursData] = useState([]);
-    const handelData = async () => {
-      try {
-        const res = await getVendursWithTotalSellPrice();
-        if (res?.status === 'success') {
-          // @ts-ignore
-          setVendursData(res.data);
-        }
-        console.log(res);
-      } catch (error) {
-        console.error(error);   
-      }
-    }
-    useEffect(() => {
-      handelData();
-    }
-    , []);
+  const { data:vendursData, error } = useSWR('/api/data/bar', fetcher);
+   if (error){
+    return(
+      <img src="/err.png"
+      className=" w-44 aspect-square hue-rotate-180"
+      alt=""
+      />
+    )
+   }
   return (
     <Card
-    className="w-full border-none shadow-none h-full overflow-hidden"
+    className="w-full p-0 rounded-none   border-none shadow-none h-full overflow-hidden"
     >
-      <CardHeader>
+      {!vendursData?.data ?(
+         <CardHeader
+         className="p-0"
+         >
+        <Skeleton className="w-44 p-1"/>
+        <Skeleton className="w-60 p-1"/>
+         
+       </CardHeader>
+      ):(
+      <CardHeader
+      className=" p-0"
+      >
         <CardTitle>
             المبيعات الشهرية لكل بائع
         </CardTitle>
@@ -43,13 +49,21 @@ export function BarChartExample() {
             البيانات الشهرية للمبيعات لكل بائع
         </CardDescription>
       </CardHeader>
-      <CardContent className="pb-4 w-full">
-        <div className="h-[250px]">
+      )}
+      <CardContent className=" p-0 w-full">
+        <div className="h-[290px] py-4">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
             
-            width={150} height={40} data={vendursData}>
-              
+            width={150} height={40} data={vendursData?.data}>
+              {
+              vendursData?.data&&(
+                  <CartesianGrid
+              opacity={0.4}
+                vertical={false}
+              />
+                )
+              }
           <Bar
           radius={[5, 5, 0, 0]}
           label={{ fill: 'white', fontSize: 9, fontWeight:'bold' }}
@@ -58,7 +72,12 @@ export function BarChartExample() {
            fill="currentColor"
            className=" fill-primary"
             />
-            
+           <XAxis
+                dataKey="nom"
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: 'currentColor', fontSize: 9 }}
+            />
         </BarChart>
         </ResponsiveContainer>
         </div>
