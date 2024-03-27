@@ -1,8 +1,9 @@
 import { prisma } from "@/(secrets)/secrets";
-import { NextResponse,NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
+export const dynamic = 'force-dynamic' 
 
 
- async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, res: NextResponse): Promise<void | Response> {
     try {
         const vendurs = await prisma.vendur.findMany({
             include: {
@@ -11,10 +12,10 @@ import { NextResponse,NextRequest } from "next/server";
         });
 
         if (!vendurs || vendurs.length === 0) {
-            return { status: 'error', message: 'لم يتم العثور على البائعين' };
+            return Response.json({ status: 'error', message: 'لم يتم العثور على البائعين' });
         }
-        //@ts-ignore
-        let earningsByMonth = []; 
+
+        let earningsByMonth: { month: number; year: number; totalEarnings: number }[] = [];
 
         vendurs.forEach(vendur => {
             vendur.produit_sell.forEach(product => {
@@ -22,7 +23,6 @@ import { NextResponse,NextRequest } from "next/server";
                 const month = date.getMonth() + 1;
                 const year = date.getFullYear();
 
-                //@ts-ignore
                 const existingEntry = earningsByMonth.find(entry => entry.month === month && entry.year === year);
 
                 if (existingEntry) {
@@ -36,21 +36,18 @@ import { NextResponse,NextRequest } from "next/server";
                 }
             });
         });
-        //@ts-ignore
+
         const sortedEarnings = earningsByMonth.sort((a, b) => {
             if (a.year === b.year) {
                 return a.month - b.month;
             }
             return a.year - b.year;
-        }
-        );
-        //@ts-ignore
-        return NextResponse.json({status: "success",data:sortedEarnings , "message": ""});
+        });
+
+        return Response.json({ status: "success", data: sortedEarnings, message: "" });
     } catch (error) {
         console.error(error);
+        // Handle error and return an appropriate response
+        return Response.json({ status: 'error', message: 'An error occurred while processing your request.' });
     }
 }
-
-export default GET;
-
-

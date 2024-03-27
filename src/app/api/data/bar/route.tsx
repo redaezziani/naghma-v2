@@ -1,19 +1,17 @@
 import { prisma } from "@/(secrets)/secrets";
-import { NextResponse,NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 
-async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest, res: NextResponse): Promise<void | Response> {
     try {
         let currentMonth = new Date().getMonth() + 1;
         let currentYear = new Date().getFullYear();
         const vendurs = await prisma.vendur.findMany({
-            
             include: {
                 produit_sell: true
             },
-            
         });
         if (!vendurs || vendurs.length === 0) {
-            return { status: 'error', message: 'لم يتم العثور على البائعين' };
+            return Response.json({ status: 'error', message: 'لم يتم العثور على البائعين' });
         }
         const vendursWithTotalSellPrice = vendurs.map((vendur: any) => {
             const total_sell_price = vendur.produit_sell.reduce((acc: number, product: any) => {
@@ -28,12 +26,10 @@ async function GET(req: NextRequest, res: NextResponse) {
                 total_sell_price
             };
         });
-        
-        return NextResponse.json({status: "success",data:vendursWithTotalSellPrice , "message": ""});
+        return Response.json({ status: "success", data: vendursWithTotalSellPrice, message: "" });
     } catch (error) {
         console.error(error);
+        // Handle error and return an appropriate response
+        return Response.json({ status: 'error', message: 'An error occurred while processing your request.' });
     }
 }
-export default GET;
-
-
