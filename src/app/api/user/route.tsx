@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse,NextRequest } from "next/server";
 
 
-export async function GET(req: NextRequest, res: NextResponse) {
+ async function GET(req: NextRequest, res: NextResponse) {
     try {
         const isToken = cookies().has("token");
         if (!isToken) {
@@ -30,4 +30,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
     }
 }
 
+export default GET;
 

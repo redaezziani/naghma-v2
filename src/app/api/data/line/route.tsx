@@ -2,7 +2,7 @@ import { prisma } from "@/(secrets)/secrets";
 import { NextResponse,NextRequest } from "next/server";
 
 
-export async function GET(req: NextRequest, res: NextResponse) {
+ async function GET(req: NextRequest, res: NextResponse) {
     try {
         const vendurs = await prisma.vendur.findMany({
             include: {
@@ -50,5 +50,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         console.error(error);
     }
 }
+
+export default GET;
 
 
