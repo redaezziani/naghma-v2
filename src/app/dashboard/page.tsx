@@ -1,6 +1,5 @@
 'use client';
 import { Card } from '@/components/ui/card';
-import BarChart from '@/components/my-ui/chart-bar';
 import { useEffect, useState } from 'react';
 import { getEarningsOfCurrentMonth, getLossesReturnOfCurrentMonth, getTotalVendursFraisByMonth } from '@/(db)/errning';
 import { Button } from '@/components/ui/button';
@@ -8,6 +7,8 @@ import Link from 'next/link';
 import { createTotalSelles, getHowmuchrRest, getTotalExpensesByMonth } from '@/(db)/data';
 import DataCard from '@/components/my-ui/anlys/data-card';
 import CompanyExpense from '@/components/my-ui/forms/create-company-expense';
+import { BarChartExample } from '@/components/my-ui/forms/bar-chart';
+import { EreaChart } from '@/components/my-ui/forms/area-chart';
 const Dashboard = () => {
   const [earnings, setEarnings] = useState(0);
   const [losses, setLosses] = useState(0);
@@ -117,13 +118,11 @@ const Dashboard = () => {
         <div className="w-full grid grid-cols-4 gap-6">
           
           <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
-            <p
-              className='text-lg font-bold text-primary mb-4'
-            >
-              البائعين الأكثر مبيعًا (الشهر الحالي)
-            </p>
-            <BarChart
-              color='33, 95%, 56%' />
+            <EreaChart />
+          </Card>
+          <Card className="w-full col-span-4 flex-col lg:py-6  h-fit flex justify-center items-center lg:h-96 lg:col-span-2 p-2 shadow-none">
+            
+            <BarChartExample />
           </Card>
         </div>
       </div>

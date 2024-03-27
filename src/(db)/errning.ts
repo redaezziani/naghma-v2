@@ -36,7 +36,15 @@ export const getEarningsByMonth = async () => {
             });
         });
         //@ts-ignore
-        return { status: 'success', message: 'تم العثور على الأرباح بنجاح', data: earningsByMonth };
+        const sortedEarnings = earningsByMonth.sort((a, b) => {
+            if (a.year === b.year) {
+                return a.month - b.month;
+            }
+            return a.year - b.year;
+        }
+        );
+        //@ts-ignore
+        return { status: 'success', message: 'تم العثور على الأرباح بنجاح', data: sortedEarnings };
     } catch (error) {
         console.error(error);
         return { status: 'error', message: 'حدث خطأ أثناء جلب البيانات' };
